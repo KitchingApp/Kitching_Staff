@@ -1,4 +1,4 @@
-package com.kitching.app.util
+package com.kitching.data.util
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -6,11 +6,12 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.kitching.app.common.KitchingApplication
 import kotlinx.coroutines.flow.first
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "team")
-class PreferencesDataStore(private val context: Context = KitchingApplication.getInstance()) {
+
+class PreferencesDataStore(private val context: Context) {
+    val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "team")
+
     companion object {
         private val TEAM_ID = stringPreferencesKey("team_id")
         private val USER_ID = stringPreferencesKey("user_id")
