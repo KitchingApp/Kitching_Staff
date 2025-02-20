@@ -14,7 +14,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -28,7 +27,6 @@ import com.kitching.core.common.CustomTopAppBar
 import com.kitching.core.common.NavigationIconInfo
 import com.kitching.core.common.ScreenRouteDef
 import com.kitching.core.designsystem.theme.NeutralGray0
-import com.kitching.core.designsystem.theme.PrimaryGreen300
 import kotlinx.coroutines.launch
 
 @Composable
@@ -120,30 +118,6 @@ fun RecipeTabScreen(
     Spacer(modifier = Modifier.height(50.dp))
 
     Text("RecipeTabScreen")
-}
-
-@Composable
-fun ScheduleTabScreen(
-    commonState: CommonState
-) {
-    commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
-        containerColor = PrimaryGreen300,
-        navIconInfo = NavigationIconInfo.DRAWER,
-        onClickNavIcon = {
-            if (commonState.topAppBarState.value.drawerState.isOpen) {
-                commonState.scope.launch { commonState.topAppBarState.value.drawerState.close() }
-            } else {
-                commonState.scope.launch { commonState.topAppBarState.value.drawerState.open() }
-            }
-        },
-        actionIconInfo = ActionIconInfo.ADD,
-        onClickActionIcon = {
-
-        }
-    )
-    Spacer(modifier = Modifier.height(50.dp))
-
-    Text("ScheduleTabScreen")
 }
 
 @Composable
