@@ -1,5 +1,6 @@
 package com.kitching.main.schedule
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -16,23 +17,37 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.kitching.core.common.AppResultHandler
+import com.kitching.main.factory.viewModelFactory
+import com.kitching.main.viewmodel.ScheduleViewModel
 import java.time.LocalDate
 import java.time.YearMonth
-import kotlin.math.min
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Calendar(
     modifier: Modifier = Modifier,
     state: CalendarState,
+    viewModel: ScheduleViewModel = viewModel(factory = viewModelFactory),
     onClick: () -> Unit
 ) {
+    val schedules by viewModel.schedules.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.fetchSchedules("3863591667", "3uM01g5GSz8lC49JA6vq")
+        Log.e("TAG", "Calendar: $schedules")
+    }
+
     // Pager 페이지가 변경되면 -> "현재 선택일자"와 "새로운 YearMonth"의 날짜를 조정
     LaunchedEffect(state.datePagerState.currentPage) {
         val newYM = state.currentPageYM
@@ -58,63 +73,63 @@ fun Calendar(
         }
     }
 
-    Column(
-        modifier = modifier.background(Color.White)
-    ) {
-        // 상단의 연/월 + 버튼들
-        TopBarSection(state = state)
-        // 월~일 헤더
-        DayOfWeekLabels()
+    AppResultHandler(state = schedules,
+        onSuccess = { scheduleList ->
+            Column(
+                modifier = modifier.background(Color.White)
+            ) {
+                // 상단의 연/월 + 버튼들
+                TopBarSection(state = state)
+                // 월~일 헤더
+                DayOfWeekLabels()
 
-        // 날짜 Pager
-        HorizontalPager(
-            state = state.datePagerState,
-            modifier = Modifier
-                .weight(1f)
-                .padding(horizontal = 8.dp)
-        ) { page ->
-            // 이 페이지가 가리키는 YearMonth
-            val pageYearMonth = remember {
-                val baseYM = YearMonth.from(LocalDate.now())
-                val offset = page - (Int.MAX_VALUE / 2)
-                baseYM.plusMonths(offset.toLong())
-            }
-            val daysOfMonth = remember(pageYearMonth) {
-                state.getDaysOfMonth(pageYearMonth)
-            }
+                // 날짜 Pager
+                HorizontalPager(
+                    state = state.datePagerState,
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(horizontal = 8.dp)
+                ) { page ->
+                    // 이 페이지가 가리키는 YearMonth
+                    val pageYearMonth = remember {
+                        val baseYM = YearMonth.from(LocalDate.now())
+                        val offset = page - (Int.MAX_VALUE / 2)
+                        baseYM.plusMonths(offset.toLong())
+                    }
+                    val daysOfMonth = remember(pageYearMonth) {
+                        state.getDaysOfMonth(pageYearMonth)
+                    }
 
-            Column(Modifier.fillMaxSize()) {
-                // 1주(7일) 단위로 나누어 그리기
-                daysOfMonth.chunked(7).forEach { weekDates ->
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f)
-                    ) {
-                        weekDates.forEach { date ->
-                            val isToday = (date == state.currentDate)
-                            val isSelected = (date == state.selectedDate)
-                            val isVisibleMonth = (YearMonth.from(date) == pageYearMonth)
-
-                            CalendarDay(
-                                date = date,
-                                isToday = isToday,
-                                isSelected = isSelected,
-                                isVisibleMonth = isVisibleMonth,
-                                onClick = {
-                                    state.selectedDate = date
-                                    onClick()
-                                },
+                    Column(Modifier.fillMaxSize()) {
+                        // 1주(7일) 단위로 나누어 그리기
+                        daysOfMonth.chunked(7).forEach { weekDates ->
+                            Row(
                                 modifier = Modifier
+                                    .fillMaxWidth()
                                     .weight(1f)
-                                    .fillMaxHeight()
-                            )
+                            ) {
+                                weekDates.forEach { date ->
+                                    CalendarDay(
+                                        date = date,
+                                        isToday = (date == state.currentDate),
+                                        isSelected = (date == state.selectedDate),
+                                        isVisibleMonth = (YearMonth.from(date) == pageYearMonth),
+                                        schedules = scheduleList,
+                                        onClick = {
+                                            state.selectedDate = date
+                                            onClick()
+                                        },
+                                        modifier = Modifier
+                                            .weight(1f)
+                                            .fillMaxHeight()
+                                    )
+                                }
+                            }
                         }
                     }
                 }
             }
-        }
-    }
+        })
 }
 
 @Composable
@@ -139,7 +154,7 @@ private fun TopBarSection(state: CalendarState) {
 
             BasicText(
                 text = ymText,
-                style = androidx.compose.ui.text.TextStyle(
+                style = TextStyle(
                     fontSize = 22.sp,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -168,7 +183,7 @@ private fun DayOfWeekLabels() {
                 }
                 BasicText(
                     text = dayText,
-                    style = androidx.compose.ui.text.TextStyle(
+                    style = TextStyle(
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Medium,
                         color = textColor
