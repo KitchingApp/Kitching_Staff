@@ -1,5 +1,6 @@
 package com.kitching.main.schedule
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -40,8 +41,8 @@ fun ScheduleTabScreen(
             modifier = Modifier
                 .fillMaxWidth(),
             state = calendarState,
-            onClick = {
-
+            onDoubleSelect = {
+                Toast.makeText(commonState.navController.context, "더블클릭", Toast.LENGTH_SHORT).show()
             }
         )
     }

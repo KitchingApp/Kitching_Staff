@@ -23,6 +23,7 @@ data class CalendarState(
 ) {
     // 사용자가 선택한 날짜
     var selectedDate by mutableStateOf(LocalDateTime.now().toLocalDate())
+    var previousSelectedDate by mutableStateOf<LocalDate?>(null)
 
     // 오늘 날짜 (연산 프로퍼티)
     val currentDate: LocalDate
@@ -59,6 +60,15 @@ data class CalendarState(
         return generateSequence(startOfMonth) { it.plusDays(1) }
             .takeWhile { !it.isAfter(endOfMonth) }
             .toList()
+    }
+
+    // 날짜 선택 처리를 위한 함수 추가
+    fun onDateSelected(date: LocalDate): Boolean {
+        // 현재 선택된 날짜와 같은지 확인
+        val isDoubleSelect = (date == selectedDate)
+        previousSelectedDate = selectedDate
+        selectedDate = date
+        return isDoubleSelect
     }
 
     // CalendarState를 저장/복원하기 위한 Saver

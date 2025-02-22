@@ -38,8 +38,8 @@ import java.time.YearMonth
 fun Calendar(
     modifier: Modifier = Modifier,
     state: CalendarState,
-    viewModel: ScheduleViewModel = viewModel(factory = viewModelFactory),
-    onClick: () -> Unit
+    onDoubleSelect: (LocalDate) -> Unit,
+    viewModel: ScheduleViewModel = viewModel(factory = viewModelFactory)
 ) {
     val schedules by viewModel.schedules.collectAsStateWithLifecycle()
 
@@ -116,8 +116,9 @@ fun Calendar(
                                         isVisibleMonth = (YearMonth.from(date) == pageYearMonth),
                                         schedules = scheduleList,
                                         onClick = {
-                                            state.selectedDate = date
-                                            onClick()
+                                            if (state.onDateSelected(date)) {
+                                                onDoubleSelect(date)
+                                            }
                                         },
                                         modifier = Modifier
                                             .weight(1f)
