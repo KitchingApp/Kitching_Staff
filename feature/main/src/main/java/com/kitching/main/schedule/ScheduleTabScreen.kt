@@ -27,9 +27,6 @@ fun ScheduleTabScreen(
             }
         },
         actionIconInfo = ActionIconInfo.NULL,
-        onClickActionIcon = {
-
-        }
     )
 
     val calendarState = rememberCalendarState()
@@ -42,7 +39,7 @@ fun ScheduleTabScreen(
                 .fillMaxWidth(),
             state = calendarState,
             onDoubleSelect = {
-                Toast.makeText(commonState.navController.context, "더블클릭", Toast.LENGTH_SHORT).show()
+                commonState.navController.navigate("schedule_detail_screen")
             }
         )
     }
