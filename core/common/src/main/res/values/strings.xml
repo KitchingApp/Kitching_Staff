@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="progress_indicator_message_salt">소금 뿌리는 중..</string>
+    <string name="progress_indicator_message_bread">빵 굽는 중..</string>
+    <string name="progress_indicator_message_whipper">조리하는 중..</string>
+    <string name="progress_indicator_common_message">요리가 완성되는 중입니다. 조금만 기다려주세요!</string>
+
+    <string name="network_cannot_access">네트워크에 접속할 수 없습니다.</string>
+    <string name="network_retry_message">네트워크 연결상태를 확인하거나 아래 버튼 클릭 후
+        다시 접속을 시도해주시기 바랍니다.</string>
+    <string name="retry">재시도</string>
+</resources>

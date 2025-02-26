@@ -1,0 +1,15 @@
+package com.kitching.data.firebase
+
+const val COLLECTION_NOTICE = "notice"
+const val COLLECTION_ORDER = "order"
+const val COLLECTION_ORDER_CATEGORY = "orderCategory"
+const val COLLECTION_PREP = "prep"
+const val COLLECTION_PREP_CATEGORY = "prepCategory"
+const val COLLECTION_RECIPE = "recipe"
+const val COLLECTION_SCHEDULE = "schedule"
+const val COLLECTION_SCHEDULE_TIME = "scheduleTime"
+const val COLLECTION_STAFF_LEVEL = "staffLevel"
+const val COLLECTION_TEAM = "team"
+const val COLLECTION_USER = "user"
+const val COLLECTION_USER_TEAM = "user-team"
+const val COLLECTION_INGREDIENT = "ingredient"
