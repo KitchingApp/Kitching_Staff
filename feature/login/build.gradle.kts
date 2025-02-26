@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
     implementation(libs.coil.svg)
+    implementation(libs.sdk.v2.user)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

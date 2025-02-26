@@ -5,42 +5,25 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.kitching.core.common.ScreenRouteDef
-import com.kitching.login.InviteCodeScreen
-import com.kitching.login.LoginMainScreen
-import com.kitching.login.TeamScreen
+import com.kitching.login.ui.screen.InviteCodeScreen
+import com.kitching.login.ui.screen.LoginScreen
+import com.kitching.login.ui.screen.TeamSelectScreen
 
 fun NavGraphBuilder.loginNavGraph(
-    navController: NavHostController,
-    onLogin: () -> Unit
+    navController: NavHostController
 ) {
     navigation(
         route = ScreenRouteDef.LoginGraph.routeName,
-        startDestination = ScreenRouteDef.LoginMain.routeName,
+        startDestination = ScreenRouteDef.Login.routeName,
     ) {
-        composable(route = ScreenRouteDef.LoginMain.routeName) {
-            LoginMainScreen(onLogin = {
-                navController.navigate(ScreenRouteDef.TeamSelect.routeName) {
-                    popUpTo(ScreenRouteDef.LoginMain.routeName) {
-                        inclusive = true
-                    }
-                }
-            })
+        composable(route = ScreenRouteDef.Login.routeName) {
+            LoginScreen(navController)
         }
         composable(route = ScreenRouteDef.TeamSelect.routeName) {
-            TeamScreen(onSelect = {
-                onLogin()
-            }, onJoin = {
-                navController.navigate(ScreenRouteDef.TeamJoin.routeName)
-            })
+            TeamSelectScreen(navController)
         }
         composable(route = ScreenRouteDef.TeamJoin.routeName) {
-            InviteCodeScreen(onJoinTeam = {
-                navController.navigate(ScreenRouteDef.TeamSelect.routeName) {
-                    popUpTo(ScreenRouteDef.TeamJoin.routeName) {
-                        inclusive = true
-                    }
-                }
-            })
+            InviteCodeScreen(navController)
         }
     }
 }
