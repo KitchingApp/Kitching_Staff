@@ -3,7 +3,7 @@ package com.kitching.core.common
 sealed class ScreenRouteDef(val routeName: String) {
     data object Splash : ScreenRouteDef("splash")
 
-    data object LoginMain : ScreenRouteDef("loginMain")
+    data object Login : ScreenRouteDef("login")
     data object TeamSelect : ScreenRouteDef("teamSelect")
     data object TeamJoin : ScreenRouteDef("teamJoin")
 

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="Kitching">Kitching</string>
+    <string name="login_welcome_message">"반갑습니다.
+스케쥴 관리, 프렙 관리,
+한손으로 편리하게 관리해보세요!"</string>
+    <string name="login_bottom_sheet_message">"현재 사용중인 기기의
+카카오톡에 연결된 카카오계정으로
+로그인 됩니다."</string>
+    <string name="login_bottom_sheet_confirm_text">확인</string>
+    <string name="login_bottom_sheet_cancel_text">취소</string>
+
+    <string name="invite_code">초대코드</string>
+    <string name="insert_invite_code">초대코드 입력</string>
+    <string name="insert_invite_code_message">참여하실 레스토랑의 초대코드를 입력하세요!</string>
+    <string name="input">입력</string>
+    <string name="icon_description_go_to_team_select_screen">팀 선택 화면으로 돌아가기</string>
+
+    <string name="empty_message_for_team_select_screen">팀이 없습니다.</string>
+    <string name="icon_description_go_to_invite_code_screen">초대코드 입력 화면으로 이동하기</string>
+</resources>

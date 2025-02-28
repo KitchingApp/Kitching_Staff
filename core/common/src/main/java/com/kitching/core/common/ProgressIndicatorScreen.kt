@@ -10,6 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
@@ -37,7 +39,7 @@ fun ProgressIndicatorScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(20.dp),
+                verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.defaultPadding)),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Column (
@@ -49,7 +51,7 @@ fun ProgressIndicatorScreen() {
                         contentDescription = null
                     )
                     Text(
-                        text = indicatorItem.title,
+                        text = stringResource(indicatorItem.title),
                         style = H1.copy(color = PrimaryGreen300)
                     )
                 }
@@ -59,7 +61,7 @@ fun ProgressIndicatorScreen() {
                     color = PrimaryGreen300
                 )
                 Text(
-                    text = "요리가 완성되는 중입니다. 조금만 기다려주세요!",
+                    text = stringResource(R.string.progress_indicator_common_message),
                     style = Caption1_m.copy(color = NeutralGray0)
                 )
             }
