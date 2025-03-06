@@ -13,7 +13,8 @@ import com.kitching.main.ChatTabScreen
 import com.kitching.main.OrderTabScreen
 import com.kitching.main.PrepTabScreen
 import com.kitching.main.RecipeTabScreen
-import com.kitching.main.ScheduleTabScreen
+import com.kitching.main.schedule.ScheduleDetailScreen
+import com.kitching.main.schedule.ScheduleTabScreen
 
 @Composable
 fun CustomNavHost(
@@ -41,5 +42,6 @@ fun CustomNavHost(
         composable(ScreenRouteDef.ChattingTab.routeName) {
             ChatTabScreen(commonState)
         }
+        sliceNavGraph(commonState)
     }
 }

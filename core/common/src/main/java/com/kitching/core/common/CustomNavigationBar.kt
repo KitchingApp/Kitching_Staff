@@ -36,7 +36,7 @@ fun CustomNavigationBar(
         BottomNavItem().renderBottomNavItems()
             .forEachIndexed { _, bottomNavItem ->
                 NavigationBarItem(
-                    selected = bottomNavItem.routeName == currentDestination?.route,
+                    selected = currentDestination?.route?.startsWith(bottomNavItem.routeName) == true,
                     label = {
                         Text(
                             text = bottomNavItem.tabName,

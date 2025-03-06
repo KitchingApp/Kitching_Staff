@@ -7,4 +7,5 @@ data class Schedule(
     val scheduleTimeName: String,
     val date: String,
     val fix: Boolean,
+    val color: String
 )

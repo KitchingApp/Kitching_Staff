@@ -8,13 +8,15 @@ data class ScheduleTimeDTO(
     val name: String = "",
     val startTime: String = "",
     val endTime: String = "",
+    val color: String = "",
 ) {
     fun toDomain(): ScheduleTime {
         return ScheduleTime(
             scheduleTimeId = id,
             scheduleTimeName = name,
             startTime = startTime,
-            endTime = endTime
+            endTime = endTime,
+            color = color
         )
     }
 }
