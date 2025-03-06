@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import com.kitching.core.common.ActionIconInfo
 import com.kitching.core.common.CommonState
 import com.kitching.core.common.NavigationIconInfo
+import com.kitching.core.common.ScreenRouteDef
 import com.kitching.core.designsystem.theme.PrimaryGreen300
 import kotlinx.coroutines.launch
 
@@ -39,7 +40,7 @@ fun ScheduleTabScreen(
                 .fillMaxWidth(),
             state = calendarState,
             onDoubleSelect = {
-                commonState.navController.navigate("schedule_detail_screen")
+                commonState.navController.navigate(ScreenRouteDef.InnerContent.ScheduleDetail.routeName)
             }
         )
     }

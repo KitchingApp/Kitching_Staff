@@ -42,8 +42,6 @@ fun CustomNavHost(
         composable(ScreenRouteDef.ChattingTab.routeName) {
             ChatTabScreen(commonState)
         }
-        composable("schedule_detail_screen") {
-            ScheduleDetailScreen(commonState)
-        }
+        sliceNavGraph(commonState)
     }
 }

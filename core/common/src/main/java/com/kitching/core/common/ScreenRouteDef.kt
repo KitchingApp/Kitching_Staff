@@ -23,10 +23,11 @@ sealed class ScreenRouteDef(val routeName: String) {
     data object Notice : ScreenRouteDef("notice")
     data object MemberList : ScreenRouteDef("memberList")
 
+    data object ScheduleDetailGraph : ScreenRouteDef("schedule_detail")
 
     sealed interface InnerContent {
-        data object RecipeDetail : ScreenRouteDef("detail")
-        data object ScheduleDetail : ScreenRouteDef("detail")
+        data object RecipeDetail : ScreenRouteDef("recipe/detail")
+        data object ScheduleDetail : ScreenRouteDef("schedule/detail")
         data object ProfileEdit : ScreenRouteDef("edit")
         data object NoticeDetail : ScreenRouteDef("detail")
         data object MemberDetail : ScreenRouteDef("detail")
