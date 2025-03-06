@@ -27,6 +27,7 @@ import com.kitching.core.common.CustomTopAppBar
 import com.kitching.core.common.NavigationIconInfo
 import com.kitching.core.common.ScreenRouteDef
 import com.kitching.core.designsystem.theme.NeutralGray0
+import com.kitching.data.PreferencesDataSource
 import kotlinx.coroutines.launch
 
 @Composable
@@ -48,6 +49,8 @@ fun EntryPointScreen(
     CustomNavigationDrawer(
         drawerState, onLogout = {
             appNavController.navigate(ScreenRouteDef.Splash.routeName) {
+                PreferencesDataSource(tabNavController.context).clearUserId()
+                PreferencesDataSource(tabNavController.context).clearTeamId()
                 popUpTo(ScreenRouteDef.MainGraph.routeName) {
                     inclusive = true
                 }

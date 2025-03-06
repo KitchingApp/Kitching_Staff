@@ -1,10 +1,10 @@
 package com.kitching.core.common
 
-class ProgressIndicatorItem(val image: Int, val title: String) {
+class ProgressIndicatorItem(val image: Int, val title: Int) {
     companion object {
-        private val salt = ProgressIndicatorItem(image = R.drawable.icon_salt, title = "소금 뿌리는 중..")
-        private val bread = ProgressIndicatorItem(image = R.drawable.icon_whipper, title = "조리하는 중..")
-        private val whipper = ProgressIndicatorItem(image = R.drawable.icon_bread, title = "빵 굽는 중..")
+        private val salt = ProgressIndicatorItem(image = R.drawable.icon_salt, title = R.string.progress_indicator_message_salt)
+        private val bread = ProgressIndicatorItem(image = R.drawable.icon_whipper, title = R.string.progress_indicator_message_bread)
+        private val whipper = ProgressIndicatorItem(image = R.drawable.icon_bread, title = R.string.progress_indicator_message_whipper)
 
         fun getRandomItem() = listOf(salt, bread, whipper).random()
     }
