@@ -54,7 +54,7 @@ class PreferencesDataSource(private val context: Context) {
 
     fun getTeamId(): Flow<AppResult<String>> = context.dataStore.data.map { preferences ->
         AppResult.Loading
-        AppResult.Success(preferences[USER_ID] ?: "")
+        AppResult.Success(preferences[TEAM_ID] ?: "")
     }.catch {
         AppResult.Failure(it)
     }

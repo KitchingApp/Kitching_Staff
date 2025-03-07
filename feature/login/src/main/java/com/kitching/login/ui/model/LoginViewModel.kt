@@ -7,7 +7,6 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import com.kitching.data.PreferencesDataSource
 import com.kitching.domain.entities.Team
-import com.kitching.domain.repository.FcmTokenRepository
 import com.kitching.domain.repository.LoginRepository
 import com.kitching.domain.repository.TeamRepository
 import com.kitching.domain.util.AppResult
@@ -19,8 +18,7 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val loginRepository: LoginRepository,
-    private val teamRepository: TeamRepository,
-    private val tokenRepository: FcmTokenRepository
+    private val teamRepository: TeamRepository
 ) : ViewModel() {
 
     private val _kakaoLoginState = MutableStateFlow<AppResult<Boolean>>(AppResult.Initial)

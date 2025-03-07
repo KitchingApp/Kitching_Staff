@@ -1,5 +1,7 @@
 package com.kitching.login.ui.screen.splash
 
+import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -9,56 +11,58 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
-import com.kakao.sdk.auth.AuthApiClient
-import com.kakao.sdk.common.model.KakaoSdkError
-import com.kakao.sdk.user.UserApiClient
 import com.kitching.core.designsystem.theme.PrimaryGreen300
+import com.kitching.domain.util.AppResult
 import com.kitching.login.R
-import com.kitching.login.SplashEntryPoint
+import com.kitching.login.ui.model.LoginViewModel
+import com.kitching.login.ui.model.LoginViewModelFactory
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(
+    context: Context,
     goLogin: () -> Unit,
-    goMain: () -> Unit
+    goMain: () -> Unit,
+    goTeamSelect: () -> Unit,
+    loginViewModel: LoginViewModel = viewModel(factory = LoginViewModelFactory())
 ) {
-    LaunchedEffect(Unit) {
-        var entryPoint = SplashEntryPoint.MAIN
+    val userId by loginViewModel.userId.collectAsState()
+    val teamId by loginViewModel.teamId.collectAsState()
 
-        val job = async {
-            if (AuthApiClient.instance.hasToken()) {
-                UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
-                    entryPoint = if (error != null) {
-                        if (error is KakaoSdkError && error.isInvalidTokenError()) {
-                            SplashEntryPoint.LOGIN
-                        } else {
-                            AuthApiClient.instance.tokenManagerProvider.manager.clear()
-                            SplashEntryPoint.LOGIN
-                        }
-                    } else {
-                        SplashEntryPoint.MAIN
-                    }
-                }
-            } else {
-                entryPoint = SplashEntryPoint.LOGIN
-            }
+    LaunchedEffect(Unit) {
+        val splashJob = async {
+            loginViewModel.getUserId(context)
+            loginViewModel.getTeamIdFromDataStore(context)
         }
 
         delay(2000)
-        job.await()
+        splashJob.await()
+    }
 
-        when (entryPoint) {
-            SplashEntryPoint.INIT -> {}
-            SplashEntryPoint.LOGIN -> goLogin()
-            SplashEntryPoint.MAIN -> goMain()
+    LaunchedEffect(userId, teamId) {
+        Log.d("splash userId", userId.toString())
+        Log.d("splash teamId", teamId.toString())
+        if (userId is AppResult.Success && teamId is AppResult.Success) {
+            if((userId as AppResult.Success<String>).data !== "") {
+                if((teamId as AppResult.Success<String>).data !== "") {
+                    goMain()
+                } else {
+                    goTeamSelect()
+                }
+            } else {
+                goLogin()
+            }
         }
     }
 
