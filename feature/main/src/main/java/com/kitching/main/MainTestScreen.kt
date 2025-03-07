@@ -1,7 +1,6 @@
 package com.kitching.main
 
 import androidx.compose.foundation.layout.Spacer
-import com.kitching.data.PreferencesDataSource
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.DrawerValue
@@ -27,7 +26,12 @@ import com.kitching.core.common.NavigationIconInfo
 import com.kitching.core.common.ScreenRouteDef
 import com.kitching.core.common.TopAppBarState
 import com.kitching.core.designsystem.theme.NeutralGray0
+import com.kitching.data.PreferencesDataSource
+import com.kitching.domain.util.AppResult
 import com.kitching.main.navigation.CustomNavHost
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @Composable
@@ -47,13 +51,23 @@ fun EntryPointScreen(
     val currentDestination = navBackStackEntry?.destination
 
     CustomNavigationDrawer(
-        drawerState, onLogout = {
+        drawerState,
+        onLogout = {
             appNavController.navigate(ScreenRouteDef.Splash.routeName) {
-                PreferencesDataSource(tabNavController.context).clearUserId()
-                PreferencesDataSource(tabNavController.context).clearTeamId()
-                popUpTo(ScreenRouteDef.MainGraph.routeName) {
-                    inclusive = true
+                CoroutineScope(Dispatchers.IO).launch {
+                    PreferencesDataSource(tabNavController.context).clearUserId().collectLatest { clearUserId ->
+                        if(clearUserId is AppResult.Success) {
+                            PreferencesDataSource(tabNavController.context).clearTeamId().collectLatest { clearTeamId ->
+                                if(clearTeamId is AppResult.Success) {
+                                    popUpTo(ScreenRouteDef.Splash.routeName) {
+                                        inclusive = true
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
+
             }
         }) {
         Scaffold(
