@@ -18,6 +18,7 @@ class PreferencesDataSource(private val context: Context) {
     companion object {
         private val TEAM_ID = stringPreferencesKey("team_id")
         private val USER_ID = stringPreferencesKey("user_id")
+        private val FCM_TOKEN = stringPreferencesKey("fcm_token")
     }
 
     fun saveUserId(userId: String): Flow<AppResult<Boolean>> = flow {
@@ -64,5 +65,10 @@ class PreferencesDataSource(private val context: Context) {
         emit(AppResult.Success(true))
     }.catch {
         emit(AppResult.Failure(it))
+    }
+
+    /** 토큰이 있는지 확인하고 있으면 업데이트, 없으면 새로 저장 */
+    suspend fun updateTokenAtDatastore(newToken: String) {
+        context.dataStore.edit { preferences -> preferences[FCM_TOKEN] = newToken }
     }
 }

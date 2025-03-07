@@ -1,7 +1,9 @@
 package com.kitching.data.datasource
 
 import com.google.firebase.firestore.FirebaseFirestore
+import com.kitching.data.dto.FcmTokenDTO
 import com.kitching.data.dto.UserDTO
+import com.kitching.data.firebase.COLLECTION_FIREBASE_MESSAGING_TOKEN
 import com.kitching.data.firebase.COLLECTION_USER
 import kotlinx.coroutines.tasks.await
 
