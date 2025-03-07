@@ -1,6 +1,5 @@
 package com.kitching.login.ui.screen.splash
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -32,12 +31,11 @@ fun SplashScreen(
     goMain: () -> Unit
 ) {
     LaunchedEffect(Unit) {
-        var entryPoint = SplashEntryPoint.INIT
+        var entryPoint = SplashEntryPoint.MAIN
 
         val job = async {
             if (AuthApiClient.instance.hasToken()) {
                 UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
-                    Log.d("splashScreen", tokenInfo.toString())
                     entryPoint = if (error != null) {
                         if (error is KakaoSdkError && error.isInvalidTokenError()) {
                             SplashEntryPoint.LOGIN
