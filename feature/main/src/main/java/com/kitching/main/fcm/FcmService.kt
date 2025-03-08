@@ -10,6 +10,8 @@ import com.kitching.domain.util.AppResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.launch
 
 class FcmService : FirebaseMessagingService() {
@@ -18,12 +20,15 @@ class FcmService : FirebaseMessagingService() {
 
         CoroutineScope(Dispatchers.IO).launch {
             PreferencesDataSource(this@FcmService).getUserId().collectLatest { userId ->
-                if(userId is AppResult.Success) {
-                    FcmTokenRepositoryImpl().updateToken(
-                        userId = userId.data,
-                        token = token,
-                        deviceModel = Build.MODEL
-                    )
+                if (userId is AppResult.Success) {
+                    if (userId.data !== "") {
+                        FcmTokenRepositoryImpl().updateToken(
+                            userId = userId.data,
+                            token = token,
+                            deviceModel = Build.MODEL
+                        ).takeWhile { result -> !(result is AppResult.Success && result.data) }
+                            .launchIn(this@launch)
+                    }
                 }
             }
         }
