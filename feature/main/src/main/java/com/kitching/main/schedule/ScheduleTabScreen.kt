@@ -39,8 +39,10 @@ fun ScheduleTabScreen(
             modifier = Modifier
                 .fillMaxWidth(),
             state = calendarState,
-            onDoubleSelect = {
-                commonState.navController.navigate(ScreenRouteDef.InnerContent.ScheduleDetail.routeName)
+            onDoubleSelect = { selectedDate ->
+                val dateTime = selectedDate.atStartOfDay()
+                val route = "${ScreenRouteDef.InnerContent.ScheduleDetail.routeName}?date=${dateTime}"
+                commonState.navController.navigate(route)
             }
         )
     }
