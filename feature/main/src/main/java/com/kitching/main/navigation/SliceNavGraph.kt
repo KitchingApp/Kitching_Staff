@@ -8,7 +8,7 @@ import androidx.navigation.navigation
 import com.kitching.core.common.CommonState
 import com.kitching.core.common.ScreenRouteDef
 import com.kitching.main.schedule.ScheduleDetailScreen
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 fun NavGraphBuilder.sliceNavGraph(
     commonState: CommonState
@@ -22,12 +22,12 @@ fun NavGraphBuilder.sliceNavGraph(
             arguments = listOf(
                 navArgument("date") {
                     type = NavType.StringType
-                    defaultValue = LocalDateTime.now().toString()
+                    defaultValue = LocalDate.now().toString()
                 }
             )
         ) { backStackEntry ->
-            val dateTimeString = backStackEntry.arguments?.getString("date") ?: LocalDateTime.now().toString()
-            val date = LocalDateTime.parse(dateTimeString)
+            val dateString = backStackEntry.arguments?.getString("date") ?: LocalDate.now().toString()
+            val date = LocalDate.parse(dateString)
 
             ScheduleDetailScreen(commonState, date)
         }

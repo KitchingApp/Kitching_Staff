@@ -1,9 +1,7 @@
 package com.kitching.main.schedule
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -11,25 +9,27 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.kitching.core.common.ActionIconInfo
 import com.kitching.core.common.CommonState
 import com.kitching.core.common.NavigationIconInfo
+import com.kitching.core.common.datepicker.DatePickerModal
 import com.kitching.core.common.datepicker.DateSelector
 import com.kitching.core.designsystem.theme.KitchingStaffTheme
-import com.kitching.core.designsystem.theme.PrimaryGreen300
+import com.kitching.core.designsystem.theme.NeutralGray0
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
+import java.time.LocalDate
+import java.time.LocalTime
 
 @Composable
 fun ScheduleDetailScreen(
     commonState: CommonState,
-    date: LocalDateTime
+    date: LocalDate
 ) {
-    var selectedDateTime by remember { mutableStateOf(date) }
+    var selectedDate by remember { mutableStateOf(date) }
+    var showDatePicker by remember { mutableStateOf(false) }
 
     commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
-        containerColor = PrimaryGreen300,
+        containerColor = NeutralGray0,
         navIconInfo = NavigationIconInfo.DRAWER,
         onClickNavIcon = {
             if (commonState.topAppBarState.value.drawerState.isOpen) {
@@ -45,18 +45,32 @@ fun ScheduleDetailScreen(
     KitchingStaffTheme {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(20.dp),
+                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
             DateSelector(
-                selectedDateTime = selectedDateTime,
+                selectedDateTime = selectedDate.atTime(LocalTime.now()),
                 onDateChange = { newDateTime ->
-                    selectedDateTime = newDateTime
+                    selectedDate = newDateTime.toLocalDate()
                 },
-                onClickDateBtn = {}
+                onClickDateBtn = {
+                    showDatePicker = true
+                }
             )
+
+            if (showDatePicker) {
+                DatePickerModal(
+                    selectedDateTime = selectedDate,
+                    onDismissRequest = { showDatePicker = false },
+                    onClickConfirm = { newSelectedDate ->
+                        if (newSelectedDate != null) {
+                            selectedDate = newSelectedDate
+                        }
+                        showDatePicker = false
+                    },
+                    onClickCancel = { showDatePicker = false }
+                )
+            }
         }
     }
 }

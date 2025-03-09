@@ -11,7 +11,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import java.time.DayOfWeek
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.YearMonth
 import java.time.temporal.TemporalAdjusters
 
@@ -22,12 +21,12 @@ data class CalendarState(
     val datePagerState: PagerState
 ) {
     // 사용자가 선택한 날짜
-    var selectedDate by mutableStateOf(LocalDateTime.now().toLocalDate())
+    var selectedDate by mutableStateOf(LocalDate.now())
     var previousSelectedDate by mutableStateOf<LocalDate?>(null)
 
     // 오늘 날짜 (연산 프로퍼티)
     val currentDate: LocalDate
-        get() = LocalDateTime.now().toLocalDate()
+        get() = LocalDate.now()
 
     // 현재 Pager가 표시하는 YearMonth
     val currentPageYM: YearMonth
@@ -36,7 +35,7 @@ data class CalendarState(
             // (Int.MAX_VALUE / 2) = 0 (중심점)이라고 보고
             // 해당 offset을 현재 날짜의 YearMonth에 더함
             val offset = datePagerState.currentPage - (Int.MAX_VALUE / 2)
-            val baseYM = YearMonth.from(LocalDateTime.now().toLocalDate())
+            val baseYM = YearMonth.from(LocalDate.now())
             return baseYM.plusMonths(offset.toLong())
         }
 

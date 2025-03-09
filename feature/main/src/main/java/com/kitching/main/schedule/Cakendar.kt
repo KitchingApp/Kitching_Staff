@@ -130,7 +130,8 @@ fun Calendar(
                     }
                 }
             }
-        })
+        }
+    )
 }
 
 @Composable

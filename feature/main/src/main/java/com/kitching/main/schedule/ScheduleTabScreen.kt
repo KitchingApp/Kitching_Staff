@@ -1,6 +1,5 @@
 package com.kitching.main.schedule
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -40,8 +39,7 @@ fun ScheduleTabScreen(
                 .fillMaxWidth(),
             state = calendarState,
             onDoubleSelect = { selectedDate ->
-                val dateTime = selectedDate.atStartOfDay()
-                val route = "${ScreenRouteDef.InnerContent.ScheduleDetail.routeName}?date=${dateTime}"
+                val route = "${ScreenRouteDef.InnerContent.ScheduleDetail.routeName}?date=${selectedDate}"
                 commonState.navController.navigate(route)
             }
         )
