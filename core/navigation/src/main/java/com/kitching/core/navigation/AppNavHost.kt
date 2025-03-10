@@ -15,14 +15,13 @@ fun AppNavHost(
 ) {
     val navController = rememberNavController()
 
-
-
     NavHost(
         navController = navController,
         startDestination = startDestination,
     ) {
         composable(ScreenRouteDef.Splash.routeName) {
             SplashScreen(
+                context = navController.context,
                 goLogin = {
                     navController.navigate(ScreenRouteDef.LoginGraph.routeName) {
                         popUpTo(ScreenRouteDef.Splash.routeName) {
@@ -36,12 +35,18 @@ fun AppNavHost(
                             inclusive = true
                         }
                     }
+                },
+                goTeamSelect = {
+                    navController.navigate(ScreenRouteDef.TeamSelect.routeName) {
+                        popUpTo(ScreenRouteDef.Splash.routeName) {
+                            inclusive = true
+                        }
+                    }
                 }
             )
         }
 
         loginNavGraph(navController)
-
         mainNavGraph(navController)
     }
 }
