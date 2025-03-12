@@ -8,7 +8,7 @@ import kotlinx.coroutines.tasks.await
 
 class ScheduleDataSourceImpl(private val db: FirebaseFirestore = FirebaseFirestore.getInstance()) :
     ScheduleDataSource {
-    override suspend fun getSchedules(
+    override suspend fun getMySchedules(
         userId: String,
         teamId: String,
     ): List<Schedule> {

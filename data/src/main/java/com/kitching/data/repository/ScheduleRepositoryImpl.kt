@@ -10,13 +10,13 @@ import kotlinx.coroutines.flow.flow
 
 class ScheduleRepositoryImpl(private val dataSource: ScheduleDataSource = ScheduleDataSourceImpl()) :
     ScheduleRepository {
-    override fun getSchedules(
+    override fun getMySchedules(
         userId: String,
         teamId: String,
     ): Flow<AppResult<List<Schedule>>> = flow {
         emit(AppResult.Loading)
         try {
-            val schedules = dataSource.getSchedules(userId, teamId)
+            val schedules = dataSource.getMySchedules(userId, teamId)
             emit(AppResult.Success(schedules))
         } catch (e: Exception) {
             emit(AppResult.Failure(e))

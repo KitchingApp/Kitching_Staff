@@ -12,14 +12,14 @@ import kotlinx.coroutines.launch
 
 class ScheduleViewModel(private val scheduleRepository: ScheduleRepository) : ViewModel() {
 
-    private val _schedules = MutableStateFlow<AppResult<List<Schedule>>>(AppResult.Initial)
-    val schedules get() = _schedules.asStateFlow()
+    private val _mySchedules = MutableStateFlow<AppResult<List<Schedule>>>(AppResult.Initial)
+    val mySchedules get() = _mySchedules.asStateFlow()
 
     fun fetchSchedules(userId: String, teamId: String) {
         viewModelScope.launch {
-            scheduleRepository.getSchedules(userId, teamId)
+            scheduleRepository.getMySchedules(userId, teamId)
                 .collectLatest {
-                    _schedules.value = it
+                    _mySchedules.value = it
                 }
         }
     }
