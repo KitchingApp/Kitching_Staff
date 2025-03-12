@@ -1,7 +1,6 @@
-package com.kitching.main.fcm
+package com.kitching.app.fcm
 
 import android.os.Build
-import android.util.Log
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.kitching.data.PreferencesDataSource
@@ -34,12 +33,25 @@ class FcmService : FirebaseMessagingService() {
         }
     }
 
-    override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        super.onMessageReceived(remoteMessage)
-        Log.d("$FCM_TAG - onMessageReceived", remoteMessage.toString())
-        // 푸시 메시지가 도착하면 처리하는 코드
-        remoteMessage.notification?.let {
-            Log.d("FCM", "메시지 수신: ${it.body}")
-        }
+    override fun onMessageReceived(message: RemoteMessage) {
+        super.onMessageReceived(message)
+        val messageData = message.data
+
+        val teamName = messageData["teamName"] ?: throw Throwable("teamName is null")
+        val scheduleDate = messageData["scheduleDate"] ?: throw Throwable("scheduleDate is null")
+        val scheduleTimeName =
+            messageData["scheduleTimeName"] ?: throw Throwable("scheduleTimeName is null")
+        val rejectReason = messageData["rejectReason"] ?: throw Throwable("rejectReason is null")
+
+        val title = "${teamName}의 $scheduleDate $scheduleTimeName 스케줄 신청이 반려되었습니다."
+        val body = "반려 사유: $rejectReason"
+
+        ScheduleRejectedNotificationChannel().showScheduleRejectNotification(
+            context = this,
+            teamName = teamName,
+            scheduleDate = scheduleDate,
+            scheduleTimeName = scheduleTimeName,
+            rejectReason = rejectReason
+        )
     }
 }

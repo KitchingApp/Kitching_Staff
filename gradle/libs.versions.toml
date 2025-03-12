@@ -24,6 +24,7 @@ coilNetworkOkhttp = "3.0.4"
 runtimeAndroid = "1.7.8"
 v2UserVersion = "2.20.6"
 firebaseBom = "33.9.0"
+protoliteWellKnownTypes = "18.0.0"
 
 
 [libraries]
