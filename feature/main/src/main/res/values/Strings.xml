@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fix_schedule">근무인원</string>
+    <string name="apply_schedule">신청 스케쥴</string>
+    <string name="no_apply_schedule">근무인원이 없습니다.</string>
+    <string name="no_fix_schedule">신청인원이 없습니다.</string>
+</resources>

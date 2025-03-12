@@ -12,6 +12,7 @@ val Pink40 = Color(0xFF7D5260)
 
 val NeutralGray0 = Color(0xFFFFFFFF)
 
+val PrimaryGreen700 = Color(0xFF00973F)
 val PrimaryGreen300 = Color(0xFF51D088)
 val PrimaryGreen200 = Color(0xFF8BDDAB)
 val PrimaryGreen50 = Color(0xFFE3F7EA)

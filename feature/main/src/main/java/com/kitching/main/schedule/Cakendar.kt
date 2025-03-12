@@ -41,7 +41,7 @@ fun Calendar(
     onDoubleSelect: (LocalDate) -> Unit,
     viewModel: ScheduleViewModel = viewModel(factory = viewModelFactory)
 ) {
-    val schedules by viewModel.schedules.collectAsStateWithLifecycle()
+    val schedules by viewModel.mySchedules.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         viewModel.fetchSchedules("3863591667", "3uM01g5GSz8lC49JA6vq")
