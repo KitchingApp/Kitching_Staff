@@ -26,6 +26,7 @@ import com.kitching.core.common.NavigationIconInfo
 import com.kitching.core.common.ScreenRouteDef
 import com.kitching.core.common.TopAppBarState
 import com.kitching.core.designsystem.theme.NeutralGray0
+import com.kitching.core.designsystem.theme.PrimaryGreen300
 import com.kitching.data.PreferencesDataSource
 import com.kitching.domain.util.AppResult
 import com.kitching.main.navigation.CustomNavHost
@@ -38,14 +39,22 @@ import kotlinx.coroutines.launch
 fun EntryPointScreen(
     appNavController: NavHostController
 ) {
+
     val tabNavController = rememberNavController()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val title by remember { mutableStateOf("Kitching") } // 레스토랑 이름
-    val topAppBarState = remember { mutableStateOf(TopAppBarState(drawerState = drawerState, title = title)) }
-    val commonState by remember { mutableStateOf(
-        CommonState(navController = tabNavController, topAppBarState = topAppBarState, scope = scope)
-    ) }
+    val topAppBarState =
+        remember { mutableStateOf(TopAppBarState(drawerState = drawerState, title = title)) }
+    val commonState by remember {
+        mutableStateOf(
+            CommonState(
+                navController = tabNavController,
+                topAppBarState = topAppBarState,
+                scope = scope
+            )
+        )
+    }
 
     val navBackStackEntry by tabNavController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -55,35 +64,42 @@ fun EntryPointScreen(
         onLogout = {
             appNavController.navigate(ScreenRouteDef.Splash.routeName) {
                 CoroutineScope(Dispatchers.IO).launch {
-                    PreferencesDataSource(tabNavController.context).clearUserId().collectLatest { clearUserId ->
-                        if(clearUserId is AppResult.Success) {
-                            PreferencesDataSource(tabNavController.context).clearTeamId().collectLatest { clearTeamId ->
-                                if(clearTeamId is AppResult.Success) {
-                                    popUpTo(ScreenRouteDef.Splash.routeName) {
-                                        inclusive = true
+                    PreferencesDataSource(tabNavController.context).clearUserId()
+                        .collectLatest { clearUserId ->
+                            if (clearUserId is AppResult.Success) {
+                                PreferencesDataSource(tabNavController.context).clearTeamId()
+                                    .collectLatest { clearTeamId ->
+                                        if (clearTeamId is AppResult.Success) {
+                                            popUpTo(ScreenRouteDef.Splash.routeName) {
+                                                inclusive = true
+                                            }
+                                        }
                                     }
-                                }
                             }
                         }
-                    }
                 }
-
             }
         }) {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
-            topBar = { CustomTopAppBar(
-                topAppBarState = topAppBarState.value
-            ) },
-            bottomBar = { CustomNavigationBar(
+            topBar = {
+                CustomTopAppBar(
+                    topAppBarState = topAppBarState.value
+                )
+            },
+            bottomBar = {
+                CustomNavigationBar(
+                    navController = tabNavController,
+                    currentDestination = currentDestination
+                )
+            }
+        ) { paddingValues ->
+            CustomNavHost(
                 navController = tabNavController,
-                currentDestination = currentDestination
-            ) }
-        ) { paddingValues -> CustomNavHost(
-            navController = tabNavController,
-            paddingValues = paddingValues,
-            commonState = commonState
-        ) }
+                paddingValues = paddingValues,
+                commonState = commonState
+            )
+        }
     }
 }
 
@@ -135,6 +151,30 @@ fun RecipeTabScreen(
     Spacer(modifier = Modifier.height(50.dp))
 
     Text("RecipeTabScreen")
+}
+
+@Composable
+fun ScheduleTabScreen(
+    commonState: CommonState
+) {
+    commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
+        containerColor = PrimaryGreen300,
+        navIconInfo = NavigationIconInfo.DRAWER,
+        onClickNavIcon = {
+            if (commonState.topAppBarState.value.drawerState.isOpen) {
+                commonState.scope.launch { commonState.topAppBarState.value.drawerState.close() }
+            } else {
+                commonState.scope.launch { commonState.topAppBarState.value.drawerState.open() }
+            }
+        },
+        actionIconInfo = ActionIconInfo.ADD,
+        onClickActionIcon = {
+
+        }
+    )
+    Spacer(modifier = Modifier.height(50.dp))
+
+    Text("ScheduleTabScreen")
 }
 
 @Composable

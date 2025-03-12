@@ -1,7 +1,6 @@
 package com.kitching.login.ui.screen.splash
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -22,7 +21,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import com.kitching.core.designsystem.theme.PrimaryGreen300
-import com.kitching.domain.util.AppResult
 import com.kitching.login.R
 import com.kitching.login.ui.model.LoginViewModel
 import com.kitching.login.ui.model.LoginViewModelFactory
@@ -51,19 +49,19 @@ fun SplashScreen(
     }
 
     LaunchedEffect(userId, teamId) {
-        Log.d("splash userId", userId.toString())
-        Log.d("splash teamId", teamId.toString())
-        if (userId is AppResult.Success && teamId is AppResult.Success) {
-            if((userId as AppResult.Success<String>).data !== "") {
-                if((teamId as AppResult.Success<String>).data !== "") {
-                    goMain()
-                } else {
-                    goTeamSelect()
-                }
-            } else {
-                goLogin()
-            }
-        }
+//        if (userId is AppResult.Success && teamId is AppResult.Success) {
+//            if((userId as AppResult.Success<String>).data !== "") {
+//                if((teamId as AppResult.Success<String>).data !== "") {
+//                    goMain()
+//                } else {
+//                    goTeamSelect()
+//                }
+//            } else {
+//                goLogin()
+//            }
+//        }
+        goMain()
+
     }
 
     Column(
