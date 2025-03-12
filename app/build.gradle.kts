@@ -65,6 +65,9 @@ dependencies {
     implementation(project(":feature:login"))
     implementation(project(":feature:main"))
 
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.messaging)
+    implementation(libs.firebase.analytics)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
