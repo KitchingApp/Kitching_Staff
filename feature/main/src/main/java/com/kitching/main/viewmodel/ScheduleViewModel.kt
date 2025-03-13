@@ -41,7 +41,7 @@ class ScheduleViewModel(private val scheduleRepository: ScheduleRepository) : Vi
     private val _scheduleByDate = MutableStateFlow<AppResult<List<Schedule>>>(AppResult.Initial)
     val scheduleByDate get() = _scheduleByDate.asStateFlow()
 
-    fun fetchScheduleByDate(teamId: String, date: LocalDate) {
+    fun fetchScheduleByDate(teamId: String, date: String) {
         viewModelScope.launch {
             scheduleRepository.getScheduleByDate(teamId, date)
                 .collectLatest {

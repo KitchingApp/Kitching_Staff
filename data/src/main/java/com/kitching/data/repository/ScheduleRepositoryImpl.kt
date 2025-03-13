@@ -26,7 +26,7 @@ class ScheduleRepositoryImpl(private val dataSource: ScheduleDataSource = Schedu
 
     override fun getScheduleByDate(
         teamId: String,
-        date: LocalDate,
+        date: String,
     ): Flow<AppResult<List<Schedule>>> = flow {
         emit(AppResult.Loading)
         try {

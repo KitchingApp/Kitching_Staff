@@ -1,5 +1,6 @@
 package com.kitching.data.datasource
 
+import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.kitching.data.dto.ScheduleDTO
 import com.kitching.data.dto.ScheduleTimeDTO
@@ -45,7 +46,7 @@ class ScheduleDataSourceImpl(private val db: FirebaseFirestore = FirebaseFiresto
 
     override suspend fun getScheduleByDate(
         teamId: String,
-        date: LocalDate,
+        date: String,
     ): List<Schedule> {
         val schedules = db.collection(COLLECTION_SCHEDULE)
             .whereEqualTo("teamId", teamId)

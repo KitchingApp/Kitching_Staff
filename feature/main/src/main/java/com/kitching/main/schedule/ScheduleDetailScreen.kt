@@ -1,5 +1,6 @@
 package com.kitching.main.schedule
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -38,7 +39,7 @@ fun ScheduleDetailScreen(
     var selectedDate by remember { mutableStateOf(date) }
     var showDatePicker by remember { mutableStateOf(false) }
 
-    val teamId by viewModel.teamId.collectAsStateWithLifecycle()
+    val teamId = "3uM01g5GSz8lC49JA6vq"
     val scheduleByDate by viewModel.scheduleByDate.collectAsStateWithLifecycle()
 
     commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
@@ -55,12 +56,13 @@ fun ScheduleDetailScreen(
         onClickActionIcon = {}
     )
 
-    LaunchedEffect(Unit) {
-        viewModel.getTeamIdFromDataStore(commonState.navController.context)
-    }
+//    LaunchedEffect(Unit) {
+//        viewModel.getTeamIdFromDataStore(commonState.navController.context)
+//        Log.d("TAG", "ScheduleDetailScreen: ${viewModel.teamId.value}")
+//    }
 
     LaunchedEffect(selectedDate) {
-        viewModel.fetchScheduleByDate(teamId.toString(), selectedDate)
+        viewModel.fetchScheduleByDate(teamId, selectedDate.toString())
     }
 
     KitchingStaffTheme {

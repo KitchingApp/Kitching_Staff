@@ -8,5 +8,5 @@ import java.time.LocalDate
 interface ScheduleRepository {
     fun getMySchedules(userId: String, teamId: String): Flow<AppResult<List<Schedule>>>
 
-    fun getScheduleByDate(teamId: String, date: LocalDate): Flow<AppResult<List<Schedule>>>
+    fun getScheduleByDate(teamId: String, date: String): Flow<AppResult<List<Schedule>>>
 }
