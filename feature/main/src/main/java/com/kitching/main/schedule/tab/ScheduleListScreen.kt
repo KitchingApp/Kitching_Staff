@@ -1,6 +1,5 @@
-package com.kitching.main.schedule
+package com.kitching.main.schedule.tab
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize

@@ -1,4 +1,4 @@
-package com.kitching.main.schedule
+package com.kitching.main.schedule.calendar
 
 import android.util.Log
 import androidx.compose.foundation.background

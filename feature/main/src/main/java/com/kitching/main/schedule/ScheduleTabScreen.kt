@@ -10,6 +10,8 @@ import com.kitching.core.common.CommonState
 import com.kitching.core.common.NavigationIconInfo
 import com.kitching.core.common.ScreenRouteDef
 import com.kitching.core.designsystem.theme.PrimaryGreen300
+import com.kitching.main.schedule.calendar.Calendar
+import com.kitching.main.schedule.calendar.rememberCalendarState
 import kotlinx.coroutines.launch
 
 @Composable
@@ -39,7 +41,8 @@ fun ScheduleTabScreen(
                 .fillMaxWidth(),
             state = calendarState,
             onDoubleSelect = { selectedDate ->
-                val route = "${ScreenRouteDef.InnerContent.ScheduleDetail.routeName}?date=${selectedDate}"
+                val route =
+                    "${ScreenRouteDef.InnerContent.ScheduleDetail.routeName}?date=${selectedDate}"
                 commonState.navController.navigate(route)
             }
         )

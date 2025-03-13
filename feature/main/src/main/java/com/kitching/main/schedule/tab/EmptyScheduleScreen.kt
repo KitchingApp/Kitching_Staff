@@ -1,4 +1,4 @@
-package com.kitching.main.schedule
+package com.kitching.main.schedule.tab
 
 import com.kitching.main.R
 import androidx.compose.foundation.Image

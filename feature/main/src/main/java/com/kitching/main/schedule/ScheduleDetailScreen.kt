@@ -1,6 +1,5 @@
 package com.kitching.main.schedule
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,6 +24,7 @@ import com.kitching.core.designsystem.theme.KitchingStaffTheme
 import com.kitching.core.designsystem.theme.NeutralGray0
 import com.kitching.core.designsystem.theme.PrimaryGreen300
 import com.kitching.main.factory.viewModelFactory
+import com.kitching.main.schedule.tab.scheduleTabs
 import com.kitching.main.viewmodel.ScheduleViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
