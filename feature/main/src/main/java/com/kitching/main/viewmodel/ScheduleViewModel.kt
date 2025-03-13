@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kitching.data.PreferencesDataSource
 import com.kitching.domain.entities.Schedule
+import com.kitching.domain.entities.ScheduleTime
 import com.kitching.domain.repository.ScheduleRepository
 import com.kitching.domain.util.AppResult
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -47,6 +48,40 @@ class ScheduleViewModel(private val scheduleRepository: ScheduleRepository) : Vi
                 .collectLatest {
                     _scheduleByDate.value = it
                 }
+        }
+    }
+
+    private val _scheduleTimes =
+        MutableStateFlow<AppResult<List<ScheduleTime>>>(AppResult.Initial)
+    val scheduleTimes get() = _scheduleTimes.asStateFlow()
+
+    fun getScheduleTimes(teamId: String) {
+        viewModelScope.launch {
+            scheduleRepository.getScheduleTimes(teamId)
+                .collectLatest { _scheduleTimes.value = it }
+        }
+    }
+
+    private val _scheduleResult =
+        MutableStateFlow<AppResult<Boolean>>(AppResult.Initial)
+    val scheduleResult get() = _scheduleResult.asStateFlow()
+
+    fun createSchedule(
+        teamId: String,
+        dateString: String,
+        userId: String,
+        scheduleTimeId: String,
+        fix: Boolean = false
+    ) {
+        viewModelScope.launch {
+            scheduleRepository.createApplySchedule(teamId, dateString, userId, scheduleTimeId, fix)
+                .collectLatest {
+                    _scheduleResult.value = it
+                }
+
+            if (scheduleResult.value is AppResult.Success) {
+                fetchScheduleByDate(teamId, dateString)
+            }
         }
     }
 }

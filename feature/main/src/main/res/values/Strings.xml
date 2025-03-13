@@ -4,4 +4,9 @@
     <string name="apply_schedule">신청 스케쥴</string>
     <string name="no_apply_schedule">근무인원이 없습니다.</string>
     <string name="no_fix_schedule">신청인원이 없습니다.</string>
+
+    <string name="schedule_apply">신청</string>
+    <string name="schedule_apply_cancel">취소</string>
+    <string name="schedule_apply_success">스케쥴을 신청하였습니다.</string>
+    <string name="schedule_apply_fail">스케쥴을 신청에 실패하였습니다. 잠시 후 다시 시도해주세요.</string>
 </resources>

@@ -87,4 +87,16 @@ class ScheduleDataSourceImpl(private val db: FirebaseFirestore = FirebaseFiresto
             )
         }
     }
+
+    override suspend fun getScheduleTimes(teamId: String): List<ScheduleTimeDTO>  =
+        db.collection(COLLECTION_SCHEDULE_TIME).whereEqualTo("teamId", teamId).get().await()
+            .toObjects(ScheduleTimeDTO::class.java)
+
+    override suspend fun createApplySchedule(scheduleDTO: ScheduleDTO) = runCatching {
+        db.collection(COLLECTION_SCHEDULE).add(
+            scheduleDTO
+        ).await().apply {
+            this.update("id", this.id).await()
+        }
+    }.isSuccess
 }
