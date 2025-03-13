@@ -1,38 +1,62 @@
 package com.kitching.main.schedule
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
+import com.kitching.main.R
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kitching.core.common.ActionIconInfo
+import com.kitching.core.common.AppResultHandler
 import com.kitching.core.common.CommonState
 import com.kitching.core.common.NavigationIconInfo
-import com.kitching.core.common.TeamCardItem
+import com.kitching.core.common.datepicker.DatePickerModal
+import com.kitching.core.common.datepicker.DateSelector
+import com.kitching.core.common.tabui.TabPager
+import com.kitching.core.designsystem.theme.KitchingStaffTheme
+import com.kitching.core.designsystem.theme.NeutralGray0
 import com.kitching.core.designsystem.theme.PrimaryGreen300
-import com.kitching.core.designsystem.theme.subTextColor
-import com.kitching.main.R
+import com.kitching.domain.entities.ScheduleTime
+import com.kitching.domain.util.AppResult
+import com.kitching.main.factory.viewModelFactory
+import com.kitching.main.schedule.dialog.ScheduleApplyDialog
+import com.kitching.main.schedule.tab.scheduleTabs
+import com.kitching.main.viewmodel.ScheduleViewModel
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.LocalTime
 
 @Composable
 fun ScheduleDetailScreen(
     commonState: CommonState,
+    date: LocalDate,
+    viewModel: ScheduleViewModel = viewModel(factory = viewModelFactory)
 ) {
+    var selectedDate by remember { mutableStateOf(date) }
+    var showDatePicker by remember { mutableStateOf(false) }
+    var showApplyDialog by remember { mutableStateOf(false) }
+
+    var selectedScheduleTimeId = remember { mutableStateOf("") }
+
+    val scheduleTimesState by viewModel.scheduleTimes.collectAsStateWithLifecycle()
+    val applyScheduleResult by viewModel.scheduleResult.collectAsStateWithLifecycle()
+
+    val teamId = "3uM01g5GSz8lC49JA6vq"
+    val userId = "3863591667"
+    val scheduleByDate by viewModel.scheduleByDate.collectAsStateWithLifecycle()
+
     commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
-        containerColor = PrimaryGreen300,
+        containerColor = NeutralGray0,
         navIconInfo = NavigationIconInfo.DRAWER,
         onClickNavIcon = {
             if (commonState.topAppBarState.value.drawerState.isOpen) {
@@ -41,50 +65,94 @@ fun ScheduleDetailScreen(
                 commonState.scope.launch { commonState.topAppBarState.value.drawerState.open() }
             }
         },
-        actionIconInfo = ActionIconInfo.NULL,
+        actionIconInfo = ActionIconInfo.ADD,
+        onClickActionIcon = {
+            showApplyDialog = true
+        }
     )
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .height(60.dp)
-            .background(Color.White),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(20.dp)
-    ) {
-        Spacer(modifier = Modifier.height(20.dp))
-        Row(
+
+    LaunchedEffect(Unit) {
+//        viewModel.getTeamIdFromDataStore(commonState.navController.context)
+        viewModel.getScheduleTimes(teamId)
+    }
+
+    LaunchedEffect(selectedDate) {
+        viewModel.fetchScheduleByDate(teamId, selectedDate.toString())
+    }
+
+    KitchingStaffTheme {
+        Column(
+            modifier = Modifier
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Icon(
-                imageVector = ImageVector.vectorResource(R.drawable.icon_left_triangle),
-                contentDescription = "prev date button",
-                tint = subTextColor
+            DateSelector(
+                selectedDateTime = selectedDate.atTime(LocalTime.now()),
+                onDateChange = { newDateTime ->
+                    selectedDate = newDateTime.toLocalDate()
+                },
+                onClickDateBtn = {
+                    showDatePicker = true
+                }
             )
 
+            AppResultHandler(
+                state = scheduleByDate,
+                onSuccess = { schedules ->
+                    val tabs = scheduleTabs(schedules)
 
-            Text(
-                text = "  2025-02-24  ",
-                color = subTextColor,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.SemiBold
+                    TabPager(
+                        tabs = tabs,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f),
+                        indicatorColor = PrimaryGreen300
+                    )
+                }
             )
 
-            Icon(
-                imageVector = ImageVector.vectorResource(R.drawable.icon_right_triangle),
-                contentDescription = "next date button",
-                tint = subTextColor
+            if (showDatePicker) {
+                DatePickerModal(
+                    selectedDateTime = selectedDate,
+                    onDismissRequest = { showDatePicker = false },
+                    onClickConfirm = { newSelectedDate ->
+                        if (newSelectedDate != null) {
+                            selectedDate = newSelectedDate
+                        }
+                        showDatePicker = false
+                    },
+                    onClickCancel = { showDatePicker = false }
+                )
+            }
+
+            if (showApplyDialog) {
+                ScheduleApplyDialog(
+                    selectedDate = selectedDate,
+                    onDismissRequest = { showApplyDialog = false },
+                    onClickConfirm = {
+                        viewModel.createSchedule(
+                            teamId = teamId,
+                            dateString = selectedDate.toString(),
+                            userId = userId,
+                            scheduleTimeId = selectedScheduleTimeId.value
+                        )
+                    },
+                    scheduleTimes = (scheduleTimesState as AppResult.Success<List<ScheduleTime>>).data,
+                    selectedScheduleTimeId = selectedScheduleTimeId
+                )
+            }
+
+            AppResultHandler(
+                state = applyScheduleResult,
+                onSuccess = {
+                    showApplyDialog = false
+                    Toast.makeText(commonState.navController.context, stringResource(R.string.schedule_apply_success), Toast.LENGTH_SHORT).show()
+                },
+                onFailure = {
+                    showApplyDialog = false
+                    Toast.makeText(commonState.navController.context, stringResource(R.string.schedule_apply_fail), Toast.LENGTH_SHORT).show()
+                }
             )
         }
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        TeamCardItem("      박민수 / 미들") { }
-
-        TeamCardItem("      김수연 / 오픈") { }
-
-        TeamCardItem("      김채연 / D/O") { }
-
-        TeamCardItem("      박지수 / D/O") { }
-
-        TeamCardItem("      박채아 / 마감") { }
     }
 }

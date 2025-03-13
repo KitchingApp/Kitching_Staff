@@ -1,18 +1,33 @@
 package com.kitching.data.datasource
 
+import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.kitching.data.dto.ScheduleDTO
 import com.kitching.data.dto.ScheduleTimeDTO
+import com.kitching.data.dto.UserDTO
+import com.kitching.data.firebase.COLLECTION_SCHEDULE
+import com.kitching.data.firebase.COLLECTION_SCHEDULE_TIME
+import com.kitching.data.firebase.COLLECTION_USER
 import com.kitching.domain.entities.Schedule
 import kotlinx.coroutines.tasks.await
 
 class ScheduleDataSourceImpl(private val db: FirebaseFirestore = FirebaseFirestore.getInstance()) :
     ScheduleDataSource {
-    override suspend fun getSchedules(
+    override suspend fun getUserById(userId: String): UserDTO {
+        val userDto = db.collection(COLLECTION_USER)
+            .whereEqualTo("id", userId)
+            .get()
+            .await()
+            .toObjects(UserDTO::class.java)
+
+        return userDto.firstOrNull() ?: UserDTO()
+    }
+
+    override suspend fun getMySchedules(
         userId: String,
         teamId: String,
     ): List<Schedule> {
-        val schedules = db.collection("schedule")
+        val schedules = db.collection(COLLECTION_SCHEDULE)
             .whereEqualTo("userId", userId)
             .whereEqualTo("teamId", teamId)
             .whereEqualTo("fix", true)
@@ -20,7 +35,7 @@ class ScheduleDataSourceImpl(private val db: FirebaseFirestore = FirebaseFiresto
             .await()
             .toObjects(ScheduleDTO::class.java)
 
-        val scheduleTimes = db.collection("scheduleTime")
+        val scheduleTimes = db.collection(COLLECTION_SCHEDULE_TIME)
             .whereEqualTo("teamId", teamId)
             .get()
             .await()
@@ -39,4 +54,49 @@ class ScheduleDataSourceImpl(private val db: FirebaseFirestore = FirebaseFiresto
             )
         }
     }
+
+    override suspend fun getScheduleByDate(
+        teamId: String,
+        date: String,
+    ): List<Schedule> {
+        val schedules = db.collection(COLLECTION_SCHEDULE)
+            .whereEqualTo("teamId", teamId)
+            .whereEqualTo("date", date)
+            .get()
+            .await()
+            .toObjects(ScheduleDTO::class.java)
+
+        val scheduleTimes = db.collection(COLLECTION_SCHEDULE_TIME)
+            .whereEqualTo("teamId", teamId)
+            .get()
+            .await()
+            .toObjects(ScheduleTimeDTO::class.java)
+
+        return schedules.map { scheduleDTO ->
+            val scheduleTime = scheduleTimes.find { it.id == scheduleDTO.scheduleTimeId }
+            val user = getUserById(scheduleDTO.userId)
+
+            Schedule(
+                scheduleId = scheduleDTO.id,
+                userId = scheduleDTO.userId,
+                userName = user.userName,
+                scheduleTimeName = scheduleTime?.name ?: "",
+                date = scheduleDTO.date,
+                fix = scheduleDTO.fix,
+                color = scheduleTime?.color ?: "#00ffff"
+            )
+        }
+    }
+
+    override suspend fun getScheduleTimes(teamId: String): List<ScheduleTimeDTO>  =
+        db.collection(COLLECTION_SCHEDULE_TIME).whereEqualTo("teamId", teamId).get().await()
+            .toObjects(ScheduleTimeDTO::class.java)
+
+    override suspend fun createApplySchedule(scheduleDTO: ScheduleDTO) = runCatching {
+        db.collection(COLLECTION_SCHEDULE).add(
+            scheduleDTO
+        ).await().apply {
+            this.update("id", this.id).await()
+        }
+    }.isSuccess
 }

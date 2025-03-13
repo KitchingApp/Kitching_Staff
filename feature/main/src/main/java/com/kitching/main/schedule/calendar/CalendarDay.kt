@@ -1,4 +1,4 @@
-package com.kitching.main.schedule
+package com.kitching.main.schedule.calendar
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
