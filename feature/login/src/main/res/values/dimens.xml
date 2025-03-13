@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="default_padding">20.dp</dimen>
+    <dimen name="default_padding">20dp</dimen>
     <dimen name="logo_dish_width">64.94dp</dimen>
     <dimen name="logo_dish_height">29.66dp</dimen>
-    <dimen name="logo_with_text_padding">10.dp</dimen>
+    <dimen name="logo_with_text_padding">10dp</dimen>
     <dimen name="logo_font_size">34.88sp</dimen>
 
-    <dimen name="button_kakao_login_width">320.dp</dimen>
-    <dimen name="button_kakao_login_height">48.dp</dimen>
-    <dimen name="button_kakao_login_padding_bottom">150.dp</dimen>
-    <dimen name="login_welcome_message_font_size">20.sp</dimen>
-    <dimen name="login_welcome_message_line_height">24.sp</dimen>
-    <dimen name="login_bottom_modal_sheet_height">280.dp</dimen>
-    <dimen name="login_bottom_modal_sheet_radius">28.dp</dimen>
-    <dimen name="login_bottom_modal_sheet_message_font_size">16.sp</dimen>
-    <dimen name="login_bottom_modal_sheet_message_line_height">24.sp</dimen>
-    <dimen name="login_bottom_modal_sheet_spacer_height">40.dp</dimen>
-    <dimen name="login_bottom_modal_sheet_button_width">150.dp</dimen>
-    <dimen name="login_bottom_modal_sheet_button_height">40.dp</dimen>
-    <dimen name="login_bottom_modal_sheet_button_font_size">16.sp</dimen>
-    <dimen name="login_bottom_modal_sheet_button_gap">19.dp</dimen>
-    <dimen name="login_bottom_modal_sheet_button_radius">8.dp</dimen>
+    <dimen name="button_kakao_login_width">320dp</dimen>
+    <dimen name="button_kakao_login_height">48dp</dimen>
+    <dimen name="button_kakao_login_padding_bottom">150dp</dimen>
+    <dimen name="login_welcome_message_font_size">20sp</dimen>
+    <dimen name="login_welcome_message_line_height">24sp</dimen>
+    <dimen name="login_bottom_modal_sheet_height">280dp</dimen>
+    <dimen name="login_bottom_modal_sheet_radius">28dp</dimen>
+    <dimen name="login_bottom_modal_sheet_message_font_size">16sp</dimen>
+    <dimen name="login_bottom_modal_sheet_message_line_height">24sp</dimen>
+    <dimen name="login_bottom_modal_sheet_spacer_height">40dp</dimen>
+    <dimen name="login_bottom_modal_sheet_button_width">150dp</dimen>
+    <dimen name="login_bottom_modal_sheet_button_height">40dp</dimen>
+    <dimen name="login_bottom_modal_sheet_button_font_size">16sp</dimen>
+    <dimen name="login_bottom_modal_sheet_button_gap">19dp</dimen>
+    <dimen name="login_bottom_modal_sheet_button_radius">8dp</dimen>
 
-    <dimen name="invite_code_text_field_height">44.dp</dimen>
-    <dimen name="invite_code_text_field_border">1.dp</dimen>
-    <dimen name="invite_code_text_field_radius">8.dp</dimen>
-    <dimen name="invite_code_button_width">80.dp</dimen>
-    <dimen name="invite_code_button_radius">8.dp</dimen>
-    <dimen name="top_app_bar_for_invite_code_screen_navigation_icon_size">24.dp</dimen>
+    <dimen name="invite_code_text_field_height">44dp</dimen>
+    <dimen name="invite_code_text_field_border">1dp</dimen>
+    <dimen name="invite_code_text_field_radius">8dp</dimen>
+    <dimen name="invite_code_button_width">80dp</dimen>
+    <dimen name="invite_code_button_radius">8dp</dimen>
+    <dimen name="top_app_bar_for_invite_code_screen_navigation_icon_size">24dp</dimen>
 
-    <dimen name="team_card_item_list_gap">12.dp</dimen>
-    <dimen name="go_to_invite_code_screen_icon_button_size">24.dp</dimen>
+    <dimen name="team_card_item_list_gap">12dp</dimen>
+    <dimen name="go_to_invite_code_screen_icon_button_size">24dp</dimen>
 </resources>

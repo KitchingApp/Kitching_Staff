@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="one_dp">1.dp</dimen>
-    <dimen name="ten_dp">10.dp</dimen>
+    <dimen name="one_dp">1dp</dimen>
+    <dimen name="ten_dp">10dp</dimen>
 
-    <dimen name="default_padding">20.dp</dimen>
+    <dimen name="default_padding">20dp</dimen>
 
-    <dimen name="schedule_card_item_height">60.dp</dimen>
-    <dimen name="schedule_card_item_radius">8.dp</dimen>
-    <dimen name="schedule_card_item_vertical_padding">20.5.dp</dimen>
-    <dimen name="schedule_card_item_between_padding">52.dp</dimen>
+    <dimen name="schedule_card_item_height">60dp</dimen>
+    <dimen name="schedule_card_item_radius">8dp</dimen>
+    <dimen name="schedule_card_item_vertical_padding">20.5dp</dimen>
+    <dimen name="schedule_card_item_between_padding">52dp</dimen>
 </resources>

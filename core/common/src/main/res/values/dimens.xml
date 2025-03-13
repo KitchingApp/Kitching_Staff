@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="defaultPadding">20.dp</dimen>
+    <dimen name="defaultPadding">20dp</dimen>
 
-    <dimen name="network_cannot_access_icon_size">56.dp</dimen>
-    <dimen name="network_retry_btn_width">100.dp</dimen>
-    <dimen name="network_retry_btn_height">40.dp</dimen>
-    <dimen name="network_retry_btn_radius">20.dp</dimen>
+    <dimen name="network_cannot_access_icon_size">56dp</dimen>
+    <dimen name="network_retry_btn_width">100dp</dimen>
+    <dimen name="network_retry_btn_height">40dp</dimen>
+    <dimen name="network_retry_btn_radius">20dp</dimen>
 
-    <dimen name="team_card_item_height">60.dp</dimen>
-    <dimen name="team_card_item_radius">8.dp</dimen>
-    <dimen name="team_card_item_gap_between_icon_and_text">8.dp</dimen>
+    <dimen name="team_card_item_height">60dp</dimen>
+    <dimen name="team_card_item_radius">8dp</dimen>
+    <dimen name="team_card_item_gap_between_icon_and_text">8dp</dimen>
 </resources>

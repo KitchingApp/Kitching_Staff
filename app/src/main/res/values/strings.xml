@@ -3,8 +3,8 @@
     <string name="notification_channel_schedule_rejected_name">스케줄 반려</string>
     <string name="notification_channel_schedule_rejected_description">신청하신 스케줄이 반려되었습니다.</string>
     <string name="notification_schedule_rejected_content_title">신청 스케줄 반려 안내</string>
-    <string name="notification_schedule_rejected_content_text">%s의 %s %s 스케줄 신청이 반려되었습니다.</string>
-    <string name="notification_schedule_rejected_content_big_text">"%s의 %s %s 스케줄 신청이 반려되었습니다.
+    <string name="notification_schedule_rejected_content_text" formatted="false">%s의 %s %s 스케줄 신청이 반려되었습니다.</string>
+    <string name="notification_schedule_rejected_content_big_text" formatted="false">"%s의 %s %s 스케줄 신청이 반려되었습니다.
 
 반려 사유: %s"</string>
 </resources>
