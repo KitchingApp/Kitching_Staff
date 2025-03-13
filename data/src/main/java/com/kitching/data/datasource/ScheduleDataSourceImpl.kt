@@ -4,14 +4,25 @@ import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.kitching.data.dto.ScheduleDTO
 import com.kitching.data.dto.ScheduleTimeDTO
+import com.kitching.data.dto.UserDTO
 import com.kitching.data.firebase.COLLECTION_SCHEDULE
 import com.kitching.data.firebase.COLLECTION_SCHEDULE_TIME
+import com.kitching.data.firebase.COLLECTION_USER
 import com.kitching.domain.entities.Schedule
 import kotlinx.coroutines.tasks.await
-import java.time.LocalDate
 
 class ScheduleDataSourceImpl(private val db: FirebaseFirestore = FirebaseFirestore.getInstance()) :
     ScheduleDataSource {
+    override suspend fun getUserById(userId: String): UserDTO {
+        val userDto = db.collection(COLLECTION_USER)
+            .whereEqualTo("id", userId)
+            .get()
+            .await()
+            .toObjects(UserDTO::class.java)
+
+        return userDto.firstOrNull() ?: UserDTO()
+    }
+
     override suspend fun getMySchedules(
         userId: String,
         teamId: String,
@@ -62,12 +73,13 @@ class ScheduleDataSourceImpl(private val db: FirebaseFirestore = FirebaseFiresto
             .toObjects(ScheduleTimeDTO::class.java)
 
         return schedules.map { scheduleDTO ->
-            val scheduleTime = scheduleTimes.find { it.id == scheduleDTO.id }
+            val scheduleTime = scheduleTimes.find { it.id == scheduleDTO.scheduleTimeId }
+            val user = getUserById(scheduleDTO.userId)
 
             Schedule(
                 scheduleId = scheduleDTO.id,
                 userId = scheduleDTO.userId,
-                userName = "",
+                userName = user.userName,
                 scheduleTimeName = scheduleTime?.name ?: "",
                 date = scheduleDTO.date,
                 fix = scheduleDTO.fix,

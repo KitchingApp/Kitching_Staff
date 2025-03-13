@@ -1,6 +1,8 @@
 package com.kitching.main.schedule
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import com.kitching.main.R
@@ -20,6 +22,7 @@ fun ScheduleListScreen(schedules: List<Schedule>, text: String) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = dimensionResource(R.dimen.default_padding)),
+            contentPadding = PaddingValues(vertical = dimensionResource(R.dimen.ten_dp)),
             verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.ten_dp))
         ) {
             items(schedules) { schedule ->
