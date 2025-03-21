@@ -9,4 +9,6 @@
     <string name="schedule_apply_cancel">취소</string>
     <string name="schedule_apply_success">스케쥴을 신청하였습니다.</string>
     <string name="schedule_apply_fail">스케쥴을 신청에 실패하였습니다. 잠시 후 다시 시도해주세요.</string>
+
+    <string name="order_main_text">발주 카테고리</string>
 </resources>
