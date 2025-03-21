@@ -4,12 +4,14 @@ import com.kitching.domain.entities.Order
 
 data class OrderDTO(
     val id: String = "",
+    val teamId: String = "",
     val categoryId: String = "",
     val name: String = ""
 ) {
     fun toDomain(): Order {
         return Order(
             orderId = id,
+            teamId = teamId,
             orderName = name,
             categoryId = categoryId
         )
