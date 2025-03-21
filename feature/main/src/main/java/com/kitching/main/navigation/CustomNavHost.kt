@@ -10,10 +10,9 @@ import androidx.navigation.compose.composable
 import com.kitching.core.common.CommonState
 import com.kitching.core.common.ScreenRouteDef
 import com.kitching.main.ChatTabScreen
-import com.kitching.main.OrderTabScreen
 import com.kitching.main.PrepTabScreen
 import com.kitching.main.RecipeTabScreen
-import com.kitching.main.schedule.ScheduleDetailScreen
+import com.kitching.main.order.OrderTabScreen
 import com.kitching.main.schedule.ScheduleTabScreen
 
 @Composable

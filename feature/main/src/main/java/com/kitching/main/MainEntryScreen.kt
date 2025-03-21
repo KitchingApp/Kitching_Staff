@@ -26,7 +26,6 @@ import com.kitching.core.common.NavigationIconInfo
 import com.kitching.core.common.ScreenRouteDef
 import com.kitching.core.common.TopAppBarState
 import com.kitching.core.designsystem.theme.NeutralGray0
-import com.kitching.core.designsystem.theme.PrimaryGreen300
 import com.kitching.data.PreferencesDataSource
 import com.kitching.domain.util.AppResult
 import com.kitching.main.navigation.CustomNavHost
@@ -151,55 +150,6 @@ fun RecipeTabScreen(
     Spacer(modifier = Modifier.height(50.dp))
 
     Text("RecipeTabScreen")
-}
-
-@Composable
-fun ScheduleTabScreen(
-    commonState: CommonState
-) {
-    commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
-        containerColor = PrimaryGreen300,
-        navIconInfo = NavigationIconInfo.DRAWER,
-        onClickNavIcon = {
-            if (commonState.topAppBarState.value.drawerState.isOpen) {
-                commonState.scope.launch { commonState.topAppBarState.value.drawerState.close() }
-            } else {
-                commonState.scope.launch { commonState.topAppBarState.value.drawerState.open() }
-            }
-        },
-        actionIconInfo = ActionIconInfo.ADD,
-        onClickActionIcon = {
-
-        }
-    )
-    Spacer(modifier = Modifier.height(50.dp))
-
-    Text("ScheduleTabScreen")
-}
-
-@Composable
-fun OrderTabScreen(
-    commonState: CommonState
-) {
-    commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
-        title = "Kitching",
-        containerColor = NeutralGray0,
-        navIconInfo = NavigationIconInfo.DRAWER,
-        onClickNavIcon = {
-            if (commonState.topAppBarState.value.drawerState.isOpen) {
-                commonState.scope.launch { commonState.topAppBarState.value.drawerState.close() }
-            } else {
-                commonState.scope.launch { commonState.topAppBarState.value.drawerState.open() }
-            }
-        },
-        actionIconInfo = ActionIconInfo.ADD,
-        onClickActionIcon = {
-
-        },
-    )
-    Spacer(modifier = Modifier.height(50.dp))
-
-    Text("OrderTabScreen")
 }
 
 @Composable
