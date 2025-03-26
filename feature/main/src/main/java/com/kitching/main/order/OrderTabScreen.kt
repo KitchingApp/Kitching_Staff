@@ -3,6 +3,7 @@ package com.kitching.main.order
 import androidx.compose.foundation.layout.Arrangement
 import com.kitching.main.R
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -106,6 +107,7 @@ fun OrderTabScreen(
                 onSuccess = { orderCategories, orderItems ->
                     LazyColumn(
                         modifier = Modifier.fillMaxWidth(),
+                        contentPadding = PaddingValues(vertical = dimensionResource(R.dimen.order_card_between_card)),
                         verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.order_card_between_card))
                     ) {
                         items(orderCategories) { category ->

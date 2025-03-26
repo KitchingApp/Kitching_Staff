@@ -32,7 +32,8 @@ fun CategoryCardItem(
     isExpanded: Boolean,
     onCardClick: () -> Unit
 ) {
-    val backgroundColor = Color(android.graphics.Color.parseColor(category.color))
+    // 그럼 그냥 16진수로 저장할까??
+    val backgroundColor = Color(android.graphics.Color.parseColor("#${category.color}"))
 
     Card(
         modifier = Modifier
