@@ -16,6 +16,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
@@ -35,6 +37,8 @@ import com.kitching.core.designsystem.theme.NeutralGray800
 import com.kitching.core.designsystem.theme.defaultHorizontalPadding
 import com.kitching.main.factory.viewModelFactory
 import com.kitching.main.order.carditem.CategoryCardItem
+import com.kitching.main.order.carditem.OrderCardItem
+import com.kitching.main.order.carditem.OrderItemsList
 import com.kitching.main.viewmodel.OrderViewModel
 import kotlinx.coroutines.launch
 
@@ -47,6 +51,8 @@ fun OrderTabScreen(
 
     val orderCategoriesState by viewModel.orderCategories.collectAsStateWithLifecycle()
     val orderItemsState by viewModel.orderItems.collectAsStateWithLifecycle()
+
+    val expandedCategories = remember { mutableStateMapOf<String, Boolean>() }
 
     commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
         title = "Kitching",
@@ -111,11 +117,27 @@ fun OrderTabScreen(
                         verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.order_card_between_card))
                     ) {
                         items(orderCategories) { category ->
+                            if (!expandedCategories.containsKey(category.categoryId)) {
+                                expandedCategories[category.categoryId] = false
+                            }
+                            val isExpanded = expandedCategories[category.categoryId] ?: false
                             CategoryCardItem(
                                 category = category,
-                                isExpanded = false,
-                                onCardClick = {}
+                                isExpanded = isExpanded,
+                                onCardClick = {
+                                    expandedCategories[category.categoryId] = !isExpanded
+                                }
                             )
+
+                            if (isExpanded) {
+                                val categoryItems = orderItems.filter { it.categoryId == category.categoryId }
+
+                                OrderItemsList(
+                                    orderItems = categoryItems,
+                                    onIncreaseClick = {  },
+                                    onDecreaseClick = {  }
+                                )
+                            }
                         }
                     }
                 }

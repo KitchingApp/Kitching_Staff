@@ -17,6 +17,7 @@
     <dimen name="order_card_item_height">48dp</dimen>
     <dimen name="order_card_icon_end_padding">16dp</dimen>
     <dimen name="order_card_vertical_padding">12dp</dimen>
+    <dimen name="order_card_horizontal_padding">20dp</dimen>
     <dimen name="order_card_item_radius">8dp</dimen>
     <dimen name="order_offset_x">0dp</dimen>
     <dimen name="order_offset_y">2dp</dimen>
