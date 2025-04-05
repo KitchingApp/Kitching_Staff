@@ -13,6 +13,7 @@ import com.kitching.domain.entities.Order
 @Composable
 fun OrderItemsList(
     orderItems: List<Order>,
+    itemCounts: Map<String, Int>,
     onIncreaseClick: (Order) -> Unit,
     onDecreaseClick: (Order) -> Unit
 ) {
@@ -24,7 +25,7 @@ fun OrderItemsList(
         orderItems.forEach { order ->
             OrderCardItem(
                 order = order,
-                count = 0,
+                count = itemCounts[order.orderId] ?: 0,
                 onIncreaseClick = { onIncreaseClick(order) },
                 onDecreaseClick = { onDecreaseClick(order) }
             )

@@ -53,6 +53,7 @@ fun OrderTabScreen(
     val orderItemsState by viewModel.orderItems.collectAsStateWithLifecycle()
 
     val expandedCategories = remember { mutableStateMapOf<String, Boolean>() }
+    val orderCounts = remember { mutableStateMapOf<String, Int>() }
 
     commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
         title = "Kitching",
@@ -132,10 +133,24 @@ fun OrderTabScreen(
                             if (isExpanded) {
                                 val categoryItems = orderItems.filter { it.categoryId == category.categoryId }
 
+                                categoryItems.forEach { order ->
+                                    if (!orderCounts.containsKey(order.orderId)) {
+                                        orderCounts[order.orderId] = 0
+                                    }
+                                }
+
                                 OrderItemsList(
                                     orderItems = categoryItems,
-                                    onIncreaseClick = {  },
-                                    onDecreaseClick = {  }
+                                    itemCounts = orderCounts,
+                                    onIncreaseClick = { order ->
+                                        orderCounts[order.orderId] = (orderCounts[order.orderId] ?: 0) + 1
+                                    },
+                                    onDecreaseClick = {
+                                        val currentCount = orderCounts[it.orderId] ?: 0
+                                        if (currentCount > 0) {
+                                            orderCounts[it.orderId] = currentCount - 1
+                                        }
+                                    }
                                 )
                             }
                         }
