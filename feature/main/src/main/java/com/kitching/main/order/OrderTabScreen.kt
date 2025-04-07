@@ -1,5 +1,9 @@
 package com.kitching.main.order
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import com.kitching.main.R
 import androidx.compose.foundation.layout.Column
@@ -35,6 +39,8 @@ import com.kitching.core.designsystem.theme.KitchingStaffTheme
 import com.kitching.core.designsystem.theme.NeutralGray0
 import com.kitching.core.designsystem.theme.NeutralGray800
 import com.kitching.core.designsystem.theme.defaultHorizontalPadding
+import com.kitching.domain.entities.Order
+import com.kitching.domain.util.AppResult
 import com.kitching.main.factory.viewModelFactory
 import com.kitching.main.order.carditem.CategoryCardItem
 import com.kitching.main.order.carditem.OrderCardItem
@@ -99,7 +105,20 @@ fun OrderTabScreen(
                         .size(
                             dimensionResource(R.dimen.order_icon_copy_size)
                         ),
-                    onClick = {}
+                    onClick = {
+                        when (orderItemsState) {
+                            is AppResult.Success -> {
+                                val orderItems = (orderItemsState as AppResult.Success<List<Order>>).data
+                                val orderText = generateOrderText(orderItems, orderCounts)
+                                copyToClipboard(commonState.navController.context, orderText)
+                                Toast.makeText(commonState.navController.context, "발주내역이 복사되었습니다.", Toast.LENGTH_SHORT).show()
+
+                            }
+                            else -> {
+                                Toast.makeText(commonState.navController.context, "발주내역을 가져올 수 없습니다..", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
                 ) {
                     AsyncImage(
                         model = R.drawable.icon_copy_right,
@@ -159,4 +178,22 @@ fun OrderTabScreen(
             )
         }
     }
+}
+
+private fun generateOrderText(orderItems: List<Order>,orderCounts: Map<String, Int>): String {
+    val orderItems = orderItems.filter { (orderCounts[it.orderId] ?: 0) > 0 }
+    return buildString {
+        orderItems.forEach { order ->
+            val count = orderCounts[order.orderId] ?: 0
+            if ( count > 0 ) {
+                appendLine("${order.orderName} - $count")
+            }
+        }
+    }
+}
+
+private fun copyToClipboard(context: Context, text: String) {
+    val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    val clip = ClipData.newPlainText("발주내역", text)
+    clipboard.setPrimaryClip(clip)
 }
