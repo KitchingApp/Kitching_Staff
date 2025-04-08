@@ -1,6 +1,5 @@
 package com.kitching.data.datasource
 
-import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.kitching.data.dto.ScheduleDTO
 import com.kitching.data.dto.ScheduleTimeDTO
@@ -8,6 +7,11 @@ import com.kitching.data.dto.UserDTO
 import com.kitching.data.firebase.COLLECTION_SCHEDULE
 import com.kitching.data.firebase.COLLECTION_SCHEDULE_TIME
 import com.kitching.data.firebase.COLLECTION_USER
+import com.kitching.data.firebase.DOCUMENT_ID
+import com.kitching.data.firebase.DOCUMENT_SCHEDULE_DATE
+import com.kitching.data.firebase.DOCUMENT_SCHEDULE_FIX
+import com.kitching.data.firebase.DOCUMENT_TEAM_ID
+import com.kitching.data.firebase.DOCUMENT_USER_ID
 import com.kitching.domain.entities.Schedule
 import kotlinx.coroutines.tasks.await
 
@@ -15,7 +19,7 @@ class ScheduleDataSourceImpl(private val db: FirebaseFirestore = FirebaseFiresto
     ScheduleDataSource {
     override suspend fun getUserById(userId: String): UserDTO {
         val userDto = db.collection(COLLECTION_USER)
-            .whereEqualTo("id", userId)
+            .whereEqualTo(DOCUMENT_ID, userId)
             .get()
             .await()
             .toObjects(UserDTO::class.java)
@@ -28,15 +32,15 @@ class ScheduleDataSourceImpl(private val db: FirebaseFirestore = FirebaseFiresto
         teamId: String,
     ): List<Schedule> {
         val schedules = db.collection(COLLECTION_SCHEDULE)
-            .whereEqualTo("userId", userId)
-            .whereEqualTo("teamId", teamId)
-            .whereEqualTo("fix", true)
+            .whereEqualTo(DOCUMENT_USER_ID, userId)
+            .whereEqualTo(DOCUMENT_TEAM_ID, teamId)
+            .whereEqualTo(DOCUMENT_SCHEDULE_FIX, true)
             .get()
             .await()
             .toObjects(ScheduleDTO::class.java)
 
         val scheduleTimes = db.collection(COLLECTION_SCHEDULE_TIME)
-            .whereEqualTo("teamId", teamId)
+            .whereEqualTo(DOCUMENT_TEAM_ID, teamId)
             .get()
             .await()
             .toObjects(ScheduleTimeDTO::class.java)
@@ -60,14 +64,14 @@ class ScheduleDataSourceImpl(private val db: FirebaseFirestore = FirebaseFiresto
         date: String,
     ): List<Schedule> {
         val schedules = db.collection(COLLECTION_SCHEDULE)
-            .whereEqualTo("teamId", teamId)
-            .whereEqualTo("date", date)
+            .whereEqualTo(DOCUMENT_TEAM_ID, teamId)
+            .whereEqualTo(DOCUMENT_SCHEDULE_DATE, date)
             .get()
             .await()
             .toObjects(ScheduleDTO::class.java)
 
         val scheduleTimes = db.collection(COLLECTION_SCHEDULE_TIME)
-            .whereEqualTo("teamId", teamId)
+            .whereEqualTo(DOCUMENT_TEAM_ID, teamId)
             .get()
             .await()
             .toObjects(ScheduleTimeDTO::class.java)
@@ -89,14 +93,14 @@ class ScheduleDataSourceImpl(private val db: FirebaseFirestore = FirebaseFiresto
     }
 
     override suspend fun getScheduleTimes(teamId: String): List<ScheduleTimeDTO>  =
-        db.collection(COLLECTION_SCHEDULE_TIME).whereEqualTo("teamId", teamId).get().await()
+        db.collection(COLLECTION_SCHEDULE_TIME).whereEqualTo(DOCUMENT_TEAM_ID, teamId).get().await()
             .toObjects(ScheduleTimeDTO::class.java)
 
     override suspend fun createApplySchedule(scheduleDTO: ScheduleDTO) = runCatching {
         db.collection(COLLECTION_SCHEDULE).add(
             scheduleDTO
         ).await().apply {
-            this.update("id", this.id).await()
+            this.update(DOCUMENT_ID, this.id).await()
         }
     }.isSuccess
 }

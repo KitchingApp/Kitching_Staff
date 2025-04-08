@@ -14,3 +14,12 @@ const val COLLECTION_TEAM = "team"
 const val COLLECTION_USER = "user"
 const val COLLECTION_USER_TEAM = "user-team"
 const val COLLECTION_INGREDIENT = "ingredient"
+
+const val DOCUMENT_ID = "id"
+const val DOCUMENT_TEAM_ID = "teamId"
+const val DOCUMENT_USER_ID = "userId"
+
+const val DOCUMENT_SCHEDULE_DATE = "date"
+const val DOCUMENT_SCHEDULE_FIX = "fix"
+
+const val DOCUMENT_ORDER_CATEGORY_ID = "categoryId"

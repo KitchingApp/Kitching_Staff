@@ -9,4 +9,19 @@
     <dimen name="schedule_card_item_radius">8dp</dimen>
     <dimen name="schedule_card_item_vertical_padding">20.5dp</dimen>
     <dimen name="schedule_card_item_between_padding">52dp</dimen>
+
+    <dimen name="order_main_text_vertical_padding">25.5dp</dimen>
+    <dimen name="order_icon_copy_size">24dp</dimen>
+    <dimen name="order_card_between_card">16dp</dimen>
+    <dimen name="order_card_item_width">320dp</dimen>
+    <dimen name="order_card_item_height">48dp</dimen>
+    <dimen name="order_card_icon_end_padding">16dp</dimen>
+    <dimen name="order_card_vertical_padding">12dp</dimen>
+    <dimen name="order_card_horizontal_padding">20dp</dimen>
+    <dimen name="order_card_item_radius">8dp</dimen>
+    <dimen name="order_offset_x">0dp</dimen>
+    <dimen name="order_offset_y">2dp</dimen>
+    <dimen name="order_blur">2dp</dimen>
+    <dimen name="order_spread">0dp</dimen>
+    <dimen name="order_arrow_size">20dp</dimen>
 </resources>
