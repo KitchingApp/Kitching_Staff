@@ -1,4 +1,4 @@
-package com.kitching.main.schedule.tab
+package com.kitching.main.view.schedule.tab
 
 import com.kitching.main.R
 import androidx.compose.runtime.Composable

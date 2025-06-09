@@ -1,4 +1,4 @@
-package com.kitching.main.schedule
+package com.kitching.main.view.schedule
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,15 +8,16 @@ import androidx.compose.ui.Modifier
 import com.kitching.core.common.ActionIconInfo
 import com.kitching.core.common.CommonState
 import com.kitching.core.common.NavigationIconInfo
-import com.kitching.core.common.ScreenRouteDef
 import com.kitching.core.designsystem.theme.PrimaryGreen300
-import com.kitching.main.schedule.calendar.Calendar
-import com.kitching.main.schedule.calendar.rememberCalendarState
+import com.kitching.main.view.schedule.calendar.Calendar
+import com.kitching.main.view.schedule.calendar.rememberCalendarState
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 @Composable
 fun ScheduleTabScreen(
-    commonState: CommonState
+    commonState: CommonState,
+    onNavigateToDetail: (LocalDate) -> Unit
 ) {
     commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
         containerColor = PrimaryGreen300,
@@ -41,9 +42,7 @@ fun ScheduleTabScreen(
                 .fillMaxWidth(),
             state = calendarState,
             onDoubleSelect = { selectedDate ->
-                val route =
-                    "${ScreenRouteDef.InnerContent.ScheduleDetail.routeName}?date=${selectedDate}"
-                commonState.navController.navigate(route)
+                onNavigateToDetail(selectedDate)
             }
         )
     }

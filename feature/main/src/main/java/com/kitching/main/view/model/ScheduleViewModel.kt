@@ -1,4 +1,4 @@
-package com.kitching.main.viewmodel
+package com.kitching.main.view.model
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.time.LocalDate
 
 class ScheduleViewModel(private val scheduleRepository: ScheduleRepository) : ViewModel() {
 

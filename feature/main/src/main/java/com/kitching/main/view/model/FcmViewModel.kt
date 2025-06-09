@@ -1,4 +1,4 @@
-package com.kitching.main.viewmodel
+package com.kitching.main.view.model
 
 import androidx.lifecycle.ViewModel
 

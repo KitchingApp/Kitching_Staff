@@ -1,4 +1,4 @@
-package com.kitching.main.schedule.dialog
+package com.kitching.main.view.schedule.dialog
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

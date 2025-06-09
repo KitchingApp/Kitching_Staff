@@ -1,4 +1,4 @@
-package com.kitching.main.schedule.dialog
+package com.kitching.main.view.schedule.dialog
 
 import com.kitching.main.R
 import androidx.compose.material3.Text
