@@ -61,6 +61,7 @@ fun SplashScreen(
 //                goLogin()
 //            }
 //        }
+        goMain()
     }
 
     Column(

@@ -4,7 +4,6 @@ import androidx.compose.material3.DrawerState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.Color
-import androidx.navigation.NavHostController
 import com.kitching.core.designsystem.theme.NeutralGray0
 import kotlinx.coroutines.CoroutineScope
 

@@ -15,7 +15,7 @@ fun NavGraphBuilder.sliceNavGraph(
 ) {
     navigation(
         route = ScreenRouteDef.InnerContentGraph.routeName,
-        startDestination = ScreenRouteDef.InnerContentGraph.routeName,
+        startDestination = ScreenRouteDef.InnerContent.ScheduleDetail.routeName,
     ) {
         composable(
             route = "${ScreenRouteDef.InnerContent.ScheduleDetail.routeName}?date={date}",
