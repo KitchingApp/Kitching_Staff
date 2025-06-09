@@ -1,6 +1,7 @@
 package com.kitching.core.common
 
 import androidx.compose.material3.DrawerState
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
@@ -22,7 +23,7 @@ enum class NavigationIconInfo(val icon: Int, val description: String) {
 
 data class TopAppBarState(
     val containerColor: Color = NeutralGray0,
-    val title: String = "Kitching",
+    var title: String = "",
     val drawerState: DrawerState,
     val navIconInfo: NavigationIconInfo = NavigationIconInfo.DRAWER,
     val onClickNavIcon: () -> Unit = {},
@@ -32,7 +33,8 @@ data class TopAppBarState(
 
 /** 네비게이션 컨트롤러, 앱바 상태, 코루틴 스코프를 갖는 data class */
 data class CommonState(
-    val navController: NavHostController,
     var topAppBarState: MutableState<TopAppBarState>,
     val scope: CoroutineScope,
+    val snackBarState: SnackbarHostState,
+    val appInfoState: MutableState<AppInfoState>
 )
