@@ -12,8 +12,8 @@ import com.kitching.core.common.ScreenRouteDef
 import com.kitching.main.ChatTabScreen
 import com.kitching.main.PrepTabScreen
 import com.kitching.main.RecipeTabScreen
-import com.kitching.main.order.OrderTabScreen
-import com.kitching.main.schedule.ScheduleTabScreen
+import com.kitching.main.view.order.OrderTabScreen
+import com.kitching.main.view.schedule.ScheduleTabScreen
 
 @Composable
 fun CustomNavHost(
@@ -22,12 +22,17 @@ fun CustomNavHost(
     commonState: CommonState
 ) {
     NavHost(
-        navController = commonState.navController,
+        navController = navController,
         startDestination = ScreenRouteDef.ScheduleTab.routeName,
         modifier = Modifier.padding(paddingValues = paddingValues)
     ) {
         composable(ScreenRouteDef.ScheduleTab.routeName) {
-            ScheduleTabScreen(commonState)
+            ScheduleTabScreen(
+                commonState = commonState,
+                onNavigateToDetail = { selectedDate ->
+                    navController.navigate("${ScreenRouteDef.InnerContent.ScheduleDetail.routeName}?date=${selectedDate}")
+                }
+            )
         }
         composable(ScreenRouteDef.PrepTab.routeName) {
             PrepTabScreen(commonState)

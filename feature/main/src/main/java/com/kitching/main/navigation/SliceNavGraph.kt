@@ -7,15 +7,15 @@ import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.kitching.core.common.CommonState
 import com.kitching.core.common.ScreenRouteDef
-import com.kitching.main.schedule.ScheduleDetailScreen
+import com.kitching.main.view.schedule.ScheduleDetailScreen
 import java.time.LocalDate
 
 fun NavGraphBuilder.sliceNavGraph(
     commonState: CommonState
 ) {
     navigation(
-        route = ScreenRouteDef.ScheduleDetailGraph.routeName,
-        startDestination = ScreenRouteDef.ScheduleTab.routeName,
+        route = ScreenRouteDef.InnerContentGraph.routeName,
+        startDestination = ScreenRouteDef.InnerContentGraph.routeName,
     ) {
         composable(
             route = "${ScreenRouteDef.InnerContent.ScheduleDetail.routeName}?date={date}",

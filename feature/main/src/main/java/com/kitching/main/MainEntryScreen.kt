@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -25,6 +26,7 @@ import com.kitching.core.common.CustomTopAppBar
 import com.kitching.core.common.NavigationIconInfo
 import com.kitching.core.common.ScreenRouteDef
 import com.kitching.core.common.TopAppBarState
+import com.kitching.core.common.rememberCommonState
 import com.kitching.core.designsystem.theme.NeutralGray0
 import com.kitching.data.PreferencesDataSource
 import com.kitching.domain.util.AppResult
@@ -40,26 +42,13 @@ fun EntryPointScreen(
 ) {
 
     val tabNavController = rememberNavController()
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
-    val title by remember { mutableStateOf("Kitching") } // 레스토랑 이름
-    val topAppBarState =
-        remember { mutableStateOf(TopAppBarState(drawerState = drawerState, title = title)) }
-    val commonState by remember {
-        mutableStateOf(
-            CommonState(
-                navController = tabNavController,
-                topAppBarState = topAppBarState,
-                scope = scope
-            )
-        )
-    }
+    val commonState = rememberCommonState()
 
     val navBackStackEntry by tabNavController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
     CustomNavigationDrawer(
-        drawerState,
+        drawerState = commonState.topAppBarState.value.drawerState,
         onLogout = {
             appNavController.navigate(ScreenRouteDef.Splash.routeName) {
                 CoroutineScope(Dispatchers.IO).launch {
@@ -83,7 +72,7 @@ fun EntryPointScreen(
             modifier = Modifier.fillMaxSize(),
             topBar = {
                 CustomTopAppBar(
-                    topAppBarState = topAppBarState.value
+                    topAppBarState = commonState.topAppBarState.value
                 )
             },
             bottomBar = {

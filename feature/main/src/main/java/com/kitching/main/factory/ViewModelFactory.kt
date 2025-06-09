@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.kitching.data.repository.OrderRepositoryImpl
 import com.kitching.data.repository.ScheduleRepositoryImpl
-import com.kitching.main.viewmodel.FcmViewModel
-import com.kitching.main.viewmodel.OrderViewModel
-import com.kitching.main.viewmodel.ScheduleViewModel
+import com.kitching.main.view.model.FcmViewModel
+import com.kitching.main.view.model.OrderViewModel
+import com.kitching.main.view.model.ScheduleViewModel
 
 @Suppress("UNCHECKED_CAST")
 val viewModelFactory = object : ViewModelProvider.Factory {

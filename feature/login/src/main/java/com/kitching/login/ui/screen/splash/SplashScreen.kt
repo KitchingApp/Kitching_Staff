@@ -18,6 +18,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import com.kitching.core.designsystem.theme.PrimaryGreen300
@@ -35,8 +36,8 @@ fun SplashScreen(
     goTeamSelect: () -> Unit,
     loginViewModel: LoginViewModel = viewModel(factory = LoginViewModelFactory())
 ) {
-    val userId by loginViewModel.userId.collectAsState()
-    val teamId by loginViewModel.teamId.collectAsState()
+    val userId by loginViewModel.userId.collectAsStateWithLifecycle()
+    val teamId by loginViewModel.teamId.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         val splashJob = async {
@@ -60,8 +61,6 @@ fun SplashScreen(
 //                goLogin()
 //            }
 //        }
-        goMain()
-
     }
 
     Column(
