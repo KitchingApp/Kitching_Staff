@@ -7,19 +7,116 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import com.kitching.data.PreferencesDataSource
 import com.kitching.domain.entities.Team
+import com.kitching.domain.entities.User
 import com.kitching.domain.repository.LoginRepository
 import com.kitching.domain.repository.TeamRepository
 import com.kitching.domain.util.AppResult
+import com.kitching.login.SplashEntryPoint
+import com.kitching.login.SplashResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val loginRepository: LoginRepository,
     private val teamRepository: TeamRepository
 ) : ViewModel() {
+
+    private val _splashResult = MutableStateFlow<AppResult<SplashResult>>(AppResult.Initial)
+    val splashResult: StateFlow<AppResult<SplashResult>> = _splashResult
+
+    fun initializeAppInfoState(context: Context) {
+        viewModelScope.launch {
+            _splashResult.value = AppResult.Loading
+
+            try {
+                val userIdResult = PreferencesDataSource(context).getUserId().first()
+                val teamIdResult = PreferencesDataSource(context).getTeamId().first()
+
+                if (userIdResult !is AppResult.Success || teamIdResult !is AppResult.Success) {
+                    _splashResult.value = AppResult.Success(
+                        SplashResult(SplashEntryPoint.LOGIN)
+                    )
+                    return@launch
+                }
+
+                val userId = userIdResult.data
+                val teamId = teamIdResult.data
+
+                when {
+                    // 둘 다 없으면 로그인 화면
+                    userId.isEmpty() && teamId.isEmpty() -> {
+                        _splashResult.value = AppResult.Success(
+                            SplashResult(entryPoint = SplashEntryPoint.LOGIN)
+                        )
+                    }
+
+                    // userId만 있으면 사용자 정보 로드 후 팀선택 화면
+                    userId.isNotEmpty() && teamId.isEmpty() -> {
+                        val user = loadUserFromFirebase(userId)
+                        _splashResult.value = AppResult.Success(
+                            SplashResult(
+                                entryPoint = SplashEntryPoint.TEAM_SELECT,
+                                user = user
+                            )
+                        )
+                    }
+
+                    // 둘 다 있으면 사용자 정보와 팀 정보 로드 후 메인 화면
+                    userId.isNotEmpty() && teamId.isNotEmpty() -> {
+                        val user = loadUserFromFirebase(userId)
+                        val team = loadTeamFromFirebase(teamId)
+                        _splashResult.value = AppResult.Success(
+                            SplashResult(
+                                entryPoint = SplashEntryPoint.MAIN,
+                                user = user,
+                                team = team
+                            )
+                        )
+                    }
+
+                    else -> {
+                        _splashResult.value = AppResult.Success(
+                            SplashResult(entryPoint = SplashEntryPoint.LOGIN)
+                        )
+                    }
+                }
+
+
+            } catch (e: Exception) {
+                _splashResult.value = AppResult.Failure(e)
+            }
+        }
+    }
+
+    private suspend fun loadUserFromFirebase(userId: String): User? {
+        return try {
+            val userResult = loginRepository.getUserById(userId).first()
+            if (userResult is AppResult.Success) {
+                userResult.data
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    private suspend fun loadTeamFromFirebase(teamId: String): Team? {
+        return try {
+            val teamResult = teamRepository.getTeam(teamId).first()
+            if (teamResult is AppResult.Success) {
+                teamResult.data
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            null
+        }
+    }
 
     private val _kakaoLoginState = MutableStateFlow<AppResult<Boolean>>(AppResult.Initial)
     val kakaoLoginState: StateFlow<AppResult<Boolean>> = _kakaoLoginState

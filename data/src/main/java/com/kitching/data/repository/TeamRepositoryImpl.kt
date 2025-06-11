@@ -39,14 +39,7 @@ class TeamRepositoryImpl(
         val team = teamDataSource.getTeam(teamId)
         if (team != null) {
             emit(
-                AppResult.Success(
-                    Team(
-                        teamId = team.id,
-                        teamName = team.teamName,
-                        teamAmount = team.teamAmount,
-                        inviteCode = team.inviteCode
-                    )
-                )
+                AppResult.Success(team.toDomain()                )
             )
         } else throw Throwable("team is not exists")
     }.catch {

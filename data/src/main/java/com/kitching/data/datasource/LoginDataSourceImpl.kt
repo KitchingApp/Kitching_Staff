@@ -1,9 +1,7 @@
 package com.kitching.data.datasource
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.kitching.data.dto.FcmTokenDTO
 import com.kitching.data.dto.UserDTO
-import com.kitching.data.firebase.COLLECTION_FIREBASE_MESSAGING_TOKEN
 import com.kitching.data.firebase.COLLECTION_USER
 import kotlinx.coroutines.tasks.await
 
@@ -20,4 +18,8 @@ class LoginDataSourceImpl(
             db.collection(COLLECTION_USER).add(UserDTO(id = userId, userName = userName, userImage = userImage)).await()
         }
     }.isSuccess
+
+    override suspend fun getUserById(userId: String): UserDTO {
+        return db.collection(COLLECTION_USER).document(userId).get().await().toObject(UserDTO::class.java)!!
+    }
 }

@@ -50,6 +50,7 @@ fun AppNavHost(
         }
 
         loginNavGraph(navController, commonState)
+
         mainNavGraph(navController, commonState)
     }
 }

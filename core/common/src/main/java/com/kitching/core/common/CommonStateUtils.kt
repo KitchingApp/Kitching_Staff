@@ -7,6 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import com.kitching.domain.entities.Team
+import com.kitching.domain.entities.User
 
 @Composable
 fun rememberCommonState(): CommonState {
@@ -26,11 +28,18 @@ fun rememberCommonState(): CommonState {
     }
 }
 
-fun CommonState.updateTeamInfo(teamInfo: TeamInfo) {
-    appInfoState.value = appInfoState.value.copy(teamInfo = teamInfo)
+fun CommonState.updateUserInfo(user: User?) {
+    appInfoState.value = appInfoState.value.copy(userInfo = user)
 }
 
-fun CommonState.clearAppInfoState() {
-    appInfoState.value = AppInfoState()
+fun CommonState.updateTeamInfo(team: Team) {
+    appInfoState.value = appInfoState.value.copy(teamInfo = team)
+}
 
+fun CommonState.updateAppInfo(user: User?, team: Team?) {
+    appInfoState.value = appInfoState.value.copy(userInfo = user, teamInfo = team)
+}
+
+fun CommonState.clearAppInfo() {
+    appInfoState.value = AppInfoState()
 }
