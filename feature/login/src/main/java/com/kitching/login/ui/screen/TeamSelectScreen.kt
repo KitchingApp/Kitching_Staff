@@ -26,6 +26,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
+import com.kitching.core.common.CommonState
 import com.kitching.core.common.EmptyScreen
 import com.kitching.core.common.ResultConditionScreen
 import com.kitching.core.common.ScreenRouteDef
@@ -40,6 +41,7 @@ import com.kitching.login.ui.model.LoginViewModelFactory
 @Composable
 fun TeamSelectScreen(
     navController: NavController,
+    commonState: CommonState,
     loginViewModel: LoginViewModel = viewModel(factory = LoginViewModelFactory())
 ) {
     val userId by loginViewModel.userId.collectAsStateWithLifecycle()

@@ -32,6 +32,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
+import com.kitching.core.common.CommonState
 import com.kitching.core.common.ProgressIndicatorScreen
 import com.kitching.core.common.ScreenRouteDef
 import com.kitching.core.designsystem.theme.NeutralGray0
@@ -52,6 +53,7 @@ import com.kitching.login.ui.model.LoginViewModelFactory
 @Composable
 fun LoginScreen(
     navController: NavHostController,
+    commonState: CommonState,
     loginViewModel: LoginViewModel = viewModel(factory = LoginViewModelFactory())
 ) {
     var showBottomSheet by remember { mutableStateOf(false) }

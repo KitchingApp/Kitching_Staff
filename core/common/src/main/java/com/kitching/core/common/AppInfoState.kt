@@ -1,17 +1,9 @@
 package com.kitching.core.common
 
+import com.kitching.domain.entities.Team
+import com.kitching.domain.entities.User
+
 data class AppInfoState(
-    val userInfo: UserInfo = UserInfo(),
-    val teamInfo: TeamInfo = TeamInfo(),
-)
-
-data class UserInfo(
-    val userId: String = "",
-    val userName: String = "",
-    val userImage: String = "",
-)
-
-data class TeamInfo(
-    val teamId: String = "",
-    val teamName: String = "",
+    val userInfo: User = User(),
+    val teamInfo: Team = Team(),
 )

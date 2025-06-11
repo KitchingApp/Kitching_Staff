@@ -31,11 +31,11 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun EntryPointScreen(
-    appNavController: NavHostController
+    appNavController: NavHostController,
+    commonState: CommonState,
 ) {
 
     val tabNavController = rememberNavController()
-    val commonState = rememberCommonState()
 
     val navBackStackEntry by tabNavController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination

@@ -39,6 +39,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
+import com.kitching.core.common.CommonState
 import com.kitching.core.common.ScreenRouteDef
 import com.kitching.core.designsystem.theme.Body1
 import com.kitching.core.designsystem.theme.H2
@@ -54,7 +55,8 @@ import com.kitching.login.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InviteCodeScreen(
-    navController: NavController
+    navController: NavController,
+    commonState: CommonState,
 ) {
     val textState = remember { mutableStateOf(TextFieldValue("")) }
 
