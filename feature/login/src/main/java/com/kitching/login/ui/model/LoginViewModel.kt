@@ -2,6 +2,7 @@ package com.kitching.login.ui.model
 
 import com.kitching.login.R
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kakao.sdk.auth.model.OAuthToken
@@ -157,26 +158,50 @@ class LoginViewModel(
 
     private fun processLoginUserData(context: Context, userId: String, userNickname: String, userImage: String) {
         viewModelScope.launch {
-            // 1. 파이어베이스에 사용자 정보 저장
-            val saveResult = loginRepository.checkAndSaveUser(userId, userNickname, userImage).first()
-            if (saveResult !is AppResult.Success) {
-                _kakaoLoginState.value = AppResult.Failure(Exception("${R.string.save_user_data_error}"))
-                return@launch
+            loginRepository.checkAndSaveUser(userId, userNickname, userImage).collectLatest { result ->
+                when (result) {
+                    is AppResult.Success -> {
+                        saveUserIdToDataStore(context, userId)
+                    }
+                    is AppResult.Failure -> {
+                        _kakaoLoginState.value = AppResult.Failure(result.exception)
+                    }
+                    AppResult.Loading -> {
+                        _kakaoLoginState.value = AppResult.Loading
+                    }
+                    AppResult.Initial -> {
+                        _kakaoLoginState.value = AppResult.Initial
+                    }
+                }
             }
+        }
+    }
 
-            // 2. DataStore에 사용자 ID 저장
-            val storeResult = PreferencesDataSource(context).saveUserId(userId).first()
-            if (storeResult !is AppResult.Success) {
-                _kakaoLoginState.value = AppResult.Failure(Exception("${R.string.save_user_id_error}"))
-                return@launch
+    private fun saveUserIdToDataStore(context: Context, userId: String) {
+        viewModelScope.launch {
+            PreferencesDataSource(context).saveUserId(userId).collectLatest { result ->
+                when (result) {
+                    is AppResult.Success<*> -> {
+                        loadUserData(userId)
+                    }
+                    is AppResult.Failure -> {
+                        _kakaoLoginState.value = AppResult.Failure(result.exception)
+                    }
+                    AppResult.Loading -> {
+                        _kakaoLoginState.value = AppResult.Loading
+                    }
+                    AppResult.Initial -> {
+                        _kakaoLoginState.value = AppResult.Initial
+                    }
+                }
             }
+        }
+    }
 
-            // 3. 사용자 정보 로드
-            val userResult = loginRepository.getUserById(userId).first()
-            if (userResult is AppResult.Success) {
-                _kakaoLoginState.value = AppResult.Success(userResult.data)
-            } else {
-                _kakaoLoginState.value = AppResult.Failure(Exception("${R.string.load_user_data_error}"))
+    private fun loadUserData(userId: String) {
+        viewModelScope.launch {
+            loginRepository.getUserById(userId).collectLatest {
+                _kakaoLoginState.value = it
             }
         }
     }
