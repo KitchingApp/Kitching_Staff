@@ -1,5 +1,6 @@
 package com.kitching.login.ui.model
 
+import com.kitching.login.R
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -118,8 +119,8 @@ class LoginViewModel(
         }
     }
 
-    private val _kakaoLoginState = MutableStateFlow<AppResult<Boolean>>(AppResult.Initial)
-    val kakaoLoginState: StateFlow<AppResult<Boolean>> = _kakaoLoginState
+    private val _kakaoLoginState = MutableStateFlow<AppResult<User>>(AppResult.Initial)
+    val kakaoLoginState: StateFlow<AppResult<User>> = _kakaoLoginState
 
     fun performKakaoLogin(context: Context) {
         viewModelScope.launch {
@@ -144,55 +145,49 @@ class LoginViewModel(
                 if (userApiClientError != null) {
                     _kakaoLoginState.value = AppResult.Failure(userApiClientError)
                 } else if (user != null) {
-                    _kakaoLoginState.value = AppResult.Success(true)
                     val kakaoUid = user.id.toString()
+                    val kakaoNickname = user.kakaoAccount?.profile?.nickname ?: ""
+                    val kakaoImage = user.kakaoAccount?.profile?.profileImageUrl ?: ""
 
-                    checkAndSaveUser(
-                        kakaoUid,
-                        user.kakaoAccount?.profile?.nickname ?: "",
-                        user.kakaoAccount?.profile?.profileImageUrl ?: ""
-                    )
-                    saveUserIdToDatastore(kakaoUid, context)
+                    processLoginUserData(context, kakaoUid, kakaoNickname, kakaoImage)
                 }
             }
         }
     }
 
-    private val _checkAndSaveUserResult = MutableStateFlow<AppResult<Boolean>>(AppResult.Initial)
-    val checkAndSaveUserResult get() = _checkAndSaveUserResult.asStateFlow()
-
-    private fun checkAndSaveUser(
-        kakaoUid: String,
-        kakaoNickname: String,
-        kakaoProfileImage: String
-    ) {
+    private fun processLoginUserData(context: Context, userId: String, userNickname: String, userImage: String) {
         viewModelScope.launch {
-            loginRepository.checkAndSaveUser(kakaoUid, kakaoNickname, kakaoProfileImage)
-                .collectLatest {
-                    _checkAndSaveUserResult.value = it
-                }
-        }
-    }
+            // 1. 파이어베이스에 사용자 정보 저장
+            val saveResult = loginRepository.checkAndSaveUser(userId, userNickname, userImage).first()
+            if (saveResult !is AppResult.Success) {
+                _kakaoLoginState.value = AppResult.Failure(Exception("${R.string.save_user_data_error}"))
+                return@launch
+            }
 
-    private val _saveUserIdResult = MutableStateFlow<AppResult<Boolean>>(AppResult.Initial)
-    val saveUserIdResult get() = _saveUserIdResult.asStateFlow()
+            // 2. DataStore에 사용자 ID 저장
+            val storeResult = PreferencesDataSource(context).saveUserId(userId).first()
+            if (storeResult !is AppResult.Success) {
+                _kakaoLoginState.value = AppResult.Failure(Exception("${R.string.save_user_id_error}"))
+                return@launch
+            }
 
-    private fun saveUserIdToDatastore(userId: String, context: Context) {
-        viewModelScope.launch {
-            PreferencesDataSource(context).saveUserId(userId).collectLatest {
-                _saveUserIdResult.value = it
+            // 3. 사용자 정보 로드
+            val userResult = loginRepository.getUserById(userId).first()
+            if (userResult is AppResult.Success) {
+                _kakaoLoginState.value = AppResult.Success(userResult.data)
+            } else {
+                _kakaoLoginState.value = AppResult.Failure(Exception("${R.string.load_user_data_error}"))
             }
         }
     }
 
+    private var _teamIdSaveResult = MutableStateFlow<AppResult<Boolean>>(AppResult.Initial)
+    val teamIdSaveResult get() = _teamIdSaveResult.asStateFlow()
 
-    private val _teamList = MutableStateFlow<AppResult<List<Team>>>(AppResult.Initial)
-    val teamList get() = _teamList.asStateFlow()
-
-    fun getTeamList(userId: String) {
+    fun saveTeamIdToDataStore(teamId: String, context: Context) {
         viewModelScope.launch {
-            teamRepository.getTeamsByUserId(userId).collectLatest {
-                _teamList.value = it
+            PreferencesDataSource(context).saveTeamId(teamId).collectLatest {
+                _teamIdSaveResult.value = it
             }
         }
     }
@@ -208,40 +203,13 @@ class LoginViewModel(
         }
     }
 
-    private val _userIdSaveResult = MutableStateFlow<AppResult<Boolean>>(AppResult.Initial)
-    val userIdSaveResult get() = _userIdSaveResult.asStateFlow()
+    private val _teamList = MutableStateFlow<AppResult<List<Team>>>(AppResult.Initial)
+    val teamList get() = _teamList.asStateFlow()
 
-    fun saveUserId(userId: String, context: Context) {
+    fun getTeamList(userId: String) {
         viewModelScope.launch {
-            try {
-                _userIdSaveResult.value = AppResult.Loading
-                PreferencesDataSource(context).saveUserId(userId)
-                _userIdSaveResult.value = AppResult.Success(true)
-            } catch (e: Throwable) {
-                AppResult.Failure(e)
-            }
-
-        }
-    }
-
-    private val _teamId = MutableStateFlow<AppResult<String>>(AppResult.Initial)
-    val teamId = _teamId.asStateFlow()
-
-    fun getTeamIdFromDataStore(context: Context) {
-        viewModelScope.launch {
-            PreferencesDataSource(context).getTeamId().collectLatest {
-                _teamId.value = it
-            }
-        }
-    }
-
-    private var _teamIdSaveResult = MutableStateFlow<AppResult<Boolean>>(AppResult.Initial)
-    val teamIdSaveResult get() = _teamIdSaveResult.asStateFlow()
-
-    fun saveTeamIdToDataStore(teamId: String, context: Context) {
-        viewModelScope.launch {
-            PreferencesDataSource(context).saveTeamId(teamId).collectLatest {
-                _teamIdSaveResult.value = it
+            teamRepository.getTeamsByUserId(userId).collectLatest {
+                _teamList.value = it
             }
         }
     }

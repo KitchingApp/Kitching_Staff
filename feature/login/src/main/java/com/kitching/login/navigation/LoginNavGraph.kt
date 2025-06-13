@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.kitching.core.common.CommonState
 import com.kitching.core.common.ScreenRouteDef
+import com.kitching.core.common.updateUserInfo
 import com.kitching.login.ui.screen.InviteCodeScreen
 import com.kitching.login.ui.screen.LoginScreen
 import com.kitching.login.ui.screen.TeamSelectScreen
@@ -19,7 +20,16 @@ fun NavGraphBuilder.loginNavGraph(
         startDestination = ScreenRouteDef.Login.routeName,
     ) {
         composable(route = ScreenRouteDef.Login.routeName) {
-            LoginScreen(navController, commonState)
+            LoginScreen(navController.context, commonState,
+                onLoginSuccess = { user ->
+                    commonState.updateUserInfo(user)
+
+                    navController.navigate(ScreenRouteDef.TeamSelect.routeName) {
+                        popUpTo(ScreenRouteDef.Login.routeName) {
+                            inclusive = true
+                        }
+                    }
+                })
         }
         composable(route = ScreenRouteDef.TeamSelect.routeName) {
             TeamSelectScreen(navController, commonState)
