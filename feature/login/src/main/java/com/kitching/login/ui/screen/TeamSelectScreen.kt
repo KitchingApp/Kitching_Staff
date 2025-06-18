@@ -32,6 +32,7 @@ import com.kitching.core.common.CommonState
 import com.kitching.core.common.EmptyScreen
 import com.kitching.core.common.ProgressIndicatorScreen
 import com.kitching.core.common.TeamCardItem
+import com.kitching.core.common.updateTeamInfo
 import com.kitching.core.designsystem.theme.KitchingStaffTheme
 import com.kitching.core.designsystem.theme.PrimaryGreen300
 import com.kitching.domain.entities.Team
@@ -44,7 +45,7 @@ import com.kitching.login.ui.model.LoginViewModelFactory
 fun TeamSelectScreen(
     context: Context,
     commonState: CommonState,
-    goMain: (Team) -> Unit,
+    goMain: () -> Unit,
     goInviteCode: () -> Unit,
     loginViewModel: LoginViewModel = viewModel(factory = LoginViewModelFactory())
 ) {
@@ -62,7 +63,9 @@ fun TeamSelectScreen(
             is AppResult.Success<*> -> {
                 val team = (teamIdSaveState as AppResult.Success<Team>).data
 
-                goMain(team)
+                commonState.updateTeamInfo(team)
+
+                goMain()
             }
 
             is AppResult.Failure -> {

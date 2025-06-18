@@ -1,7 +1,6 @@
 package com.kitching.login.ui.screen
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -36,6 +35,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import com.kitching.core.common.CommonState
 import com.kitching.core.common.ProgressIndicatorScreen
+import com.kitching.core.common.updateUserInfo
 import com.kitching.core.designsystem.theme.NeutralGray0
 import com.kitching.core.designsystem.theme.NeutralGray300
 import com.kitching.core.designsystem.theme.NeutralGray800
@@ -51,7 +51,7 @@ import com.kitching.login.ui.model.LoginViewModelFactory
 fun LoginScreen(
     context: Context,
     commonState: CommonState,
-    onLoginSuccess: (User) -> Unit,
+    onLoginSuccess: () -> Unit,
     loginViewModel: LoginViewModel = viewModel(factory = LoginViewModelFactory())
 ) {
     var showBottomSheet by remember { mutableStateOf(false) }
@@ -62,7 +62,10 @@ fun LoginScreen(
         when (kakaoLoginState) {
             is AppResult.Success -> {
                 val user = (kakaoLoginState as AppResult.Success<User>).data
-                onLoginSuccess(user)
+
+                commonState.updateUserInfo(user)
+
+                onLoginSuccess()
             }
 
             is AppResult.Failure -> {
