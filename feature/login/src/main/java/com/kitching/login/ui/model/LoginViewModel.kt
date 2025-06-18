@@ -1,8 +1,6 @@
 package com.kitching.login.ui.model
 
-import com.kitching.login.R
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kakao.sdk.auth.model.OAuthToken
@@ -206,24 +204,34 @@ class LoginViewModel(
         }
     }
 
-    private var _teamIdSaveResult = MutableStateFlow<AppResult<Boolean>>(AppResult.Initial)
+    private var _teamIdSaveResult = MutableStateFlow<AppResult<Team>>(AppResult.Initial)
     val teamIdSaveResult get() = _teamIdSaveResult.asStateFlow()
 
     fun saveTeamIdToDataStore(teamId: String, context: Context) {
         viewModelScope.launch {
-            PreferencesDataSource(context).saveTeamId(teamId).collectLatest {
-                _teamIdSaveResult.value = it
+            PreferencesDataSource(context).saveTeamId(teamId).collectLatest { result ->
+                when (result) {
+                    is AppResult.Success<*> -> {
+                        loadTeamData(teamId)
+                    }
+                    is AppResult.Failure -> {
+                        _teamIdSaveResult.value = AppResult.Failure(result.exception)
+                    }
+                    AppResult.Loading -> {
+                        _teamIdSaveResult.value = AppResult.Loading
+                    }
+                    AppResult.Initial -> {
+                        _teamIdSaveResult.value = AppResult.Initial
+                    }
+                }
             }
         }
     }
 
-    private val _userId = MutableStateFlow<AppResult<String>>(AppResult.Initial)
-    val userId = _userId.asStateFlow()
-
-    fun getUserId(context: Context) {
+    private fun loadTeamData(teamId: String) {
         viewModelScope.launch {
-            PreferencesDataSource(context).getUserId().collectLatest {
-                _userId.value = it
+            teamRepository.getTeam(teamId).collectLatest {
+                _teamIdSaveResult.value = it
             }
         }
     }
