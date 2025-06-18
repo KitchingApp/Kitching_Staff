@@ -33,18 +33,16 @@ class LoginViewModel(
             _splashResult.value = AppResult.Loading
 
             try {
+                /**
+                 * 추후 AppResult에 따라 핸들리필요할듯 지금은 빠르게 불러와져서 문제 없는듯함
+                 * */
+
                 val userIdResult = PreferencesDataSource(context).getUserId().first()
                 val teamIdResult = PreferencesDataSource(context).getTeamId().first()
 
-                if (userIdResult !is AppResult.Success || teamIdResult !is AppResult.Success) {
-                    _splashResult.value = AppResult.Success(
-                        SplashResult(SplashEntryPoint.LOGIN)
-                    )
-                    return@launch
-                }
 
-                val userId = userIdResult.data
-                val teamId = teamIdResult.data
+                val userId = (userIdResult as AppResult.Success<String>).data
+                val teamId = (teamIdResult as AppResult.Success<String>).data
 
                 when {
                     // 둘 다 없으면 로그인 화면
@@ -93,28 +91,34 @@ class LoginViewModel(
     }
 
     private suspend fun loadUserFromFirebase(userId: String): User? {
-        return try {
-            val userResult = loginRepository.getUserById(userId).first()
-            if (userResult is AppResult.Success) {
-                userResult.data
-            } else {
-                null
+        try {
+            var userResult: User? = null
+
+            loginRepository.getUserById(userId).collectLatest { result ->
+                if (result is AppResult.Success) {
+                   userResult = result.data
+                }
             }
+
+            return userResult
         } catch (e: Exception) {
-            null
+            return null
         }
     }
 
     private suspend fun loadTeamFromFirebase(teamId: String): Team? {
-        return try {
-            val teamResult = teamRepository.getTeam(teamId).first()
-            if (teamResult is AppResult.Success) {
-                teamResult.data
-            } else {
-                null
+        try {
+            var teamResult: Team? = null
+
+            teamRepository.getTeam(teamId).collectLatest { result ->
+                if (result is AppResult.Success) {
+                    teamResult = result.data
+                }
             }
+
+            return teamResult
         } catch (e: Exception) {
-            null
+            return null
         }
     }
 

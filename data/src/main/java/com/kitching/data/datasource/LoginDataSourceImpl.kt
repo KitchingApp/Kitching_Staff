@@ -20,6 +20,6 @@ class LoginDataSourceImpl(
     }.isSuccess
 
     override suspend fun getUserById(userId: String): UserDTO {
-        return db.collection(COLLECTION_USER).document(userId).get().await().toObject(UserDTO::class.java)!!
+        return db.collection(COLLECTION_USER).document(userId).get().await().toObject(UserDTO::class.java) ?: UserDTO()
     }
 }
