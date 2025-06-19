@@ -7,13 +7,17 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import com.kitching.data.PreferencesDataSource
 import com.kitching.domain.entities.Team
+import com.kitching.domain.entities.User
 import com.kitching.domain.repository.LoginRepository
 import com.kitching.domain.repository.TeamRepository
 import com.kitching.domain.util.AppResult
+import com.kitching.login.SplashEntryPoint
+import com.kitching.login.SplashResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
@@ -21,8 +25,105 @@ class LoginViewModel(
     private val teamRepository: TeamRepository
 ) : ViewModel() {
 
-    private val _kakaoLoginState = MutableStateFlow<AppResult<Boolean>>(AppResult.Initial)
-    val kakaoLoginState: StateFlow<AppResult<Boolean>> = _kakaoLoginState
+    private val _splashResult = MutableStateFlow<AppResult<SplashResult>>(AppResult.Initial)
+    val splashResult: StateFlow<AppResult<SplashResult>> = _splashResult
+
+    fun initializeAppInfoState(context: Context) {
+        viewModelScope.launch {
+            _splashResult.value = AppResult.Loading
+
+            try {
+                /**
+                 * 추후 AppResult에 따라 핸들리필요할듯 지금은 빠르게 불러와져서 문제 없는듯함
+                 * */
+
+                val userIdResult = PreferencesDataSource(context).getUserId().first()
+                val teamIdResult = PreferencesDataSource(context).getTeamId().first()
+
+
+                val userId = (userIdResult as AppResult.Success<String>).data
+                val teamId = (teamIdResult as AppResult.Success<String>).data
+
+                when {
+                    // 둘 다 없으면 로그인 화면
+                    userId.isEmpty() && teamId.isEmpty() -> {
+                        _splashResult.value = AppResult.Success(
+                            SplashResult(entryPoint = SplashEntryPoint.LOGIN)
+                        )
+                    }
+
+                    // userId만 있으면 사용자 정보 로드 후 팀선택 화면
+                    userId.isNotEmpty() && teamId.isEmpty() -> {
+                        val user = loadUserFromFirebase(userId)
+                        _splashResult.value = AppResult.Success(
+                            SplashResult(
+                                entryPoint = SplashEntryPoint.TEAM_SELECT,
+                                user = user
+                            )
+                        )
+                    }
+
+                    // 둘 다 있으면 사용자 정보와 팀 정보 로드 후 메인 화면
+                    userId.isNotEmpty() && teamId.isNotEmpty() -> {
+                        val user = loadUserFromFirebase(userId)
+                        val team = loadTeamFromFirebase(teamId)
+                        _splashResult.value = AppResult.Success(
+                            SplashResult(
+                                entryPoint = SplashEntryPoint.MAIN,
+                                user = user,
+                                team = team
+                            )
+                        )
+                    }
+
+                    else -> {
+                        _splashResult.value = AppResult.Success(
+                            SplashResult(entryPoint = SplashEntryPoint.LOGIN)
+                        )
+                    }
+                }
+
+
+            } catch (e: Exception) {
+                _splashResult.value = AppResult.Failure(e)
+            }
+        }
+    }
+
+    private suspend fun loadUserFromFirebase(userId: String): User? {
+        try {
+            var userResult: User? = null
+
+            loginRepository.getUserById(userId).collectLatest { result ->
+                if (result is AppResult.Success) {
+                   userResult = result.data
+                }
+            }
+
+            return userResult
+        } catch (e: Exception) {
+            return null
+        }
+    }
+
+    private suspend fun loadTeamFromFirebase(teamId: String): Team? {
+        try {
+            var teamResult: Team? = null
+
+            teamRepository.getTeam(teamId).collectLatest { result ->
+                if (result is AppResult.Success) {
+                    teamResult = result.data
+                }
+            }
+
+            return teamResult
+        } catch (e: Exception) {
+            return null
+        }
+    }
+
+    private val _kakaoLoginState = MutableStateFlow<AppResult<User>>(AppResult.Initial)
+    val kakaoLoginState: StateFlow<AppResult<User>> = _kakaoLoginState
 
     fun performKakaoLogin(context: Context) {
         viewModelScope.launch {
@@ -47,47 +148,97 @@ class LoginViewModel(
                 if (userApiClientError != null) {
                     _kakaoLoginState.value = AppResult.Failure(userApiClientError)
                 } else if (user != null) {
-                    _kakaoLoginState.value = AppResult.Success(true)
                     val kakaoUid = user.id.toString()
+                    val kakaoNickname = user.kakaoAccount?.profile?.nickname ?: ""
+                    val kakaoImage = user.kakaoAccount?.profile?.profileImageUrl ?: ""
 
-                    checkAndSaveUser(
-                        kakaoUid,
-                        user.kakaoAccount?.profile?.nickname ?: "",
-                        user.kakaoAccount?.profile?.profileImageUrl ?: ""
-                    )
-                    saveUserIdToDatastore(kakaoUid, context)
+                    processLoginUserData(context, kakaoUid, kakaoNickname, kakaoImage)
                 }
             }
         }
     }
 
-    private val _checkAndSaveUserResult = MutableStateFlow<AppResult<Boolean>>(AppResult.Initial)
-    val checkAndSaveUserResult get() = _checkAndSaveUserResult.asStateFlow()
-
-    private fun checkAndSaveUser(
-        kakaoUid: String,
-        kakaoNickname: String,
-        kakaoProfileImage: String
-    ) {
+    private fun processLoginUserData(context: Context, userId: String, userNickname: String, userImage: String) {
         viewModelScope.launch {
-            loginRepository.checkAndSaveUser(kakaoUid, kakaoNickname, kakaoProfileImage)
-                .collectLatest {
-                    _checkAndSaveUserResult.value = it
+            loginRepository.checkAndSaveUser(userId, userNickname, userImage).collectLatest { result ->
+                when (result) {
+                    is AppResult.Success -> {
+                        saveUserIdToDataStore(context, userId)
+                    }
+                    is AppResult.Failure -> {
+                        _kakaoLoginState.value = AppResult.Failure(result.exception)
+                    }
+                    AppResult.Loading -> {
+                        _kakaoLoginState.value = AppResult.Loading
+                    }
+                    AppResult.Initial -> {
+                        _kakaoLoginState.value = AppResult.Initial
+                    }
                 }
-        }
-    }
-
-    private val _saveUserIdResult = MutableStateFlow<AppResult<Boolean>>(AppResult.Initial)
-    val saveUserIdResult get() = _saveUserIdResult.asStateFlow()
-
-    private fun saveUserIdToDatastore(userId: String, context: Context) {
-        viewModelScope.launch {
-            PreferencesDataSource(context).saveUserId(userId).collectLatest {
-                _saveUserIdResult.value = it
             }
         }
     }
 
+    private fun saveUserIdToDataStore(context: Context, userId: String) {
+        viewModelScope.launch {
+            PreferencesDataSource(context).saveUserId(userId).collectLatest { result ->
+                when (result) {
+                    is AppResult.Success<*> -> {
+                        loadUserData(userId)
+                    }
+                    is AppResult.Failure -> {
+                        _kakaoLoginState.value = AppResult.Failure(result.exception)
+                    }
+                    AppResult.Loading -> {
+                        _kakaoLoginState.value = AppResult.Loading
+                    }
+                    AppResult.Initial -> {
+                        _kakaoLoginState.value = AppResult.Initial
+                    }
+                }
+            }
+        }
+    }
+
+    private fun loadUserData(userId: String) {
+        viewModelScope.launch {
+            loginRepository.getUserById(userId).collectLatest {
+                _kakaoLoginState.value = it
+            }
+        }
+    }
+
+    private var _teamIdSaveResult = MutableStateFlow<AppResult<Team>>(AppResult.Initial)
+    val teamIdSaveResult get() = _teamIdSaveResult.asStateFlow()
+
+    fun saveTeamIdToDataStore(teamId: String, context: Context) {
+        viewModelScope.launch {
+            PreferencesDataSource(context).saveTeamId(teamId).collectLatest { result ->
+                when (result) {
+                    is AppResult.Success<*> -> {
+                        loadTeamData(teamId)
+                    }
+                    is AppResult.Failure -> {
+                        _teamIdSaveResult.value = AppResult.Failure(result.exception)
+                    }
+                    AppResult.Loading -> {
+                        _teamIdSaveResult.value = AppResult.Loading
+                    }
+                    AppResult.Initial -> {
+                        _teamIdSaveResult.value = AppResult.Initial
+                    }
+                }
+            }
+        }
+    }
+
+    private fun loadTeamData(teamId: String) {
+        viewModelScope.launch {
+            teamRepository.getTeam(teamId).collectLatest {
+                _teamIdSaveResult.value = it
+            }
+        }
+    }
 
     private val _teamList = MutableStateFlow<AppResult<List<Team>>>(AppResult.Initial)
     val teamList get() = _teamList.asStateFlow()
@@ -100,51 +251,13 @@ class LoginViewModel(
         }
     }
 
-    private val _userId = MutableStateFlow<AppResult<String>>(AppResult.Initial)
-    val userId = _userId.asStateFlow()
+    private val _joinTeamResult = MutableStateFlow<AppResult<Team>>(AppResult.Initial)
+    val joinTeamResult get() = _joinTeamResult.asStateFlow()
 
-    fun getUserId(context: Context) {
+    fun joinTeamByInviteCode(userId: String, inviteCode: String) {
         viewModelScope.launch {
-            PreferencesDataSource(context).getUserId().collectLatest {
-                _userId.value = it
-            }
-        }
-    }
-
-    private val _userIdSaveResult = MutableStateFlow<AppResult<Boolean>>(AppResult.Initial)
-    val userIdSaveResult get() = _userIdSaveResult.asStateFlow()
-
-    fun saveUserId(userId: String, context: Context) {
-        viewModelScope.launch {
-            try {
-                _userIdSaveResult.value = AppResult.Loading
-                PreferencesDataSource(context).saveUserId(userId)
-                _userIdSaveResult.value = AppResult.Success(true)
-            } catch (e: Throwable) {
-                AppResult.Failure(e)
-            }
-
-        }
-    }
-
-    private val _teamId = MutableStateFlow<AppResult<String>>(AppResult.Initial)
-    val teamId = _teamId.asStateFlow()
-
-    fun getTeamIdFromDataStore(context: Context) {
-        viewModelScope.launch {
-            PreferencesDataSource(context).getTeamId().collectLatest {
-                _teamId.value = it
-            }
-        }
-    }
-
-    private var _teamIdSaveResult = MutableStateFlow<AppResult<Boolean>>(AppResult.Initial)
-    val teamIdSaveResult get() = _teamIdSaveResult.asStateFlow()
-
-    fun saveTeamIdToDataStore(teamId: String, context: Context) {
-        viewModelScope.launch {
-            PreferencesDataSource(context).saveTeamId(teamId).collectLatest {
-                _teamIdSaveResult.value = it
+            teamRepository.joinTeamByInviteCode(userId, inviteCode).collectLatest {
+                _joinTeamResult.value = it
             }
         }
     }

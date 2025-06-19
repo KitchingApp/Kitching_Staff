@@ -9,7 +9,5 @@ interface UserTeamDataSource {
 
     suspend fun getUserTeams(userId: String): List<UserTeamDTO>
 
-    suspend fun createUserTeams(userId: String, teamId: String, staffLevelId: String, manager: Boolean = true): Boolean
-
-    suspend fun updateMember(userTeamId: String, staffLevelId: String, manager: Boolean): Boolean
+    suspend fun createUserTeam(userId: String, teamId: String): Boolean
 }

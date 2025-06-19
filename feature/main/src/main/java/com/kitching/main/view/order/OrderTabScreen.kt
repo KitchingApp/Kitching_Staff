@@ -1,9 +1,8 @@
-package com.kitching.main.order
+package com.kitching.main.view.order
 
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import com.kitching.main.R
 import androidx.compose.foundation.layout.Column
@@ -30,7 +29,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import com.kitching.core.common.ActionIconInfo
-import com.kitching.core.common.AppResultHandler
 import com.kitching.core.common.CombinedAppResultHandler
 import com.kitching.core.common.CommonState
 import com.kitching.core.common.NavigationIconInfo
@@ -42,10 +40,9 @@ import com.kitching.core.designsystem.theme.defaultHorizontalPadding
 import com.kitching.domain.entities.Order
 import com.kitching.domain.util.AppResult
 import com.kitching.main.factory.viewModelFactory
-import com.kitching.main.order.carditem.CategoryCardItem
-import com.kitching.main.order.carditem.OrderCardItem
-import com.kitching.main.order.carditem.OrderItemsList
-import com.kitching.main.viewmodel.OrderViewModel
+import com.kitching.main.view.order.carditem.CategoryCardItem
+import com.kitching.main.view.order.carditem.OrderItemsList
+import com.kitching.main.view.model.OrderViewModel
 import kotlinx.coroutines.launch
 
 @Composable
@@ -110,12 +107,12 @@ fun OrderTabScreen(
                             is AppResult.Success -> {
                                 val orderItems = (orderItemsState as AppResult.Success<List<Order>>).data
                                 val orderText = generateOrderText(orderItems, orderCounts)
-                                copyToClipboard(commonState.navController.context, orderText)
-                                Toast.makeText(commonState.navController.context, "발주내역이 복사되었습니다.", Toast.LENGTH_SHORT).show()
+//                                copyToClipboard(commonState.navController.context, orderText)
+//                                Toast.makeText(commonState.navController.context, "발주내역이 복사되었습니다.", Toast.LENGTH_SHORT).show()
 
                             }
                             else -> {
-                                Toast.makeText(commonState.navController.context, "발주내역을 가져올 수 없습니다..", Toast.LENGTH_SHORT).show()
+//                                Toast.makeText(commonState.navController.context, "발주내역을 가져올 수 없습니다..", Toast.LENGTH_SHORT).show()
                             }
                         }
                     }

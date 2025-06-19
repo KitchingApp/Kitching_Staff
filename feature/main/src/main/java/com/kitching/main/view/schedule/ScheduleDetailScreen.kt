@@ -1,7 +1,5 @@
-package com.kitching.main.schedule
+package com.kitching.main.view.schedule
 
-import com.kitching.main.R
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,7 +11,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kitching.core.common.ActionIconInfo
@@ -29,9 +26,9 @@ import com.kitching.core.designsystem.theme.PrimaryGreen300
 import com.kitching.domain.entities.ScheduleTime
 import com.kitching.domain.util.AppResult
 import com.kitching.main.factory.viewModelFactory
-import com.kitching.main.schedule.dialog.ScheduleApplyDialog
-import com.kitching.main.schedule.tab.scheduleTabs
-import com.kitching.main.viewmodel.ScheduleViewModel
+import com.kitching.main.view.schedule.dialog.ScheduleApplyDialog
+import com.kitching.main.view.schedule.tab.scheduleTabs
+import com.kitching.main.view.model.ScheduleViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
@@ -146,11 +143,11 @@ fun ScheduleDetailScreen(
                 state = applyScheduleResult,
                 onSuccess = {
                     showApplyDialog = false
-                    Toast.makeText(commonState.navController.context, stringResource(R.string.schedule_apply_success), Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(commonState.navController.context, stringResource(R.string.schedule_apply_success), Toast.LENGTH_SHORT).show()
                 },
                 onFailure = {
                     showApplyDialog = false
-                    Toast.makeText(commonState.navController.context, stringResource(R.string.schedule_apply_fail), Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(commonState.navController.context, stringResource(R.string.schedule_apply_fail), Toast.LENGTH_SHORT).show()
                 }
             )
         }

@@ -1,4 +1,4 @@
-package com.kitching.main.schedule.calendar
+package com.kitching.main.view.schedule.calendar
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -29,7 +29,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kitching.core.common.AppResultHandler
 import com.kitching.main.factory.viewModelFactory
-import com.kitching.main.viewmodel.ScheduleViewModel
+import com.kitching.main.view.model.ScheduleViewModel
 import java.time.LocalDate
 import java.time.YearMonth
 

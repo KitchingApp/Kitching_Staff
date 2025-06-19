@@ -18,4 +18,8 @@
 
     <string name="empty_message_for_team_select_screen">팀이 없습니다.</string>
     <string name="icon_description_go_to_invite_code_screen">초대코드 입력 화면으로 이동하기</string>
+
+    <string name="save_user_data_error">사용자 정보 저장 실패</string>
+    <string name="save_user_id_error">사용자 ID 저장 실패</string>
+    <string name="load_user_data_error">사용자 ID 저장 실패</string>
 </resources>

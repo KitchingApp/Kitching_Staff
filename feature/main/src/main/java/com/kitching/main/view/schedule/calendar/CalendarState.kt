@@ -1,4 +1,4 @@
-package com.kitching.main.schedule.calendar
+package com.kitching.main.view.schedule.calendar
 
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState

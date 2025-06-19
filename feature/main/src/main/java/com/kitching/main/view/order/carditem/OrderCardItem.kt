@@ -1,4 +1,4 @@
-package com.kitching.main.order.carditem
+package com.kitching.main.view.order.carditem
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement

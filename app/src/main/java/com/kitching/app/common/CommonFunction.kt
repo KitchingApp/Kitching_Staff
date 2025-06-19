@@ -15,25 +15,6 @@ fun showToast(message: String, delayTime: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(KitchingApplication.getInstance(), message, delayTime).show()
 }
 
-@Composable
-fun <T> AppResultHandler(
-    state: AppResult<T>,
-    onFailure: @Composable (Throwable) -> Unit = {},
-    onSuccess: @Composable (T) -> Unit
-) {
-    when (state) {
-        is AppResult.Initial -> {}
-
-        is AppResult.Loading -> {
-            ProgressIndicatorScreen()
-        }
-
-        is AppResult.Failure -> { onFailure(state.exception) }
-
-        is AppResult.Success -> { onSuccess(state.data) }
-    }
-}
-
 /**
  * 알림 권한을 체크하고 허용되지 않았을 경우 요청
  *
