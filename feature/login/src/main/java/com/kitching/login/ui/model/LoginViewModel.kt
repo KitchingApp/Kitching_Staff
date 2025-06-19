@@ -250,4 +250,15 @@ class LoginViewModel(
             }
         }
     }
+
+    private val _joinTeamResult = MutableStateFlow<AppResult<Team>>(AppResult.Initial)
+    val joinTeamResult get() = _joinTeamResult.asStateFlow()
+
+    fun joinTeamByInviteCode(userId: String, inviteCode: String) {
+        viewModelScope.launch {
+            teamRepository.joinTeamByInviteCode(userId, inviteCode).collectLatest {
+                _joinTeamResult.value = it
+            }
+        }
+    }
 }

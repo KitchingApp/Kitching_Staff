@@ -8,4 +8,6 @@ interface TeamRepository {
     fun getTeamsByUserId(userId: String): Flow<AppResult<List<Team>>>
 
     fun getTeam(teamId: String): Flow<AppResult<Team>>
+
+    fun joinTeamByInviteCode(userId: String, inviteCode: String): Flow<AppResult<Team>>
 }

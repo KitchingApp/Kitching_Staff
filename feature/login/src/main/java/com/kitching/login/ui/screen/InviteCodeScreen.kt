@@ -24,8 +24,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
@@ -37,10 +39,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import com.kitching.core.common.CommonState
-import com.kitching.core.common.ScreenRouteDef
+import com.kitching.core.common.ProgressIndicatorScreen
 import com.kitching.core.designsystem.theme.Body1
 import com.kitching.core.designsystem.theme.H2
 import com.kitching.core.designsystem.theme.H3_m
@@ -50,15 +53,38 @@ import com.kitching.core.designsystem.theme.NeutralGray300
 import com.kitching.core.designsystem.theme.NeutralGray600
 import com.kitching.core.designsystem.theme.NeutralGray800
 import com.kitching.core.designsystem.theme.PrimaryGreen300
+import com.kitching.domain.entities.Team
+import com.kitching.domain.util.AppResult
 import com.kitching.login.R
+import com.kitching.login.ui.model.LoginViewModel
+import com.kitching.login.ui.model.LoginViewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InviteCodeScreen(
-    navController: NavController,
     commonState: CommonState,
+    goTeamSelect: () -> Unit,
+    loginViewModel: LoginViewModel = viewModel(factory = LoginViewModelFactory())
 ) {
+    val userId = commonState.appInfoState.value.userInfo?.userId.toString()
     val textState = remember { mutableStateOf(TextFieldValue("")) }
+
+    val joinTeamResult by loginViewModel.joinTeamResult.collectAsStateWithLifecycle()
+
+    LaunchedEffect(joinTeamResult) {
+        when (joinTeamResult) {
+            is AppResult.Success -> {
+                val team = (joinTeamResult as AppResult.Success<Team>).data
+                commonState.snackBarState.showSnackbar("${team.teamName}에 합류하였습니다.")
+                goTeamSelect()
+            }
+            is AppResult.Failure -> {
+                val exception = (joinTeamResult as AppResult.Failure).exception
+                commonState.snackBarState.showSnackbar(exception.message.toString())
+            }
+            else -> {}
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -85,7 +111,7 @@ fun InviteCodeScreen(
                 ),
                 navigationIcon = {
                     IconButton(onClick = {
-                        navController.navigate(ScreenRouteDef.TeamSelect.routeName)
+                        goTeamSelect()
                     }) {
                         AsyncImage(
                             modifier = Modifier.size(dimensionResource(R.dimen.top_app_bar_for_invite_code_screen_navigation_icon_size)),
@@ -134,7 +160,7 @@ fun InviteCodeScreen(
                                     ),
                                     shape = RoundedCornerShape(dimensionResource(R.dimen.invite_code_text_field_radius))
                                 )
-                                .padding(dimensionResource(R.dimen.default_padding), 0.dp)
+                                .padding(dimensionResource(R.dimen.default_padding), dimensionResource(R.dimen.invite_code_text_field_padding)),
                         ) {
                             BasicTextField(
                                 modifier = Modifier
@@ -164,7 +190,7 @@ fun InviteCodeScreen(
                                 contentColor = NeutralGray0
                             ),
                             onClick = {
-
+                                loginViewModel.joinTeamByInviteCode(userId, textState.value.text)
                             }
                         ) {
                             Text(text = stringResource(R.string.input))
@@ -173,5 +199,9 @@ fun InviteCodeScreen(
                 }
             }
         }
+    }
+
+    if (joinTeamResult is AppResult.Loading) {
+        ProgressIndicatorScreen()
     }
 }

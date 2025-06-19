@@ -3,6 +3,7 @@ package com.kitching.data.datasource
 import com.google.firebase.firestore.FirebaseFirestore
 import com.kitching.data.dto.UserTeamDTO
 import com.kitching.data.firebase.COLLECTION_USER_TEAM
+import com.kitching.data.firebase.DOCUMENT_ID
 import com.kitching.data.firebase.DOCUMENT_TEAM_ID
 import com.kitching.data.firebase.DOCUMENT_USER_ID
 import kotlinx.coroutines.tasks.await
@@ -25,4 +26,20 @@ class UserTeamDataSourceImpl(private val db: FirebaseFirestore = FirebaseFiresto
         db.collection(COLLECTION_USER_TEAM).whereEqualTo(DOCUMENT_USER_ID, userId).get().await()
             .toObjects(UserTeamDTO::class.java)
 
+    override suspend fun createUserTeam(
+        userId: String,
+        teamId: String,
+    ) = runCatching {
+        db.collection(COLLECTION_USER_TEAM).add(
+            UserTeamDTO(
+                id = "",
+                teamId = teamId,
+                userId = userId,
+                staffLevelId = "",
+                manager = false
+            )
+        ).await().apply {
+            this.update(DOCUMENT_ID, id).await()
+        }
+    }.isSuccess
 }

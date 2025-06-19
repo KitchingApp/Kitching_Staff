@@ -44,7 +44,15 @@ fun NavGraphBuilder.loginNavGraph(
             )
         }
         composable(route = ScreenRouteDef.TeamJoin.routeName) {
-            InviteCodeScreen(navController, commonState)
+            InviteCodeScreen(commonState,
+                goTeamSelect = {
+                    navController.navigate(ScreenRouteDef.TeamSelect.routeName) {
+                        popUpTo(ScreenRouteDef.TeamJoin.routeName) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
         }
     }
 }

@@ -30,7 +30,6 @@ import coil3.compose.AsyncImage
 import com.kitching.core.common.AppResultHandler
 import com.kitching.core.common.CommonState
 import com.kitching.core.common.EmptyScreen
-import com.kitching.core.common.ProgressIndicatorScreen
 import com.kitching.core.common.TeamCardItem
 import com.kitching.core.common.updateTeamInfo
 import com.kitching.core.designsystem.theme.KitchingStaffTheme

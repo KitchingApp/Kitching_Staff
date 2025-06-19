@@ -18,6 +18,7 @@ const val COLLECTION_INGREDIENT = "ingredient"
 const val DOCUMENT_ID = "id"
 const val DOCUMENT_TEAM_ID = "teamId"
 const val DOCUMENT_USER_ID = "userId"
+const val DOCUMENT_INVITE_CODE = "inviteCode"
 
 const val DOCUMENT_SCHEDULE_DATE = "date"
 const val DOCUMENT_SCHEDULE_FIX = "fix"

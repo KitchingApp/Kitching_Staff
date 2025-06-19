@@ -8,4 +8,6 @@ interface UserTeamDataSource {
     suspend fun getMember(teamId: String, userId: String): UserTeamDTO?
 
     suspend fun getUserTeams(userId: String): List<UserTeamDTO>
+
+    suspend fun createUserTeam(userId: String, teamId: String): Boolean
 }
