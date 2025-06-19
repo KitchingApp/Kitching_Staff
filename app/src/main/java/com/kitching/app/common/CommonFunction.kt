@@ -6,10 +6,7 @@ import android.os.Build
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.runtime.Composable
 import androidx.core.content.ContextCompat
-import com.kitching.core.common.ProgressIndicatorScreen
-import com.kitching.domain.util.AppResult
 
 fun showToast(message: String, delayTime: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(KitchingApplication.getInstance(), message, delayTime).show()

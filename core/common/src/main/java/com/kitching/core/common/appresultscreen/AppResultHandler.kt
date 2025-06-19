@@ -1,4 +1,4 @@
-package com.kitching.core.common
+package com.kitching.core.common.appresultscreen
 
 import androidx.compose.runtime.Composable
 import com.kitching.domain.util.AppResult

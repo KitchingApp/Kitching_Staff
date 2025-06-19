@@ -3,7 +3,7 @@ package com.kitching.main.view.schedule.tab
 import com.kitching.main.R
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.kitching.core.common.tabui.TabItem
+import com.kitching.core.common.widget.TabItem
 import com.kitching.domain.entities.Schedule
 
 @Composable

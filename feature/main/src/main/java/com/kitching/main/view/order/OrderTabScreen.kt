@@ -29,10 +29,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
-import com.kitching.core.common.ActionIconInfo
-import com.kitching.core.common.CombinedAppResultHandler
-import com.kitching.core.common.CommonState
-import com.kitching.core.common.NavigationIconInfo
+import com.kitching.core.common.commonstate.ActionIconInfo
+import com.kitching.core.common.appresultscreen.CombinedAppResultHandler
+import com.kitching.core.common.commonstate.CommonState
+import com.kitching.core.common.commonstate.NavigationIconInfo
 import com.kitching.core.designsystem.theme.H2
 import com.kitching.core.designsystem.theme.KitchingStaffTheme
 import com.kitching.core.designsystem.theme.NeutralGray0

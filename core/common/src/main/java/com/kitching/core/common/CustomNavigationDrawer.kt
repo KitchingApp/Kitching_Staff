@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kitching.core.common.widget.TeamCardItem
 import com.kitching.core.designsystem.theme.H1
 import com.kitching.core.designsystem.theme.NeutralGray0
 import com.kitching.core.designsystem.theme.NeutralGray800

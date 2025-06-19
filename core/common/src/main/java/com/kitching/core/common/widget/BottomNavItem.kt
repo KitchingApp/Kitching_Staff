@@ -1,10 +1,11 @@
-package com.kitching.core.common
+package com.kitching.core.common.widget
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import com.kitching.core.common.R
 
 data class BottomNavItem(
     val tabName: String = "",

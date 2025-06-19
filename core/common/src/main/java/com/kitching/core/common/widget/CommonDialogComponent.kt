@@ -1,4 +1,4 @@
-package com.kitching.core.common.dialog
+package com.kitching.core.common.widget
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background

@@ -1,4 +1,4 @@
-package com.kitching.core.common
+package com.kitching.core.common.commonstate
 
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.SnackbarHostState

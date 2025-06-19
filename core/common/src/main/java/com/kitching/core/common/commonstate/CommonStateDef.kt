@@ -1,9 +1,10 @@
-package com.kitching.core.common
+package com.kitching.core.common.commonstate
 
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.Color
+import com.kitching.core.common.R
 import com.kitching.core.designsystem.theme.NeutralGray0
 import kotlinx.coroutines.CoroutineScope
 

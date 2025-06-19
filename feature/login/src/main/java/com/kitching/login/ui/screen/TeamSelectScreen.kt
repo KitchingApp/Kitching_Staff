@@ -27,11 +27,11 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
-import com.kitching.core.common.AppResultHandler
-import com.kitching.core.common.CommonState
-import com.kitching.core.common.EmptyScreen
-import com.kitching.core.common.TeamCardItem
-import com.kitching.core.common.updateTeamInfo
+import com.kitching.core.common.appresultscreen.AppResultHandler
+import com.kitching.core.common.commonstate.CommonState
+import com.kitching.core.common.appresultscreen.EmptyScreen
+import com.kitching.core.common.widget.TeamCardItem
+import com.kitching.core.common.commonstate.updateTeamInfo
 import com.kitching.core.designsystem.theme.KitchingStaffTheme
 import com.kitching.core.designsystem.theme.PrimaryGreen300
 import com.kitching.domain.entities.Team

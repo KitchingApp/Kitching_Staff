@@ -5,7 +5,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.kitching.core.common.CommonState
+import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.ScreenRouteDef
 import com.kitching.main.view.schedule.ScheduleDetailScreen
 import java.time.LocalDate

@@ -1,6 +1,5 @@
 package com.kitching.main.view.schedule
 
-import com.kitching.main.R
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,16 +11,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.kitching.core.common.ActionIconInfo
-import com.kitching.core.common.AppResultHandler
-import com.kitching.core.common.CommonState
-import com.kitching.core.common.NavigationIconInfo
-import com.kitching.core.common.datepicker.DatePickerModal
-import com.kitching.core.common.datepicker.DateSelector
-import com.kitching.core.common.tabui.TabPager
+import com.kitching.core.common.commonstate.ActionIconInfo
+import com.kitching.core.common.appresultscreen.AppResultHandler
+import com.kitching.core.common.commonstate.CommonState
+import com.kitching.core.common.commonstate.NavigationIconInfo
+import com.kitching.core.common.widget.DatePickerModal
+import com.kitching.core.common.widget.DateSelector
+import com.kitching.core.common.widget.TabPager
 import com.kitching.core.designsystem.theme.KitchingStaffTheme
 import com.kitching.core.designsystem.theme.NeutralGray0
 import com.kitching.core.designsystem.theme.PrimaryGreen300

@@ -9,7 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.kitching.core.common.ScreenRouteDef
-import com.kitching.core.common.rememberCommonState
+import com.kitching.core.common.commonstate.rememberCommonState
 import com.kitching.login.ui.screen.splash.SplashScreen
 import com.kitching.login.navigation.loginNavGraph
 import com.kitching.main.navigation.mainNavGraph

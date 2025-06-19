@@ -1,4 +1,4 @@
-package com.kitching.core.common.datepicker
+package com.kitching.core.common.widget
 
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDefaults

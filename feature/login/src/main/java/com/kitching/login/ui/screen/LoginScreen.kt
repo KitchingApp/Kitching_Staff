@@ -33,9 +33,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
-import com.kitching.core.common.CommonState
-import com.kitching.core.common.ProgressIndicatorScreen
-import com.kitching.core.common.updateUserInfo
+import com.kitching.core.common.commonstate.CommonState
+import com.kitching.core.common.appresultscreen.ProgressIndicatorScreen
+import com.kitching.core.common.commonstate.updateUserInfo
 import com.kitching.core.designsystem.theme.NeutralGray0
 import com.kitching.core.designsystem.theme.NeutralGray300
 import com.kitching.core.designsystem.theme.NeutralGray800

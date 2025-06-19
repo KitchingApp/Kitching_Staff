@@ -1,4 +1,4 @@
-package com.kitching.core.common.tabui
+package com.kitching.core.common.widget
 
 import androidx.compose.runtime.Composable
 

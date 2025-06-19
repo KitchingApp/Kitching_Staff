@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.kitching.core.common.dialog.CommonDialogComponent
+import com.kitching.core.common.widget.CommonDialogComponent
 import com.kitching.core.designsystem.theme.H5
 import com.kitching.core.designsystem.theme.NeutralGray800
 import com.kitching.domain.entities.ScheduleTime

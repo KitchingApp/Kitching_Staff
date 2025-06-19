@@ -1,4 +1,4 @@
-package com.kitching.core.common
+package com.kitching.core.common.widget
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar

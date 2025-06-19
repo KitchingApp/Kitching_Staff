@@ -1,4 +1,4 @@
-package com.kitching.core.common
+package com.kitching.core.common.commonstate
 
 import com.kitching.domain.entities.Team
 import com.kitching.domain.entities.User

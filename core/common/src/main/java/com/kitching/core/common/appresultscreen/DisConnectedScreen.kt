@@ -1,4 +1,4 @@
-package com.kitching.core.common
+package com.kitching.core.common.appresultscreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import com.kitching.core.common.R
 import com.kitching.core.designsystem.theme.Body1
 import com.kitching.core.designsystem.theme.Caption1_m
 import com.kitching.core.designsystem.theme.H4

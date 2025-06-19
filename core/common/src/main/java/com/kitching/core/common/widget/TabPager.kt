@@ -1,4 +1,4 @@
-package com.kitching.core.common.tabui
+package com.kitching.core.common.widget
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.pager.HorizontalPager

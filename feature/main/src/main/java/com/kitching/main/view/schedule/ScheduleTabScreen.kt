@@ -5,9 +5,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.kitching.core.common.ActionIconInfo
-import com.kitching.core.common.CommonState
-import com.kitching.core.common.NavigationIconInfo
+import com.kitching.core.common.commonstate.ActionIconInfo
+import com.kitching.core.common.commonstate.CommonState
+import com.kitching.core.common.commonstate.NavigationIconInfo
 import com.kitching.core.designsystem.theme.PrimaryGreen300
 import com.kitching.main.view.schedule.calendar.Calendar
 import com.kitching.main.view.schedule.calendar.rememberCalendarState

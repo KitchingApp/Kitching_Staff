@@ -1,4 +1,6 @@
-package com.kitching.core.common
+package com.kitching.core.common.appresultscreen
+
+import com.kitching.core.common.R
 
 class ProgressIndicatorItem(val image: Int, val title: Int) {
     companion object {

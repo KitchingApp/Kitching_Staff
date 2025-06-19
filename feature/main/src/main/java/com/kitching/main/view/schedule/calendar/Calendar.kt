@@ -26,8 +26,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.kitching.core.common.AppResultHandler
-import com.kitching.core.common.CommonState
+import com.kitching.core.common.appresultscreen.AppResultHandler
+import com.kitching.core.common.commonstate.CommonState
 import com.kitching.main.factory.viewModelFactory
 import com.kitching.main.view.model.ScheduleViewModel
 import java.time.LocalDate

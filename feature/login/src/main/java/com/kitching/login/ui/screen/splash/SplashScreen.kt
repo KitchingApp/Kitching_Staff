@@ -6,10 +6,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.kitching.core.common.CommonState
-import com.kitching.core.common.clearAppInfo
-import com.kitching.core.common.updateAppInfo
-import com.kitching.core.common.updateUserInfo
+import com.kitching.core.common.commonstate.CommonState
+import com.kitching.core.common.commonstate.clearAppInfo
+import com.kitching.core.common.commonstate.updateAppInfo
+import com.kitching.core.common.commonstate.updateUserInfo
 import com.kitching.domain.util.AppResult
 import com.kitching.login.SplashEntryPoint
 import com.kitching.login.ui.model.LoginViewModel

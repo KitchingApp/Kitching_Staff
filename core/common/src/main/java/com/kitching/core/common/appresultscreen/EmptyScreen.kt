@@ -1,4 +1,4 @@
-package com.kitching.core.common
+package com.kitching.core.common.appresultscreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.kitching.core.common.R
 import com.kitching.core.designsystem.theme.H3_m
 import com.kitching.core.designsystem.theme.NeutralGray300
 

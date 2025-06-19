@@ -1,4 +1,4 @@
-package com.kitching.core.common
+package com.kitching.core.common.appresultscreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import coil3.compose.AsyncImage
+import com.kitching.core.common.R
 import com.kitching.core.designsystem.theme.Caption1_m
 import com.kitching.core.designsystem.theme.H1
 import com.kitching.core.designsystem.theme.NeutralGray0
