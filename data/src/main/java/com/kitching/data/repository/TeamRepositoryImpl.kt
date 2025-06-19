@@ -39,32 +39,9 @@ class TeamRepositoryImpl(
         val team = teamDataSource.getTeam(teamId)
         if (team != null) {
             emit(
-                AppResult.Success(team.toDomain()                )
+                AppResult.Success(team.toDomain())
             )
         } else throw Throwable("team is not exists")
-    }.catch {
-        emit(AppResult.Failure(it))
-    }
-
-    override fun createTeam(
-        ownerId: String, teamName: String, teamAmount: Int
-    ) = flow {
-        emit(AppResult.Loading)
-        val inviteCode = UUID.randomUUID().toString().replace("-", "")
-            emit(
-                AppResult.Success(
-                    userTeamDataSource.createUserTeams(
-                        userId = ownerId,
-                        teamId = teamDataSource.createTeam(
-                            inviteCode,
-                            ownerId,
-                            teamName,
-                            teamAmount
-                        ),
-                        staffLevelId = ""
-                    )
-                )
-            )
     }.catch {
         emit(AppResult.Failure(it))
     }

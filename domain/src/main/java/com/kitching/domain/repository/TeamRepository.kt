@@ -8,6 +8,4 @@ interface TeamRepository {
     fun getTeamsByUserId(userId: String): Flow<AppResult<List<Team>>>
 
     fun getTeam(teamId: String): Flow<AppResult<Team>>
-
-    fun createTeam(ownerId: String, teamName: String, teamAmount: Int): Flow<AppResult<Boolean>>
 }
