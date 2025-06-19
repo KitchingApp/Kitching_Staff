@@ -141,9 +141,5 @@ fun TeamSelectScreen(
                 }
             }
         }
-
-        if (teamList is AppResult.Loading) {
-            ProgressIndicatorScreen()
-        }
     }
 }
