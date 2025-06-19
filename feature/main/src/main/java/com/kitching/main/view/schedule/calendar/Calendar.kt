@@ -1,6 +1,5 @@
 package com.kitching.main.view.schedule.calendar
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -28,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kitching.core.common.AppResultHandler
+import com.kitching.core.common.CommonState
 import com.kitching.main.factory.viewModelFactory
 import com.kitching.main.view.model.ScheduleViewModel
 import java.time.LocalDate
@@ -37,15 +37,18 @@ import java.time.YearMonth
 @Composable
 fun Calendar(
     modifier: Modifier = Modifier,
+    commonState: CommonState,
     state: CalendarState,
     onDoubleSelect: (LocalDate) -> Unit,
     viewModel: ScheduleViewModel = viewModel(factory = viewModelFactory)
 ) {
+    val userId = commonState.appInfoState.value.userInfo?.userId.toString()
+    val teamId = commonState.appInfoState.value.teamInfo?.teamId.toString()
+
     val schedules by viewModel.mySchedules.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        viewModel.fetchSchedules("3863591667", "3uM01g5GSz8lC49JA6vq")
-        Log.e("TAG", "Calendar: $schedules")
+        viewModel.fetchSchedules(userId, teamId)
     }
 
     // Pager 페이지가 변경되면 -> "현재 선택일자"와 "새로운 YearMonth"의 날짜를 조정

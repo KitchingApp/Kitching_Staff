@@ -1,5 +1,6 @@
 package com.kitching.main.view.schedule
 
+import com.kitching.main.R
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kitching.core.common.ActionIconInfo
@@ -39,6 +41,9 @@ fun ScheduleDetailScreen(
     date: LocalDate,
     viewModel: ScheduleViewModel = viewModel(factory = viewModelFactory)
 ) {
+    val userId = commonState.appInfoState.value.userInfo?.userId.toString()
+    val teamId = commonState.appInfoState.value.teamInfo?.teamId.toString()
+
     var selectedDate by remember { mutableStateOf(date) }
     var showDatePicker by remember { mutableStateOf(false) }
     var showApplyDialog by remember { mutableStateOf(false) }
@@ -48,12 +53,11 @@ fun ScheduleDetailScreen(
     val scheduleTimesState by viewModel.scheduleTimes.collectAsStateWithLifecycle()
     val applyScheduleResult by viewModel.scheduleResult.collectAsStateWithLifecycle()
 
-    val teamId = "3uM01g5GSz8lC49JA6vq"
-    val userId = "3863591667"
     val scheduleByDate by viewModel.scheduleByDate.collectAsStateWithLifecycle()
 
     commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
         containerColor = NeutralGray0,
+        title = commonState.appInfoState.value.teamInfo?.teamName ?: "",
         navIconInfo = NavigationIconInfo.DRAWER,
         onClickNavIcon = {
             if (commonState.topAppBarState.value.drawerState.isOpen) {
@@ -69,7 +73,6 @@ fun ScheduleDetailScreen(
     )
 
     LaunchedEffect(Unit) {
-//        viewModel.getTeamIdFromDataStore(commonState.navController.context)
         viewModel.getScheduleTimes(teamId)
     }
 

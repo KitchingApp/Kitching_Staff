@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import java.time.DayOfWeek
 import java.time.LocalDate
+import androidx.core.graphics.toColorInt
 
 @Composable
 fun CalendarDay(
@@ -39,7 +40,7 @@ fun CalendarDay(
     isVisibleMonth: Boolean,
     schedules: List<Schedule>,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     // 요일 체크
     val dayOfWeek = date.dayOfWeek
@@ -98,7 +99,7 @@ fun CalendarDay(
                         .fillMaxWidth()
                         .padding(top = 30.dp)
                         .clip(RoundedCornerShape(6.dp))
-                        .background(Color(android.graphics.Color.parseColor(schedule.color))),
+                        .background(Color(schedule.color.toColorInt())),
                     text = schedule.scheduleTimeName,
                     style = Body1,
                     textAlign = TextAlign.Center
