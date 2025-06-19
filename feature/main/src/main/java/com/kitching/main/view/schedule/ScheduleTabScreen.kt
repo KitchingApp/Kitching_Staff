@@ -21,6 +21,7 @@ fun ScheduleTabScreen(
 ) {
     commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
         containerColor = PrimaryGreen300,
+        title = commonState.appInfoState.value.teamInfo?.teamName ?: "",
         navIconInfo = NavigationIconInfo.DRAWER,
         onClickNavIcon = {
             if (commonState.topAppBarState.value.drawerState.isOpen) {
@@ -40,6 +41,7 @@ fun ScheduleTabScreen(
         Calendar(
             modifier = Modifier
                 .fillMaxWidth(),
+            commonState = commonState,
             state = calendarState,
             onDoubleSelect = { selectedDate ->
                 onNavigateToDetail(selectedDate)
