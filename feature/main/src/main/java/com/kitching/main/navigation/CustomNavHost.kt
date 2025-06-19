@@ -41,7 +41,7 @@ fun CustomNavHost(
             RecipeTabScreen(commonState)
         }
         composable(ScreenRouteDef.OrderTab.routeName) {
-            OrderTabScreen(commonState)
+            OrderTabScreen(navController.context, commonState)
         }
         composable(ScreenRouteDef.ChattingTab.routeName) {
             ChatTabScreen(commonState)

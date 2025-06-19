@@ -22,15 +22,16 @@ import com.kitching.core.designsystem.theme.NeutralGray800
 import com.kitching.core.designsystem.theme.ShadowColor
 import com.kitching.core.designsystem.theme.dropShadow
 import com.kitching.domain.entities.OrderCategory
+import androidx.core.graphics.toColorInt
 
 @Composable
 fun CategoryCardItem(
     category: OrderCategory,
     isExpanded: Boolean,
-    onCardClick: () -> Unit
+    onCardClick: () -> Unit,
 ) {
     // 그럼 그냥 16진수로 저장할까??
-    val backgroundColor = Color(android.graphics.Color.parseColor("#${category.color}"))
+    val backgroundColor = Color("#${category.color}".toColorInt())
 
     Card(
         modifier = Modifier
