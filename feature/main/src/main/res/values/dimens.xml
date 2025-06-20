@@ -24,4 +24,11 @@
     <dimen name="order_blur">2dp</dimen>
     <dimen name="order_spread">0dp</dimen>
     <dimen name="order_arrow_size">20dp</dimen>
+
+    <dimen name="drawer_page_width">300dp</dimen>
+    <dimen name="drawer_page_horizontal_padding">20dp</dimen>
+    <dimen name="drawer_page_vertical_padding">50dp</dimen>
+    <dimen name="drawer_vertical_padding">16dp</dimen>
+    <dimen name="drawer_divider_thickness">3dp</dimen>
+    <dimen name="drawer_item_spaced_by">20dp</dimen>
 </resources>

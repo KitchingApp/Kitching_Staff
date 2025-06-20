@@ -26,10 +26,11 @@ import com.kitching.core.designsystem.theme.NeutralGray0
 import com.kitching.core.designsystem.theme.NeutralGray300
 import com.kitching.core.designsystem.theme.NeutralGray800
 import com.kitching.core.designsystem.theme.PrimaryGreen300
+import com.kitching.domain.entities.Team
 
 @Composable
 fun TeamCardItem(
-    teamName: String,
+    team: Team,
     onCardClick: () -> Unit,
 ) {
     OutlinedCard(
@@ -57,7 +58,7 @@ fun TeamCardItem(
                 tint = PrimaryGreen300
             )
             Text(
-                text = teamName,
+                text = team.teamName,
                 style = H3_m.copy(color = NeutralGray800)
             )
         }

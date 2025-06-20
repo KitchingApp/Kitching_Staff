@@ -1,81 +1,138 @@
 package com.kitching.main.view.drawer
 
+import com.kitching.main.R
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.kitching.core.common.appresultscreen.AppResultHandler
+import com.kitching.core.common.appresultscreen.ProgressIndicatorScreen
+import com.kitching.core.common.commonstate.CommonState
+import com.kitching.core.common.commonstate.updateTeamInfo
 import com.kitching.core.common.widget.TeamCardItem
 import com.kitching.core.designsystem.theme.H1
 import com.kitching.core.designsystem.theme.NeutralGray800
 import com.kitching.core.designsystem.theme.PrimaryGreen300
+import com.kitching.domain.entities.Team
+import com.kitching.domain.util.AppResult
+import com.kitching.main.factory.viewModelFactory
+import com.kitching.main.view.model.DrawerViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun CustomDrawer(
     drawerState: DrawerState,
-    content: @Composable () -> Unit
+    commonState: CommonState,
+    context: Context,
+    drawerViewModel: DrawerViewModel = viewModel(factory = viewModelFactory),
+    content: @Composable () -> Unit,
 ) {
-    val teamListMockData = listOf(
-        "A 레스토랑",
-        "B 레스토랑",
-        "C 레스토랑",
-        "D 레스토랑",
-        "E 레스토랑"
-    )
+    val userId = commonState.appInfoState.value.userInfo?.userId.toString()
+    val currentTeamId = commonState.appInfoState.value.teamInfo?.teamId.toString()
+
+    val teamListResult by drawerViewModel.teamListResult.collectAsStateWithLifecycle()
+    val teamChangeResult by drawerViewModel.teamChangeResult.collectAsStateWithLifecycle()
+
+    LaunchedEffect(userId) {
+        drawerViewModel.getTeamListByUserId(userId)
+    }
+
+    LaunchedEffect(teamChangeResult) {
+        when (teamChangeResult) {
+            is AppResult.Success<*> -> {
+                val newTeam = (teamChangeResult as AppResult.Success<Team>).data
+                val message = context.getString(R.string.drawer_team_change_success, newTeam.teamName)
+
+                commonState.updateTeamInfo(newTeam)
+                commonState.snackBarState.showSnackbar(message)
+                commonState.scope.launch {
+                    drawerState.close()
+                }
+            }
+            is AppResult.Failure -> {
+                val message = context.getString(R.string.drawer_team_change_fail)
+                commonState.snackBarState.showSnackbar(message)
+            }
+            else -> {}
+        }
+    }
 
     ModalNavigationDrawer(
         drawerContent = {
-            ModalDrawerSheet(
-            ) {
+            ModalDrawerSheet {
                 Column(
                     modifier = Modifier
-                        .width(300.dp)
-                        .padding(20.dp, 50.dp),
+                        .width(dimensionResource(R.dimen.drawer_page_width))
+                        .padding(dimensionResource(R.dimen.drawer_page_horizontal_padding), dimensionResource(R.dimen.drawer_page_vertical_padding)),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Column (
-                        modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp)
-                    ) {
-                        Text(
-                            modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
-                            text = "팀 리스트",
-                            style = H1.copy(color = NeutralGray800)
-                        )
-                        HorizontalDivider(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            thickness = 3.dp,
-                            color = PrimaryGreen300
-                        )
-                    }
-                    LazyColumn(
-                        modifier = Modifier.fillMaxWidth().weight(1f),
-                        verticalArrangement = Arrangement.spacedBy(20.dp)
-                    ) {
-                        itemsIndexed(teamListMockData) { index, team ->
-                            TeamCardItem(
-                                teamName = team,
-                                onCardClick = {}
-                            )
+                    AppResultHandler(
+                        state = teamListResult,
+                        onSuccess = { teamList ->
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = dimensionResource(R.dimen.drawer_vertical_padding))
+                            ) {
+                                Text(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = dimensionResource(R.dimen.drawer_vertical_padding)),
+                                    text = stringResource(R.string.drawer_team_list),
+                                    style = H1.copy(color = NeutralGray800)
+                                )
+                                HorizontalDivider(
+                                    modifier = Modifier
+                                        .fillMaxWidth(),
+                                    thickness = dimensionResource(R.dimen.drawer_divider_thickness),
+                                    color = PrimaryGreen300
+                                )
+                            }
+                            LazyColumn(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .weight(1f),
+                                verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.drawer_item_spaced_by))
+                            ) {
+                                items(
+                                    items = teamList.filter { it.teamId != currentTeamId },
+                                    key = { team -> team.teamId }
+                                ) { team ->
+                                    TeamCardItem(team) {
+                                        drawerViewModel.changeTeam(context, team.teamId)
+                                    }
+                                }
+                            }
                         }
-                    }
+                    )
                 }
             }
         },
         drawerState = drawerState
     ) {
         content()
+    }
+
+    if (teamChangeResult is AppResult.Loading) {
+        ProgressIndicatorScreen()
     }
 }

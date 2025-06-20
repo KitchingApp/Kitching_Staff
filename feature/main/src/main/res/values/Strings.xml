@@ -11,4 +11,8 @@
     <string name="schedule_apply_fail">스케쥴을 신청에 실패하였습니다. 잠시 후 다시 시도해주세요.</string>
 
     <string name="order_main_text">발주 카테고리</string>
+
+    <string name="drawer_team_list">팀 리스트</string>
+    <string name="drawer_team_change_success">%s 팀으로 변경되었습니다.</string>
+    <string name="drawer_team_change_fail">팀 변경에 실패하였습니다. 잠시 후 다시 시도해주세요.</string>
 </resources>

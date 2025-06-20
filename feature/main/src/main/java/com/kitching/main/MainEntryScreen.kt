@@ -17,15 +17,9 @@ import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.widget.CustomNavigationBar
 import com.kitching.core.common.CustomTopAppBar
 import com.kitching.core.common.commonstate.NavigationIconInfo
-import com.kitching.core.common.ScreenRouteDef
 import com.kitching.core.designsystem.theme.NeutralGray0
-import com.kitching.data.PreferencesDataSource
-import com.kitching.domain.util.AppResult
 import com.kitching.main.navigation.CustomNavHost
 import com.kitching.main.view.drawer.CustomDrawer
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @Composable
@@ -41,6 +35,8 @@ fun EntryPointScreen(
 
     CustomDrawer(
         drawerState = commonState.topAppBarState.value.drawerState,
+        commonState = commonState,
+        context = appNavController.context,
         ) {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
