@@ -35,13 +35,13 @@ import com.kitching.domain.entities.Team
 import com.kitching.domain.util.AppResult
 import com.kitching.main.factory.viewModelFactory
 import com.kitching.main.view.model.DrawerViewModel
-import kotlinx.coroutines.launch
 
 @Composable
 fun CustomDrawer(
     drawerState: DrawerState,
     commonState: CommonState,
     context: Context,
+    changeTeamId: () -> Unit,
     drawerViewModel: DrawerViewModel = viewModel(factory = viewModelFactory),
     content: @Composable () -> Unit,
 ) {
@@ -63,6 +63,7 @@ fun CustomDrawer(
 
                 commonState.updateTeamInfo(newTeam)
                 drawerState.close()
+                changeTeamId()
                 commonState.snackBarState.showSnackbar(message)
             }
             is AppResult.Failure -> {
