@@ -62,10 +62,8 @@ fun CustomDrawer(
                 val message = context.getString(R.string.drawer_team_change_success, newTeam.teamName)
 
                 commonState.updateTeamInfo(newTeam)
+                drawerState.close()
                 commonState.snackBarState.showSnackbar(message)
-                commonState.scope.launch {
-                    drawerState.close()
-                }
             }
             is AppResult.Failure -> {
                 val message = context.getString(R.string.drawer_team_change_fail)
