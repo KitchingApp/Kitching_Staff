@@ -29,6 +29,7 @@ import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.updateTeamInfo
 import com.kitching.core.common.widget.TeamCardItem
 import com.kitching.core.designsystem.theme.H1
+import com.kitching.core.designsystem.theme.NeutralGray0
 import com.kitching.core.designsystem.theme.NeutralGray800
 import com.kitching.core.designsystem.theme.PrimaryGreen300
 import com.kitching.domain.entities.Team
@@ -76,7 +77,9 @@ fun CustomDrawer(
 
     ModalNavigationDrawer(
         drawerContent = {
-            ModalDrawerSheet {
+            ModalDrawerSheet(
+                drawerContainerColor = NeutralGray0,
+            ) {
                 Column(
                     modifier = Modifier
                         .width(dimensionResource(R.dimen.drawer_page_width))
