@@ -74,7 +74,7 @@ fun OrderTabScreen(
         actionIconInfo = ActionIconInfo.NULL,
     )
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(teamId) {
         viewModel.fetchOrderCategories(teamId)
         viewModel.fetchOrderItems(teamId)
     }
