@@ -26,9 +26,12 @@
     <dimen name="order_arrow_size">20dp</dimen>
 
     <dimen name="drawer_page_width">300dp</dimen>
-    <dimen name="drawer_page_horizontal_padding">20dp</dimen>
-    <dimen name="drawer_page_vertical_padding">5dp</dimen>
-    <dimen name="drawer_vertical_padding">16dp</dimen>
+    <dimen name="drawer_page_padding">20dp</dimen>
+    <dimen name="drawer_vertical_padding">8dp</dimen>
     <dimen name="drawer_divider_thickness">3dp</dimen>
     <dimen name="drawer_item_spaced_by">20dp</dimen>
+
+    <dimen name="drawer_profile_image_size">120dp</dimen>
+    <dimen name="drawer_profile_border_width">2dp</dimen>
+    <dimen name="drawer_profile_spacing">12dp</dimen>
 </resources>

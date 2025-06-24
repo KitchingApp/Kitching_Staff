@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import com.kitching.core.common.R
 import com.kitching.core.designsystem.theme.H3_m
 import com.kitching.core.designsystem.theme.NeutralGray0
-import com.kitching.core.designsystem.theme.NeutralGray300
 import com.kitching.core.designsystem.theme.NeutralGray800
 import com.kitching.core.designsystem.theme.PrimaryGreen300
 import com.kitching.domain.entities.Team
@@ -35,7 +34,7 @@ fun TeamCardItem(
 ) {
     OutlinedCard(
         modifier = Modifier.fillMaxWidth().height(dimensionResource(R.dimen.team_card_item_height))
-            .border(1.dp, NeutralGray300, RoundedCornerShape(dimensionResource(R.dimen.team_card_item_radius)))
+            .border(1.dp, PrimaryGreen300, RoundedCornerShape(dimensionResource(R.dimen.team_card_item_radius)))
             .clickable {
                 onCardClick()
             },
