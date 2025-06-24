@@ -40,6 +40,7 @@ import com.kitching.core.designsystem.theme.PrimaryGreen300
 import com.kitching.domain.entities.Team
 import com.kitching.domain.util.AppResult
 import com.kitching.main.factory.viewModelFactory
+import com.kitching.main.view.drawer.list.DrawerOtherList
 import com.kitching.main.view.drawer.list.DrawerTeamList
 import com.kitching.main.view.model.DrawerViewModel
 
@@ -160,6 +161,13 @@ fun CustomDrawer(
                             .padding(vertical = dimensionResource(R.dimen.drawer_vertical_padding)),
                         text = stringResource(R.string.drawer_other_list),
                         style = H3_m.copy(color = NeutralGray800)
+                    )
+
+                    DrawerOtherList(
+                        onInviteCodeClick = { },
+                        onNoticeClick = { },
+                        onNotificationClick = { },
+                        onMemberClick = { }
                     )
                 }
             }
