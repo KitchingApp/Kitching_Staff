@@ -96,7 +96,7 @@ fun CustomDrawer(
                 Column(
                     modifier = Modifier
                         .width(dimensionResource(R.dimen.drawer_page_width))
-                        .padding(KitchingDimens.Margin.large),
+                        .padding(KitchingDimens.Margin.medium),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
@@ -154,7 +154,7 @@ fun CustomDrawer(
                     Text(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = KitchingDimens.Margin.small),
+                            .padding(vertical = KitchingDimens.Margin.xSmall),
                         text = stringResource(R.string.drawer_team_list),
                         style = H3_m.copy(color = NeutralGray800)
                     )
@@ -182,7 +182,7 @@ fun CustomDrawer(
                     Text(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = KitchingDimens.Margin.small),
+                            .padding(vertical = KitchingDimens.Margin.xSmall),
                         text = stringResource(R.string.drawer_other_list),
                         style = H3_m.copy(color = NeutralGray800)
                     )
