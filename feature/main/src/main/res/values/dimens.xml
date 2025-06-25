@@ -31,7 +31,8 @@
     <dimen name="drawer_divider_thickness">3dp</dimen>
     <dimen name="drawer_item_spaced_by">20dp</dimen>
 
-    <dimen name="drawer_profile_image_size">120dp</dimen>
-    <dimen name="drawer_profile_border_width">2dp</dimen>
+    <dimen name="drawer_profile_image_size">80dp</dimen>
+    <dimen name="drawer_profile_border_width">1dp</dimen>
     <dimen name="drawer_profile_spacing">12dp</dimen>
+    <dimen name="drawer_alarm_icon_size">24dp</dimen>
 </resources>

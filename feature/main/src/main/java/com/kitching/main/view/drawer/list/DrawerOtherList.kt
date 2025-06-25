@@ -10,19 +10,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import com.kitching.core.common.widget.DrawerOtherItem
+import com.kitching.core.designsystem.theme.KitchingDimens
 
 @Composable
 fun DrawerOtherList(
     onInviteCodeClick: () -> Unit,
     onNoticeClick: () -> Unit,
-    onNotificationClick: () -> Unit,
     onMemberClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = dimensionResource(R.dimen.drawer_vertical_padding)),
-        verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.drawer_item_spaced_by))
+            .padding(vertical = KitchingDimens.Margin.xSmall),
+        verticalArrangement = Arrangement.spacedBy(KitchingDimens.Spacing.large)
     ) {
         DrawerOtherItem(
             text = stringResource(R.string.drawer_other_list_invite_code),
@@ -32,11 +32,6 @@ fun DrawerOtherList(
         DrawerOtherItem(
             text = stringResource(R.string.drawer_other_list_notice),
             onClick = onNoticeClick
-        )
-
-        DrawerOtherItem(
-            text = stringResource(R.string.drawer_other_list_notification),
-            onClick = onNotificationClick
         )
 
         DrawerOtherItem(

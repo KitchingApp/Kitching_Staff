@@ -12,6 +12,7 @@
 
     <string name="order_main_text">발주 카테고리</string>
 
+    <string name="drawer_profile">프로필</string>
     <string name="drawer_team_list">팀 리스트</string>
     <string name="drawer_other_list">Other</string>
     <string name="drawer_empty_team_list">다른 팀이 없습니다.</string>
@@ -19,6 +20,5 @@
     <string name="drawer_team_change_fail">팀 변경에 실패하였습니다. 잠시 후 다시 시도해주세요.</string>
     <string name="drawer_other_list_invite_code">초대코드</string>
     <string name="drawer_other_list_notice">공지사항</string>
-    <string name="drawer_other_list_notification">모든알림</string>
     <string name="drawer_other_list_member">멤버조회</string>
 </resources>

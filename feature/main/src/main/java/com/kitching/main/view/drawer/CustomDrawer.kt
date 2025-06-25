@@ -5,11 +5,12 @@ import android.content.Context
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ModalDrawerSheet
@@ -21,10 +22,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
@@ -32,9 +33,13 @@ import com.kitching.core.common.appresultscreen.AppResultHandler
 import com.kitching.core.common.appresultscreen.ProgressIndicatorScreen
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.updateTeamInfo
+import com.kitching.core.designsystem.theme.H1
 import com.kitching.core.designsystem.theme.H3
 import com.kitching.core.designsystem.theme.H3_m
+import com.kitching.core.designsystem.theme.KitchingDimens
 import com.kitching.core.designsystem.theme.NeutralGray0
+import com.kitching.core.designsystem.theme.NeutralGray300
+import com.kitching.core.designsystem.theme.NeutralGray600
 import com.kitching.core.designsystem.theme.NeutralGray800
 import com.kitching.core.designsystem.theme.PrimaryGreen300
 import com.kitching.domain.entities.Team
@@ -91,38 +96,57 @@ fun CustomDrawer(
                 Column(
                     modifier = Modifier
                         .width(dimensionResource(R.dimen.drawer_page_width))
-                        .padding(dimensionResource(R.dimen.drawer_page_padding)),
+                        .padding(KitchingDimens.Margin.large),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
-                    AsyncImage(
-                        model = userInfo?.userImage ?: R.drawable.img_group,
-                        contentDescription = "프로필 사진",
-                        modifier = Modifier
-                            .size(dimensionResource(R.dimen.drawer_profile_image_size))
-                            .clip(CircleShape)
-                            .align(Alignment.CenterHorizontally)
-                            .border(
-                                width = dimensionResource(R.dimen.drawer_profile_border_width),
-                                color = PrimaryGreen300,
-                                shape = CircleShape
-                            ),
-                        contentScale = ContentScale.Crop
-                    )
-
                     Text(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = dimensionResource(R.dimen.drawer_vertical_padding)),
-                        text = userInfo?.userName ?: "",
-                        style = H3.copy(color = NeutralGray800),
-                        textAlign = TextAlign.Center
+                            .padding(vertical = KitchingDimens.Margin.small),
+                        text = stringResource(R.string.drawer_profile),
+                        style = H1.copy(color = NeutralGray800)
                     )
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(KitchingDimens.Spacing.small)
+                    ) {
+                        AsyncImage(
+                            model = userInfo?.userImage ?: R.drawable.img_group,
+                            contentDescription = "프로필 사진",
+                            modifier = Modifier
+                                .size(dimensionResource(R.dimen.drawer_profile_image_size))
+                                .clip(RoundedCornerShape(KitchingDimens.Corner.small))
+                                .border(
+                                    width = dimensionResource(R.dimen.drawer_profile_border_width),
+                                    color = NeutralGray300,
+                                    shape = RoundedCornerShape(KitchingDimens.Corner.small)
+                                ),
+                            contentScale = ContentScale.Crop
+                        )
+
+                        Text(
+                            modifier = Modifier.weight(1f),
+                            text = userInfo?.userName ?: "",
+                            style = H3.copy(color = NeutralGray800),
+                        )
+
+                        // 아이콘 수정 예정
+                        AsyncImage(
+                            modifier = Modifier.size(dimensionResource(R.dimen.drawer_alarm_icon_size)),
+                            model = R.drawable.icon_edit,
+                            colorFilter = ColorFilter.tint(NeutralGray600),
+                            contentDescription = "알림"
+                        )
+                    }
 
                     HorizontalDivider(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = dimensionResource(R.dimen.drawer_vertical_padding)),
+                            .padding(vertical = KitchingDimens.Margin.medium),
                         thickness = dimensionResource(R.dimen.drawer_divider_thickness),
                         color = PrimaryGreen300
                     )
@@ -130,7 +154,7 @@ fun CustomDrawer(
                     Text(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = dimensionResource(R.dimen.drawer_vertical_padding)),
+                            .padding(vertical = KitchingDimens.Margin.small),
                         text = stringResource(R.string.drawer_team_list),
                         style = H3_m.copy(color = NeutralGray800)
                     )
@@ -150,7 +174,7 @@ fun CustomDrawer(
                     HorizontalDivider(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = dimensionResource(R.dimen.drawer_vertical_padding)),
+                            .padding(vertical = KitchingDimens.Margin.small),
                         thickness = dimensionResource(R.dimen.drawer_divider_thickness),
                         color = PrimaryGreen300
                     )
@@ -158,7 +182,7 @@ fun CustomDrawer(
                     Text(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = dimensionResource(R.dimen.drawer_vertical_padding)),
+                            .padding(vertical = KitchingDimens.Margin.small),
                         text = stringResource(R.string.drawer_other_list),
                         style = H3_m.copy(color = NeutralGray800)
                     )
@@ -166,7 +190,6 @@ fun CustomDrawer(
                     DrawerOtherList(
                         onInviteCodeClick = { },
                         onNoticeClick = { },
-                        onNotificationClick = { },
                         onMemberClick = { }
                     )
                 }
