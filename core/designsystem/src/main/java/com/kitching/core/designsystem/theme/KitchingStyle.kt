@@ -9,9 +9,9 @@ object KitchingDimens {
         val xSmall = 8.dp
         val small = 12.dp
         val medium = 16.dp
-        val large = 24.dp
-        val xLarge = 32.dp
-        val xxLarge = 40.dp
+        val large = 20.dp
+        val xLarge = 24.dp
+        val xxLarge = 32.dp
     }
 
     object Margin {
@@ -20,9 +20,9 @@ object KitchingDimens {
         val xSmall = 8.dp
         val small = 12.dp
         val medium = 16.dp
-        val large = 24.dp
-        val xLarge = 32.dp
-        val xxLarge = 40.dp
+        val large = 20.dp
+        val xLarge = 24.dp
+        val xxLarge = 32.dp
 
         object Layout {
             val horizontal = small
@@ -36,10 +36,10 @@ object KitchingDimens {
         val xSmall = 8.dp
         val small = 12.dp
         val medium = 16.dp
-        val large = 24.dp
-        val xLarge = 32.dp
-        val xxLarge = 40.dp
-        val xxxLarge = 52.dp
-        val x4Large = 64.dp
+        val large = 20.dp
+        val xLarge = 24.dp
+        val xxLarge = 32.dp
+        val xxxLarge = 40.dp
+        val x4Large = 52.dp
     }
 }
