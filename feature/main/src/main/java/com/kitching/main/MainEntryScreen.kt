@@ -91,31 +91,6 @@ fun PrepTabScreen(
 }
 
 @Composable
-fun RecipeTabScreen(
-    commonState: CommonState,
-) {
-    commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
-        title = "Kitching",
-        containerColor = NeutralGray0,
-        navIconInfo = NavigationIconInfo.DRAWER,
-        onClickNavIcon = {
-            if (commonState.topAppBarState.value.drawerState.isOpen) {
-                commonState.scope.launch { commonState.topAppBarState.value.drawerState.close() }
-            } else {
-                commonState.scope.launch { commonState.topAppBarState.value.drawerState.open() }
-            }
-        },
-        actionIconInfo = ActionIconInfo.ADD,
-        onClickActionIcon = {
-
-        }
-    )
-    Spacer(modifier = Modifier.height(50.dp))
-
-    Text("RecipeTabScreen")
-}
-
-@Composable
 fun ChatTabScreen(
     commonState: CommonState,
 ) {

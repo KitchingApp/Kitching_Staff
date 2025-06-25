@@ -11,8 +11,8 @@ import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.ScreenRouteDef
 import com.kitching.main.ChatTabScreen
 import com.kitching.main.PrepTabScreen
-import com.kitching.main.RecipeTabScreen
 import com.kitching.main.view.order.OrderTabScreen
+import com.kitching.main.view.recipe.RecipeTabScreen
 import com.kitching.main.view.schedule.ScheduleTabScreen
 
 @Composable
