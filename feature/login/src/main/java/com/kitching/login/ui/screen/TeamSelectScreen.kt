@@ -127,9 +127,12 @@ fun TeamSelectScreen(
                             LazyColumn(
                                 verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.team_card_item_list_gap))
                             ) {
-                                items(teamList) { team ->
+                                items(
+                                    items = teamList,
+                                    key = { team -> team.teamId }
+                                ) { team ->
                                     TeamCardItem(
-                                        teamName = team.teamName
+                                        team = team,
                                     ) {
                                         loginViewModel.saveTeamIdToDataStore(team.teamId, context)
                                     }

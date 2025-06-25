@@ -17,7 +17,14 @@ fun NavGraphBuilder.mainNavGraph(
         startDestination = ScreenRouteDef.Entry.routeName,
     ) {
         composable(ScreenRouteDef.Entry.routeName) {
-            EntryPointScreen(navController, commonState)
+            EntryPointScreen(navController, commonState,
+                changeTeamId = {
+                    navController.navigate(ScreenRouteDef.MainGraph.routeName) {
+                        popUpTo(0) { inclusive = false }
+                        launchSingleTop = true
+                    }
+                }
+            )
         }
     }
 }

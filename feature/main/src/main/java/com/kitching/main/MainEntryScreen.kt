@@ -15,23 +15,18 @@ import androidx.navigation.compose.rememberNavController
 import com.kitching.core.common.commonstate.ActionIconInfo
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.widget.CustomNavigationBar
-import com.kitching.core.common.CustomNavigationDrawer
 import com.kitching.core.common.CustomTopAppBar
 import com.kitching.core.common.commonstate.NavigationIconInfo
-import com.kitching.core.common.ScreenRouteDef
 import com.kitching.core.designsystem.theme.NeutralGray0
-import com.kitching.data.PreferencesDataSource
-import com.kitching.domain.util.AppResult
 import com.kitching.main.navigation.CustomNavHost
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
+import com.kitching.main.view.drawer.CustomDrawer
 import kotlinx.coroutines.launch
 
 @Composable
 fun EntryPointScreen(
     appNavController: NavHostController,
     commonState: CommonState,
+    changeTeamId: () -> Unit,
 ) {
 
     val tabNavController = rememberNavController()
@@ -39,27 +34,14 @@ fun EntryPointScreen(
     val navBackStackEntry by tabNavController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    CustomNavigationDrawer(
+    CustomDrawer(
         drawerState = commonState.topAppBarState.value.drawerState,
-        onLogout = {
-            appNavController.navigate(ScreenRouteDef.Splash.routeName) {
-                CoroutineScope(Dispatchers.IO).launch {
-                    PreferencesDataSource(tabNavController.context).clearUserId()
-                        .collectLatest { clearUserId ->
-                            if (clearUserId is AppResult.Success) {
-                                PreferencesDataSource(tabNavController.context).clearTeamId()
-                                    .collectLatest { clearTeamId ->
-                                        if (clearTeamId is AppResult.Success) {
-                                            popUpTo(ScreenRouteDef.Splash.routeName) {
-                                                inclusive = true
-                                            }
-                                        }
-                                    }
-                            }
-                        }
-                }
-            }
-        }) {
+        commonState = commonState,
+        context = appNavController.context,
+        changeTeamId = {
+            changeTeamId()
+        }
+    ) {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             topBar = {
@@ -85,7 +67,7 @@ fun EntryPointScreen(
 
 @Composable
 fun PrepTabScreen(
-    commonState: CommonState
+    commonState: CommonState,
 ) {
     commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
         title = "Kitching",
@@ -110,7 +92,7 @@ fun PrepTabScreen(
 
 @Composable
 fun RecipeTabScreen(
-    commonState: CommonState
+    commonState: CommonState,
 ) {
     commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
         title = "Kitching",
@@ -135,7 +117,7 @@ fun RecipeTabScreen(
 
 @Composable
 fun ChatTabScreen(
-    commonState: CommonState
+    commonState: CommonState,
 ) {
     commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
         navIconInfo = NavigationIconInfo.DRAWER,

@@ -47,7 +47,7 @@ fun Calendar(
 
     val schedules by viewModel.mySchedules.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(teamId) {
         viewModel.fetchSchedules(userId, teamId)
     }
 
