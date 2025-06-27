@@ -103,7 +103,7 @@ fun CustomDrawer(
                     Text(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = KitchingDimens.Margin.small),
+                            .padding(vertical = KitchingDimens.Margin.xMedium),
                         text = stringResource(R.string.drawer_profile),
                         style = H1.copy(color = NeutralGray800)
                     )
@@ -174,7 +174,7 @@ fun CustomDrawer(
                     HorizontalDivider(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = KitchingDimens.Margin.small),
+                            .padding(vertical = KitchingDimens.Margin.xMedium),
                         thickness = dimensionResource(R.dimen.drawer_divider_thickness),
                         color = PrimaryGreen300
                     )

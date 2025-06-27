@@ -18,14 +18,15 @@ object KitchingDimens {
         val xxxSmall = 2.dp
         val xxSmall = 4.dp
         val xSmall = 8.dp
-        val small = 12.dp
+        val small = 10.dp
+        val xMedium = 12.dp
         val medium = 16.dp
         val large = 20.dp
         val xLarge = 24.dp
         val xxLarge = 32.dp
 
         object Layout {
-            val horizontal = small
+            val horizontal = medium
             val vertical = xSmall
         }
     }

@@ -1,0 +1,78 @@
+package com.kitching.core.common.widget
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import com.kitching.core.common.R
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.text.style.TextAlign
+import coil3.compose.AsyncImage
+import com.kitching.core.designsystem.theme.Caption1_R
+import com.kitching.core.designsystem.theme.KitchingDimens
+import com.kitching.core.designsystem.theme.NeutralGray0
+import com.kitching.core.designsystem.theme.NeutralGray800
+import com.kitching.core.designsystem.theme.ShadowColor
+import com.kitching.core.designsystem.theme.dropShadow
+import com.kitching.domain.entities.Recipe
+
+@Composable
+fun RecipeCardItem(
+    recipe: Recipe,
+    onCardClick: () -> Unit,
+) {
+    Card(
+        modifier = Modifier
+            .size(
+                width = dimensionResource(R.dimen.recipe_card_item_width),
+                height = dimensionResource(R.dimen.recipe_card_item_height)
+            )
+            .dropShadow(
+                RoundedCornerShape(KitchingDimens.Corner.xSmall),
+                ShadowColor,
+                blur = dimensionResource(R.dimen.recipe_card_item_blur)
+            )
+            .clickable { onCardClick() },
+        shape = RoundedCornerShape(KitchingDimens.Corner.xSmall)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(NeutralGray0, RoundedCornerShape(KitchingDimens.Corner.xSmall)),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            AsyncImage(
+                model = recipe.picture,
+                contentDescription = recipe.recipeName,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(dimensionResource(R.dimen.recipe_card_item_image_height)),
+                contentScale = ContentScale.Crop
+            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(dimensionResource(R.dimen.recipe_card_item_box_height)),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = recipe.recipeName,
+                    style = Caption1_R.copy(color = NeutralGray800),
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
+    }
+}
