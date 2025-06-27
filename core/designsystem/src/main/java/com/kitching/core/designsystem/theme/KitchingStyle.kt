@@ -43,4 +43,10 @@ object KitchingDimens {
         val xxxLarge = 40.dp
         val x4Large = 52.dp
     }
+
+    object Size {
+        val small = 16.dp
+        val medium = 20.dp
+        val large = 24.dp
+    }
 }
