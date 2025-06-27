@@ -1,15 +1,46 @@
 package com.kitching.main.view.recipe
 
+import com.kitching.main.R
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.kitching.core.common.appresultscreen.AppResultHandler
 import com.kitching.core.common.commonstate.ActionIconInfo
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.NavigationIconInfo
+import com.kitching.core.common.widget.SearchTextField
+import com.kitching.core.designsystem.theme.H2
+import com.kitching.core.designsystem.theme.KitchingDimens
+import com.kitching.core.designsystem.theme.KitchingStaffTheme
 import com.kitching.core.designsystem.theme.NeutralGray0
+import com.kitching.core.designsystem.theme.NeutralGray800
+import com.kitching.core.designsystem.theme.defaultHorizontalPadding
+import com.kitching.domain.entities.Recipe
+import com.kitching.main.factory.viewModelFactory
+import com.kitching.main.view.model.RecipeViewModel
+import com.kitching.main.view.recipe.list.RecipeGridList
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
 fun RecipeTabScreen(
     commonState: CommonState,
+    onRecipeClick: (Recipe) -> Unit = {},
+    viewModel: RecipeViewModel = viewModel(factory = viewModelFactory)
 ) {
     commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
         title = commonState.appInfoState.value.teamInfo?.teamName ?: "",
@@ -25,4 +56,72 @@ fun RecipeTabScreen(
         actionIconInfo = ActionIconInfo.NULL,
     )
 
+    val teamId = commonState.appInfoState.value.teamInfo?.teamId.toString()
+    val recipeListState by viewModel.recipeList.collectAsStateWithLifecycle()
+
+    var searchQuery by remember { mutableStateOf("") }
+    var debouncedSearchQuery by remember { mutableStateOf("") }
+
+    LaunchedEffect(teamId) {
+        viewModel.getRecipeListByTeamId(teamId)
+    }
+
+    LaunchedEffect(searchQuery) {
+        delay(500)
+        debouncedSearchQuery = searchQuery
+    }
+
+    KitchingStaffTheme {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = KitchingDimens.Margin.large)
+        ) {
+            Column(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .defaultHorizontalPadding(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        modifier = Modifier.padding(end = KitchingDimens.Margin.medium),
+                        text = stringResource(id = R.string.recipe_search_title),
+                        style = H2.copy(color = NeutralGray800),
+                    )
+
+                    SearchTextField(
+                        searchQuery,
+                        onSearchQueryChange = {
+                            searchQuery = it
+                        }
+                    ) {
+                        debouncedSearchQuery = searchQuery
+                    }
+                }
+
+                AppResultHandler(
+                    state = recipeListState,
+                    onRetry = { viewModel.getRecipeListByTeamId(teamId) },
+                    onSuccess = { recipeList ->
+                        val filteredRecipes = remember(recipeList, debouncedSearchQuery) {
+                            if (debouncedSearchQuery.isEmpty()) {
+                                recipeList
+                            } else {
+                                recipeList.filter { recipe ->
+                                    recipe.recipeName.contains(debouncedSearchQuery, ignoreCase = true)
+                                }
+                            }
+                        }
+
+                        RecipeGridList(filteredRecipes) { recipe ->
+                            onRecipeClick(recipe)
+                        }
+                    }
+                )
+            }
+        }
+    }
 }
