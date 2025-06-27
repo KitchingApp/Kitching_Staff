@@ -54,7 +54,6 @@ fun CustomDrawer(
     drawerState: DrawerState,
     commonState: CommonState,
     context: Context,
-    changeTeamId: () -> Unit,
     drawerViewModel: DrawerViewModel = viewModel(factory = viewModelFactory),
     content: @Composable () -> Unit,
 ) {
@@ -77,7 +76,6 @@ fun CustomDrawer(
 
                 commonState.updateTeamInfo(newTeam)
                 drawerState.close()
-                changeTeamId()
                 commonState.snackBarState.showSnackbar(message)
             }
             is AppResult.Failure -> {

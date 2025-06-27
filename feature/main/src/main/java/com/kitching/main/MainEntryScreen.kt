@@ -26,7 +26,6 @@ import kotlinx.coroutines.launch
 fun EntryPointScreen(
     appNavController: NavHostController,
     commonState: CommonState,
-    changeTeamId: () -> Unit,
 ) {
 
     val tabNavController = rememberNavController()
@@ -38,9 +37,6 @@ fun EntryPointScreen(
         drawerState = commonState.topAppBarState.value.drawerState,
         commonState = commonState,
         context = appNavController.context,
-        changeTeamId = {
-            changeTeamId()
-        }
     ) {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
