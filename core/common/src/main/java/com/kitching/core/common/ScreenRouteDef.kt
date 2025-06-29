@@ -3,33 +3,50 @@ package com.kitching.core.common
 sealed class ScreenRouteDef(val routeName: String) {
     data object Splash : ScreenRouteDef("splash")
 
+    data object LoginGraph : ScreenRouteDef("loginGraph")
     data object Login : ScreenRouteDef("login")
     data object TeamSelect : ScreenRouteDef("teamSelect")
     data object TeamJoin : ScreenRouteDef("teamJoin")
 
-    data object LoginGraph : ScreenRouteDef("loginGraph")
     data object MainGraph : ScreenRouteDef("mainGraph")
-
     data object Entry : ScreenRouteDef("entry")
 
-    data object PrepTab : ScreenRouteDef("prep")
-    data object RecipeTab : ScreenRouteDef("recipe")
-    data object ScheduleTab : ScreenRouteDef("schedule")
-    data object OrderTab : ScreenRouteDef("order")
-    data object ChattingTab : ScreenRouteDef("chatting")
+    sealed class BottomTab(routeName: String) : ScreenRouteDef(routeName) {
+        data object PrepGraph : BottomTab("prepGraph")
+        data object RecipeGraph : BottomTab("recipeGraph")
+        data object ScheduleGraph : BottomTab("scheduleGraph")
+        data object OrderGraph : BottomTab("orderGraph")
+        data object ChattingGraph : BottomTab("chattingGraph")
+        data object OtherGraph : BottomTab("otherGraph")
+    }
 
-    data object Profile : ScreenRouteDef("profile")
-    data object InviteCode : ScreenRouteDef("inviteCode")
-    data object Notice : ScreenRouteDef("notice")
-    data object MemberList : ScreenRouteDef("memberList")
+    sealed class PrepTab(routeName: String) : ScreenRouteDef(routeName) {
+        data object Prep : PrepTab("prep")
+    }
 
-    data object InnerContentGraph : ScreenRouteDef("InnerContentGraph")
+    sealed class RecipeTab(routeName: String) : ScreenRouteDef(routeName) {
+        data object RecipeMain : RecipeTab("recipe")
+        data object RecipeDetail : RecipeTab("recipe/detail")
+    }
 
-    sealed interface InnerContent {
-        data object RecipeDetail : ScreenRouteDef("recipe/detail")
-        data object ScheduleDetail : ScreenRouteDef("schedule/detail")
-        data object ProfileEdit : ScreenRouteDef("edit")
-        data object NoticeDetail : ScreenRouteDef("detail")
-        data object MemberDetail : ScreenRouteDef("detail")
+    sealed class ScheduleTab(routeName: String) : ScreenRouteDef(routeName) {
+        data object ScheduleMain : ScheduleTab("schedule")
+        data object ScheduleDetail : ScheduleTab("schedule/detail")
+    }
+
+    sealed class OrderTab(routeName: String) : ScreenRouteDef(routeName) {
+        data object OrderMain : OrderTab("order")
+    }
+
+    sealed class ChattingTab(routeName: String) : ScreenRouteDef(routeName) {
+        data object ChattingMain : ChattingTab("chatting")
+    }
+
+    sealed class Other(routeName: String) : ScreenRouteDef(routeName) {
+        data object InviteCode : Other("inviteCode")
+        data object Notice : Other("notice")
+        data object NoticeDetail : Other("notice/detail")
+        data object MemberList : Other("member")
+        data object MemberDetail : Other("member/detail")
     }
 }
