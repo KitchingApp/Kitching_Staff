@@ -33,6 +33,7 @@ import com.kitching.core.common.appresultscreen.AppResultHandler
 import com.kitching.core.common.appresultscreen.ProgressIndicatorScreen
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.updateTeamInfo
+import com.kitching.core.common.widget.KitchingHorizontalDivider
 import com.kitching.core.designsystem.theme.H1
 import com.kitching.core.designsystem.theme.H3
 import com.kitching.core.designsystem.theme.H3_m
@@ -141,7 +142,7 @@ fun CustomDrawer(
                         )
                     }
 
-                    HorizontalDivider(
+                    KitchingHorizontalDivider(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = KitchingDimens.Margin.medium),
@@ -169,10 +170,10 @@ fun CustomDrawer(
                         }
                     )
 
-                    HorizontalDivider(
+                    KitchingHorizontalDivider(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = KitchingDimens.Margin.xMedium),
+                            .padding(vertical = KitchingDimens.Margin.medium),
                         thickness = dimensionResource(R.dimen.drawer_divider_thickness),
                         color = PrimaryGreen300
                     )
