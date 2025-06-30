@@ -9,13 +9,13 @@ import com.kitching.core.common.navigation.ScreenRouteDef
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.navigation.parcelableType
 import com.kitching.domain.entities.Recipe
+import com.kitching.main.view.recipe.RecipeDetailScreen
 import com.kitching.main.view.recipe.RecipeTabScreen
 import kotlin.reflect.typeOf
 
 fun NavGraphBuilder.recipeNavGraph(commonState: CommonState, navController: NavHostController) {
-    navigation(
-        route = ScreenRouteDef.BottomTab.RecipeGraph.routeName,
-        startDestination = ScreenRouteDef.RecipeTab.RecipeMain.routeName,
+    navigation<ScreenRouteDef.BottomTab.RecipeGraph>(
+        startDestination = ScreenRouteDef.RecipeTab.RecipeMain
     ) {
         composable<ScreenRouteDef.RecipeTab.RecipeMain> {
             RecipeTabScreen(commonState) { recipe ->
@@ -30,6 +30,9 @@ fun NavGraphBuilder.recipeNavGraph(commonState: CommonState, navController: NavH
         ) { backStackEntry ->
             val recipe = backStackEntry.toRoute<ScreenRouteDef.RecipeTab.RecipeDetail>()
 
+            RecipeDetailScreen(commonState, recipe.recipe) {
+                navController.popBackStack()
+            }
         }
     }
 }

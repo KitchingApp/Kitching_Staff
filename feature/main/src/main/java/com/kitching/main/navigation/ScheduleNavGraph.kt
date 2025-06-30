@@ -12,9 +12,8 @@ import com.kitching.main.view.schedule.ScheduleTabScreen
 import java.time.LocalDate
 
 fun NavGraphBuilder.scheduleNavGraph(commonState: CommonState, navController: NavHostController) {
-    navigation(
-        route = ScreenRouteDef.BottomTab.ScheduleGraph.routeName,
-        startDestination = ScreenRouteDef.ScheduleTab.ScheduleMain.routeName
+    navigation<ScreenRouteDef.BottomTab.ScheduleGraph>(
+        startDestination = ScreenRouteDef.ScheduleTab.ScheduleMain
     ) {
         composable<ScreenRouteDef.ScheduleTab.ScheduleMain> {
             ScheduleTabScreen(commonState) { selectedDate ->

@@ -17,7 +17,7 @@ fun CustomNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = ScreenRouteDef.BottomTab.ScheduleGraph.routeName,
+        startDestination = ScreenRouteDef.BottomTab.ScheduleGraph,
         modifier = Modifier.padding(paddingValues = paddingValues)
     ) {
         prepNavGraph(commonState)

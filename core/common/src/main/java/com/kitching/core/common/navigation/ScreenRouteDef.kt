@@ -14,12 +14,19 @@ sealed class ScreenRouteDef(val routeName: String) {
     data object MainGraph : ScreenRouteDef("mainGraph")
     data object Entry : ScreenRouteDef("entry")
 
+    @Serializable
     sealed class BottomTab(routeName: String) : ScreenRouteDef(routeName) {
+        @Serializable
         data object PrepGraph : BottomTab("prepGraph")
+        @Serializable
         data object RecipeGraph : BottomTab("recipeGraph")
+        @Serializable
         data object ScheduleGraph : BottomTab("scheduleGraph")
+        @Serializable
         data object OrderGraph : BottomTab("orderGraph")
+        @Serializable
         data object ChattingGraph : BottomTab("chattingGraph")
+        @Serializable
         data object OtherGraph : BottomTab("otherGraph")
     }
 
@@ -27,6 +34,7 @@ sealed class ScreenRouteDef(val routeName: String) {
         data object Prep : PrepTab("prep")
     }
 
+    @Serializable
     sealed class RecipeTab(routeName: String) : ScreenRouteDef(routeName) {
         @Serializable
         data object RecipeMain : RecipeTab("recipe")
@@ -35,6 +43,7 @@ sealed class ScreenRouteDef(val routeName: String) {
         data class RecipeDetail(val recipe: Recipe) : RecipeTab("recipe/detail")
     }
 
+    @Serializable
     sealed class ScheduleTab(routeName: String) : ScreenRouteDef(routeName) {
         @Serializable
         data object ScheduleMain : ScheduleTab("schedule")
