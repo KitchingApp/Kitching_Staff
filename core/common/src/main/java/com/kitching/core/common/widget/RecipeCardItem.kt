@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import coil3.compose.AsyncImage
 import com.kitching.core.designsystem.theme.Caption1_R
@@ -58,7 +59,10 @@ fun RecipeCardItem(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(dimensionResource(R.dimen.recipe_card_item_image_height)),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
+                placeholder = painterResource(R.drawable.recipe_loding_img),
+                error = painterResource(R.drawable.recipe_error_img),
+                fallback = painterResource(R.drawable.recipe_empty_img)
             )
 
             Box(
