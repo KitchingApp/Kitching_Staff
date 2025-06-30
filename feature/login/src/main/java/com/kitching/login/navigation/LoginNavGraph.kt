@@ -5,7 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.kitching.core.common.commonstate.CommonState
-import com.kitching.core.common.ScreenRouteDef
+import com.kitching.core.common.navigation.ScreenRouteDef
 import com.kitching.login.ui.screen.InviteCodeScreen
 import com.kitching.login.ui.screen.LoginScreen
 import com.kitching.login.ui.screen.TeamSelectScreen

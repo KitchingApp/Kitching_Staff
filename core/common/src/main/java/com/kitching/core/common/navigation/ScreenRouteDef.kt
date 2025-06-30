@@ -1,4 +1,4 @@
-package com.kitching.core.common
+package com.kitching.core.common.navigation
 
 sealed class ScreenRouteDef(val routeName: String) {
     data object Splash : ScreenRouteDef("splash")
