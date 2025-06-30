@@ -1,19 +1,20 @@
 package com.kitching.main.view.recipe
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
 import com.kitching.core.common.commonstate.ActionIconInfo
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.NavigationIconInfo
-import com.kitching.core.designsystem.theme.H2
+import com.kitching.core.designsystem.theme.KitchingDimens
+import com.kitching.core.designsystem.theme.KitchingStaffTheme
 import com.kitching.core.designsystem.theme.NeutralGray0
 import com.kitching.domain.entities.Recipe
+import com.kitching.main.view.recipe.detailsection.RecipeImageSection
+import com.kitching.main.view.recipe.detailsection.RecipeIngredientsSection
+import com.kitching.main.view.recipe.detailsection.RecipeStepsSection
 
 @Composable
 fun RecipeDetailScreen(
@@ -29,33 +30,22 @@ fun RecipeDetailScreen(
         actionIconInfo = ActionIconInfo.NULL,
     )
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(20.dp)
-    ) {
-        AsyncImage(
-            model = recipe.picture,
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxSize()
-                .weight(1f)
-        )
-        Text(
-            text = "레시피 ID: ${recipe.recipeId}",
-            style = H2
-        )
-        Text(
-            text = "레시피 이름: ${recipe.recipeName}",
-            style = H2
-        )
-        Text(
-            text = "재료 개수: ${recipe.ingredient.size}개",
-            style = H2
-        )
-        Text(
-            text = "단계 수: ${recipe.steps.size}단계",
-            style = H2
-        )
+    KitchingStaffTheme {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(KitchingDimens.Spacing.xSmall)
+        ) {
+            item {
+                RecipeImageSection(recipe.picture, recipe.recipeName)
+            }
+
+            item {
+                RecipeIngredientsSection(recipe.ingredient)
+            }
+
+            item {
+                RecipeStepsSection(recipe.steps)
+            }
+        }
     }
 }

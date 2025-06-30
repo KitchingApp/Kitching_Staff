@@ -14,6 +14,8 @@
 
     <string name="recipe_empty_screen_message">등록된 레시피가 없습니다.</string>
     <string name="recipe_search_title">레시피</string>
+    <string name="recipe_detail_ingredient">재료</string>
+    <string name="recipe_detail_step">레시피 순서</string>
 
     <string name="drawer_profile">프로필</string>
     <string name="drawer_team_list">팀 리스트</string>
