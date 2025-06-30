@@ -9,11 +9,10 @@ import com.kitching.core.common.commonstate.CommonState
 import com.kitching.main.view.order.OrderTabScreen
 
 fun NavGraphBuilder.orderNavGraph(commonState: CommonState, navController: NavHostController) {
-    navigation(
-        route = ScreenRouteDef.BottomTab.OrderGraph.routeName,
-        startDestination = ScreenRouteDef.OrderTab.OrderMain.routeName
+    navigation<ScreenRouteDef.BottomTab.OrderGraph>(
+        startDestination = ScreenRouteDef.OrderTab.OrderMain
     ) {
-        composable(ScreenRouteDef.OrderTab.OrderMain.routeName) {
+        composable<ScreenRouteDef.OrderTab.OrderMain> {
             OrderTabScreen(navController.context, commonState)
         }
     }

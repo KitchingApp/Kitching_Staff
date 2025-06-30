@@ -8,11 +8,10 @@ import com.kitching.core.common.commonstate.CommonState
 import com.kitching.main.ChatTabScreen
 
 fun NavGraphBuilder.chattingNavGraph(commonState: CommonState) {
-    navigation(
-        route = ScreenRouteDef.BottomTab.ChattingGraph.routeName,
-        startDestination = ScreenRouteDef.ChattingTab.ChattingMain.routeName
+    navigation<ScreenRouteDef.BottomTab.ChattingGraph>(
+        startDestination = ScreenRouteDef.ChattingTab.ChattingMain
     ) {
-        composable(ScreenRouteDef.ChattingTab.ChattingMain.routeName) {
+        composable<ScreenRouteDef.ChattingTab.ChattingMain> {
             ChatTabScreen(commonState)
         }
     }

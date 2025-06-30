@@ -12,11 +12,10 @@ fun NavGraphBuilder.mainNavGraph(
     navController: NavHostController,
     commonState: CommonState,
 ) {
-    navigation(
-        route = ScreenRouteDef.MainGraph.routeName,
-        startDestination = ScreenRouteDef.Entry.routeName,
+    navigation<ScreenRouteDef.MainGraph>(
+        startDestination = ScreenRouteDef.Entry,
     ) {
-        composable(ScreenRouteDef.Entry.routeName) {
+        composable<ScreenRouteDef.Entry> {
             EntryPointScreen(navController, commonState)
         }
     }

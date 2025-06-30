@@ -18,7 +18,7 @@ fun NavGraphBuilder.scheduleNavGraph(commonState: CommonState, navController: Na
         composable<ScreenRouteDef.ScheduleTab.ScheduleMain> {
             ScheduleTabScreen(commonState) { selectedDate ->
                 navController.navigate(
-                    ScreenRouteDef.ScheduleTab.ScheduleDetail(selectedDate.toString()).routeName
+                    ScreenRouteDef.ScheduleTab.ScheduleDetail(selectedDate.toString())
                 )
             }
         }

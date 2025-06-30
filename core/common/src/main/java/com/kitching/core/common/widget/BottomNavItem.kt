@@ -11,8 +11,8 @@ import com.kitching.core.common.navigation.ScreenRouteDef
 data class BottomNavItem(
     val tabName: String = "",
     val icon: ImageVector = Icons.Default.Home,
-    val routeName: String = "",
-    val graphRoute: String = ""
+    val routeName: ScreenRouteDef = ScreenRouteDef.ScheduleTab.ScheduleMain,
+    val graphRoute: ScreenRouteDef = ScreenRouteDef.BottomTab.ScheduleGraph
 ) {
     @Composable
     fun renderBottomNavItems(): List<BottomNavItem> {
@@ -20,32 +20,32 @@ data class BottomNavItem(
             BottomNavItem(
                 tabName = "프렙",
                 icon = ImageVector.vectorResource(R.drawable.icon_bottom_nav_prep),
-                routeName = ScreenRouteDef.PrepTab.Prep.routeName,
-                graphRoute = ScreenRouteDef.BottomTab.PrepGraph.routeName
+                routeName = ScreenRouteDef.PrepTab.Prep,
+                graphRoute = ScreenRouteDef.BottomTab.PrepGraph
             ),
             BottomNavItem(
                 tabName = "레시피",
                 icon = ImageVector.vectorResource(R.drawable.icon_bottom_nav_recipe),
-                routeName = ScreenRouteDef.RecipeTab.RecipeMain.routeName,
-                graphRoute = ScreenRouteDef.BottomTab.RecipeGraph.routeName
+                routeName = ScreenRouteDef.RecipeTab.RecipeMain,
+                graphRoute = ScreenRouteDef.BottomTab.RecipeGraph
             ),
             BottomNavItem(
                 tabName = "스케줄",
                 icon = ImageVector.vectorResource(R.drawable.icon_bottom_nav_schedule),
-                routeName = ScreenRouteDef.ScheduleTab.ScheduleMain.routeName,
-                graphRoute = ScreenRouteDef.BottomTab.ScheduleGraph.routeName
+                routeName = ScreenRouteDef.ScheduleTab.ScheduleMain,
+                graphRoute = ScreenRouteDef.BottomTab.ScheduleGraph
             ),
             BottomNavItem(
                 tabName = "발주목록",
                 icon = ImageVector.vectorResource(R.drawable.icon_bottom_nav_order),
-                routeName = ScreenRouteDef.OrderTab.OrderMain.routeName,
-                graphRoute = ScreenRouteDef.BottomTab.OrderGraph.routeName
+                routeName = ScreenRouteDef.OrderTab.OrderMain,
+                graphRoute = ScreenRouteDef.BottomTab.OrderGraph
             ),
             BottomNavItem(
                 tabName = "Chatting",
                 icon = ImageVector.vectorResource(R.drawable.icon_bottom_nav_other),
-                routeName = ScreenRouteDef.ChattingTab.ChattingMain.routeName,
-                graphRoute = ScreenRouteDef.BottomTab.ChattingGraph.routeName
+                routeName = ScreenRouteDef.ChattingTab.ChattingMain,
+                graphRoute = ScreenRouteDef.BottomTab.ChattingGraph
             )
         )
     }

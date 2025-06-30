@@ -3,68 +3,93 @@ package com.kitching.core.common.navigation
 import com.kitching.domain.entities.Recipe
 import kotlinx.serialization.Serializable
 
-sealed class ScreenRouteDef(val routeName: String) {
-    data object Splash : ScreenRouteDef("splash")
-
-    data object LoginGraph : ScreenRouteDef("loginGraph")
-    data object Login : ScreenRouteDef("login")
-    data object TeamSelect : ScreenRouteDef("teamSelect")
-    data object TeamJoin : ScreenRouteDef("teamJoin")
-
-    data object MainGraph : ScreenRouteDef("mainGraph")
-    data object Entry : ScreenRouteDef("entry")
+@Serializable
+sealed class ScreenRouteDef {
+    @Serializable
+    data object Splash : ScreenRouteDef()
 
     @Serializable
-    sealed class BottomTab(routeName: String) : ScreenRouteDef(routeName) {
-        @Serializable
-        data object PrepGraph : BottomTab("prepGraph")
-        @Serializable
-        data object RecipeGraph : BottomTab("recipeGraph")
-        @Serializable
-        data object ScheduleGraph : BottomTab("scheduleGraph")
-        @Serializable
-        data object OrderGraph : BottomTab("orderGraph")
-        @Serializable
-        data object ChattingGraph : BottomTab("chattingGraph")
-        @Serializable
-        data object OtherGraph : BottomTab("otherGraph")
-    }
+    data object LoginGraph : ScreenRouteDef()
 
-    sealed class PrepTab(routeName: String) : ScreenRouteDef(routeName) {
-        data object Prep : PrepTab("prep")
+    @Serializable
+    data object MainGraph : ScreenRouteDef()
+
+    @Serializable
+    data object Entry : ScreenRouteDef()
+
+    @Serializable
+    sealed class Login : ScreenRouteDef() {
+        @Serializable
+        data object LoginMain : ScreenRouteDef()
+        @Serializable
+        data object TeamSelect : ScreenRouteDef()
+        @Serializable
+        data object TeamJoin : ScreenRouteDef()
     }
 
     @Serializable
-    sealed class RecipeTab(routeName: String) : ScreenRouteDef(routeName) {
+    sealed class BottomTab : ScreenRouteDef() {
         @Serializable
-        data object RecipeMain : RecipeTab("recipe")
-
+        data object PrepGraph : BottomTab()
         @Serializable
-        data class RecipeDetail(val recipe: Recipe) : RecipeTab("recipe/detail")
+        data object RecipeGraph : BottomTab()
+        @Serializable
+        data object ScheduleGraph : BottomTab()
+        @Serializable
+        data object OrderGraph : BottomTab()
+        @Serializable
+        data object ChattingGraph : BottomTab()
+        @Serializable
+        data object OtherGraph : BottomTab()
     }
 
     @Serializable
-    sealed class ScheduleTab(routeName: String) : ScreenRouteDef(routeName) {
+    sealed class PrepTab : ScreenRouteDef() {
         @Serializable
-        data object ScheduleMain : ScheduleTab("schedule")
+        data object Prep : PrepTab()
+    }
+
+    @Serializable
+    sealed class RecipeTab : ScreenRouteDef() {
+        @Serializable
+        data object RecipeMain : RecipeTab()
 
         @Serializable
-        data class ScheduleDetail(val date: String) : ScheduleTab("schedule/detail")
+        data class RecipeDetail(val recipe: Recipe) : RecipeTab()
     }
 
-    sealed class OrderTab(routeName: String) : ScreenRouteDef(routeName) {
-        data object OrderMain : OrderTab("order")
+    @Serializable
+    sealed class ScheduleTab : ScreenRouteDef() {
+        @Serializable
+        data object ScheduleMain : ScheduleTab()
+
+        @Serializable
+        data class ScheduleDetail(val date: String) : ScheduleTab()
     }
 
-    sealed class ChattingTab(routeName: String) : ScreenRouteDef(routeName) {
-        data object ChattingMain : ChattingTab("chatting")
+    @Serializable
+    sealed class OrderTab : ScreenRouteDef() {
+        @Serializable
+        data object OrderMain : OrderTab()
     }
 
-    sealed class Other(routeName: String) : ScreenRouteDef(routeName) {
-        data object InviteCode : Other("inviteCode")
-        data object Notice : Other("notice")
-        data object NoticeDetail : Other("notice/detail")
-        data object MemberList : Other("member")
-        data object MemberDetail : Other("member/detail")
+    @Serializable
+    sealed class ChattingTab : ScreenRouteDef() {
+        @Serializable
+        data object ChattingMain : ChattingTab()
+    }
+
+    @Serializable
+    sealed class Other : ScreenRouteDef() {
+        @Serializable
+        data object InviteCode : Other()
+        @Serializable
+        data object Notice : Other()
+        @Serializable
+        data object NoticeDetail : Other()
+        @Serializable
+        data object MemberList : Other()
+        @Serializable
+        data object MemberDetail : Other()
     }
 }

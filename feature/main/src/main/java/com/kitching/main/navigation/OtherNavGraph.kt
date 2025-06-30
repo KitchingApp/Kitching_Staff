@@ -8,27 +8,26 @@ import com.kitching.core.common.navigation.ScreenRouteDef
 import com.kitching.core.common.commonstate.CommonState
 
 fun NavGraphBuilder.otherNavGraph(commonState: CommonState, navController: NavHostController) {
-    navigation(
-        route = ScreenRouteDef.BottomTab.OtherGraph.routeName,
-        startDestination = ScreenRouteDef.Other.InviteCode.routeName
+    navigation<ScreenRouteDef.BottomTab.OtherGraph>(
+        startDestination = ScreenRouteDef.Other.InviteCode
     ) {
-        composable(ScreenRouteDef.Other.InviteCode.routeName) {
+        composable<ScreenRouteDef.Other.InviteCode> {
 
         }
 
-        composable(ScreenRouteDef.Other.Notice.routeName) {
+        composable<ScreenRouteDef.Other.Notice> {
 
         }
 
-        composable(ScreenRouteDef.Other.NoticeDetail.routeName) {
+        composable<ScreenRouteDef.Other.NoticeDetail> {
 
         }
 
-        composable(ScreenRouteDef.Other.MemberList.routeName) {
+        composable<ScreenRouteDef.Other.MemberList> {
 
         }
 
-        composable(ScreenRouteDef.Other.MemberDetail.routeName) {
+        composable<ScreenRouteDef.Other.MemberDetail> {
 
         }
     }
