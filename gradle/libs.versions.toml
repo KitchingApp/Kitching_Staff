@@ -24,7 +24,7 @@ coilNetworkOkhttp = "3.0.4"
 runtimeAndroid = "1.7.8"
 v2UserVersion = "2.20.6"
 firebaseBom = "33.10.0"
-protoliteWellKnownTypes = "18.0.0"
+kotlinxSerializationJson = "1.8.1"
 
 
 [libraries]
@@ -55,6 +55,7 @@ coil-svg = { module = "io.coil-kt.coil3:coil-svg", version.ref = "coilSvg" }
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coilCompose" }
 coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coilNetworkOkhttp" }
 androidx-runtime-android = { group = "androidx.compose.runtime", name = "runtime-android", version.ref = "runtimeAndroid" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 sdk-v2-user = { module = "com.kakao.sdk:v2-user", version.ref = "v2UserVersion" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
@@ -67,4 +68,5 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 android-library = { id = "com.android.library", version.ref = "agp" }
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-serialization" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin"}
 
