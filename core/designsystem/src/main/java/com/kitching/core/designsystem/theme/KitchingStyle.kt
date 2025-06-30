@@ -3,6 +3,14 @@ package com.kitching.core.designsystem.theme
 import androidx.compose.ui.unit.dp
 
 object KitchingDimens {
+
+    object Border {
+        val xxxSmall = 1.dp
+        val xxSmall = 2.dp
+        val xSmall = 3.dp
+        val small = 4.dp
+        val medium = 5.dp
+    }
     object Corner {
         val xxxSmall = 2.dp
         val xxSmall = 4.dp
@@ -32,9 +40,9 @@ object KitchingDimens {
     }
 
     object Spacing {
-        val xxxSmall = 2.dp
-        val xxSmall = 4.dp
-        val xSmall = 8.dp
+        val xxxSmall = 4.dp
+        val xxSmall = 8.dp
+        val xSmall = 10.dp
         val small = 12.dp
         val medium = 16.dp
         val large = 20.dp

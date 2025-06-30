@@ -146,7 +146,7 @@ fun CustomDrawer(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = KitchingDimens.Margin.medium),
-                        thickness = dimensionResource(R.dimen.drawer_divider_thickness),
+                        thickness = KitchingDimens.Border.xSmall,
                         color = PrimaryGreen300
                     )
 
@@ -174,7 +174,7 @@ fun CustomDrawer(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = KitchingDimens.Margin.medium),
-                        thickness = dimensionResource(R.dimen.drawer_divider_thickness),
+                        thickness = KitchingDimens.Border.xSmall,
                         color = PrimaryGreen300
                     )
 
