@@ -1,5 +1,8 @@
 package com.kitching.core.common.navigation
 
+import com.kitching.domain.entities.Recipe
+import kotlinx.serialization.Serializable
+
 sealed class ScreenRouteDef(val routeName: String) {
     data object Splash : ScreenRouteDef("splash")
 
@@ -25,13 +28,19 @@ sealed class ScreenRouteDef(val routeName: String) {
     }
 
     sealed class RecipeTab(routeName: String) : ScreenRouteDef(routeName) {
+        @Serializable
         data object RecipeMain : RecipeTab("recipe")
-        data object RecipeDetail : RecipeTab("recipe/detail")
+
+        @Serializable
+        data class RecipeDetail(val recipe: Recipe) : RecipeTab("recipe/detail")
     }
 
     sealed class ScheduleTab(routeName: String) : ScreenRouteDef(routeName) {
+        @Serializable
         data object ScheduleMain : ScheduleTab("schedule")
-        data object ScheduleDetail : ScheduleTab("schedule/detail")
+
+        @Serializable
+        data class ScheduleDetail(val date: String) : ScheduleTab("schedule/detail")
     }
 
     sealed class OrderTab(routeName: String) : ScreenRouteDef(routeName) {

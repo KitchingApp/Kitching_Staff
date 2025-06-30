@@ -39,8 +39,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun RecipeTabScreen(
     commonState: CommonState,
-    onRecipeClick: (Recipe) -> Unit = {},
-    viewModel: RecipeViewModel = viewModel(factory = viewModelFactory)
+    viewModel: RecipeViewModel = viewModel(factory = viewModelFactory),
+    onRecipeClick: (Recipe) -> Unit,
 ) {
     commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
         title = commonState.appInfoState.value.teamInfo?.teamName ?: "",
