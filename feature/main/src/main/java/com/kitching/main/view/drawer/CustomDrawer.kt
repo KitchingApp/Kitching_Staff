@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DrawerState
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Text
@@ -33,6 +32,7 @@ import com.kitching.core.common.appresultscreen.AppResultHandler
 import com.kitching.core.common.appresultscreen.ProgressIndicatorScreen
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.updateTeamInfo
+import com.kitching.core.common.widget.KitchingHorizontalDivider
 import com.kitching.core.designsystem.theme.H1
 import com.kitching.core.designsystem.theme.H3
 import com.kitching.core.designsystem.theme.H3_m
@@ -54,7 +54,6 @@ fun CustomDrawer(
     drawerState: DrawerState,
     commonState: CommonState,
     context: Context,
-    changeTeamId: () -> Unit,
     drawerViewModel: DrawerViewModel = viewModel(factory = viewModelFactory),
     content: @Composable () -> Unit,
 ) {
@@ -77,7 +76,6 @@ fun CustomDrawer(
 
                 commonState.updateTeamInfo(newTeam)
                 drawerState.close()
-                changeTeamId()
                 commonState.snackBarState.showSnackbar(message)
             }
             is AppResult.Failure -> {
@@ -103,7 +101,7 @@ fun CustomDrawer(
                     Text(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = KitchingDimens.Margin.small),
+                            .padding(vertical = KitchingDimens.Margin.xMedium),
                         text = stringResource(R.string.drawer_profile),
                         style = H1.copy(color = NeutralGray800)
                     )
@@ -143,11 +141,11 @@ fun CustomDrawer(
                         )
                     }
 
-                    HorizontalDivider(
+                    KitchingHorizontalDivider(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = KitchingDimens.Margin.medium),
-                        thickness = dimensionResource(R.dimen.drawer_divider_thickness),
+                        thickness = KitchingDimens.Border.xSmall,
                         color = PrimaryGreen300
                     )
 
@@ -171,11 +169,11 @@ fun CustomDrawer(
                         }
                     )
 
-                    HorizontalDivider(
+                    KitchingHorizontalDivider(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = KitchingDimens.Margin.small),
-                        thickness = dimensionResource(R.dimen.drawer_divider_thickness),
+                            .padding(vertical = KitchingDimens.Margin.medium),
+                        thickness = KitchingDimens.Border.xSmall,
                         color = PrimaryGreen300
                     )
 

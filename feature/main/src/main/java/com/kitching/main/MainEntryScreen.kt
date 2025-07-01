@@ -26,7 +26,6 @@ import kotlinx.coroutines.launch
 fun EntryPointScreen(
     appNavController: NavHostController,
     commonState: CommonState,
-    changeTeamId: () -> Unit,
 ) {
 
     val tabNavController = rememberNavController()
@@ -38,9 +37,6 @@ fun EntryPointScreen(
         drawerState = commonState.topAppBarState.value.drawerState,
         commonState = commonState,
         context = appNavController.context,
-        changeTeamId = {
-            changeTeamId()
-        }
     ) {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
@@ -88,31 +84,6 @@ fun PrepTabScreen(
     Spacer(modifier = Modifier.height(50.dp))
 
     Text("PrepTabScreen")
-}
-
-@Composable
-fun RecipeTabScreen(
-    commonState: CommonState,
-) {
-    commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
-        title = "Kitching",
-        containerColor = NeutralGray0,
-        navIconInfo = NavigationIconInfo.DRAWER,
-        onClickNavIcon = {
-            if (commonState.topAppBarState.value.drawerState.isOpen) {
-                commonState.scope.launch { commonState.topAppBarState.value.drawerState.close() }
-            } else {
-                commonState.scope.launch { commonState.topAppBarState.value.drawerState.open() }
-            }
-        },
-        actionIconInfo = ActionIconInfo.ADD,
-        onClickActionIcon = {
-
-        }
-    )
-    Spacer(modifier = Modifier.height(50.dp))
-
-    Text("RecipeTabScreen")
 }
 
 @Composable
