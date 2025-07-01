@@ -16,6 +16,9 @@
     <string name="recipe_search_title">레시피</string>
     <string name="recipe_detail_ingredient">재료</string>
     <string name="recipe_detail_step">레시피 순서</string>
+    <string name="recipe_detail_once">X1</string>
+    <string name="recipe_detail_twice">X2</string>
+    <string name="recipe_detail_unit">Unit</string>
 
     <string name="drawer_profile">프로필</string>
     <string name="drawer_team_list">팀 리스트</string>

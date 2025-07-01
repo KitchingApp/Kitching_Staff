@@ -49,10 +49,30 @@ fun RecipeIngredientsSection(ingredients: List<Ingredient>) {
                     .padding(KitchingDimens.Margin.small),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Text(text = "X1", style = Caption1_R, textAlign = TextAlign.Center, modifier = Modifier.weight(1f))
-                Text(text = "X2", style = Caption1_R, textAlign = TextAlign.Center, modifier = Modifier.weight(1f))
-                Text(text = "Unit", style = Caption1_R, textAlign = TextAlign.Center, modifier = Modifier.weight(1f))
-                Text(text = "재료", style = Caption1_R, textAlign = TextAlign.Center, modifier = Modifier.weight(2f))
+                Text(
+                    text = stringResource(R.string.recipe_detail_once),
+                    style = Caption1_R,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f)
+                )
+                Text(
+                    text = stringResource(R.string.recipe_detail_twice),
+                    style = Caption1_R,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f)
+                )
+                Text(
+                    text = stringResource(R.string.recipe_detail_unit),
+                    style = Caption1_R,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f)
+                )
+                Text(
+                    text = stringResource(R.string.recipe_detail_ingredient),
+                    style = Caption1_R,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(2f)
+                )
             }
 
             KitchingHorizontalDivider(
@@ -67,10 +87,30 @@ fun RecipeIngredientsSection(ingredients: List<Ingredient>) {
                         .padding(KitchingDimens.Margin.small),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    Text(text = "${ingredient.once}", style = Caption1_R, textAlign = TextAlign.Center, modifier = Modifier.weight(1f))
-                    Text(text = "${ingredient.twice}", style = Caption1_R, textAlign = TextAlign.Center, modifier = Modifier.weight(1f))
-                    Text(text = ingredient.unit, style = Caption1_R, textAlign = TextAlign.Center, modifier = Modifier.weight(1f))
-                    Text(text = ingredient.ingredientName, style = Caption1_R, textAlign = TextAlign.Center, modifier = Modifier.weight(2f))
+                    Text(
+                        text = "${ingredient.once}",
+                        style = Caption1_R,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.weight(1f)
+                    )
+                    Text(
+                        text = "${ingredient.twice}",
+                        style = Caption1_R,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.weight(1f)
+                    )
+                    Text(
+                        text = ingredient.unit,
+                        style = Caption1_R,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.weight(1f)
+                    )
+                    Text(
+                        text = ingredient.ingredientName,
+                        style = Caption1_R,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.weight(2f)
+                    )
 
                 }
 
