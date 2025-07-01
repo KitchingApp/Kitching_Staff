@@ -26,7 +26,7 @@ fun RecipeGridList(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(KitchingDimens.Margin.small),
+            .padding(horizontal = KitchingDimens.Margin.small),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (recipeList.isEmpty()) {
@@ -34,7 +34,12 @@ fun RecipeGridList(
         } else {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
-                contentPadding = PaddingValues(KitchingDimens.Margin.small),
+                contentPadding = PaddingValues(
+                    start = KitchingDimens.Margin.small,
+                    end = KitchingDimens.Margin.small,
+                    top = KitchingDimens.Margin.small,
+                    bottom = KitchingDimens.Margin.large
+                ),
                 horizontalArrangement = Arrangement.spacedBy(KitchingDimens.Spacing.large),
                 verticalArrangement = Arrangement.spacedBy(KitchingDimens.Spacing.large),
                 modifier = Modifier.fillMaxSize()

@@ -3,6 +3,7 @@ package com.kitching.main.view.recipe
 import com.kitching.main.R
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
@@ -72,56 +73,52 @@ fun RecipeTabScreen(
     }
 
     KitchingStaffTheme {
-        Surface(
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = KitchingDimens.Margin.large)
+                .fillMaxSize()
+                .padding(top = KitchingDimens.Margin.large)
         ) {
-            Column(
-                modifier = Modifier.fillMaxWidth()
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .defaultHorizontalPadding(),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .defaultHorizontalPadding(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        modifier = Modifier.padding(end = KitchingDimens.Margin.medium),
-                        text = stringResource(id = R.string.recipe_search_title),
-                        style = H2.copy(color = NeutralGray800),
-                    )
+                Text(
+                    modifier = Modifier.padding(end = KitchingDimens.Margin.medium),
+                    text = stringResource(id = R.string.recipe_search_title),
+                    style = H2.copy(color = NeutralGray800),
+                )
 
-                    SearchTextField(
-                        searchQuery,
-                        onSearchQueryChange = {
-                            searchQuery = it
-                        }
-                    ) {
-                        debouncedSearchQuery = searchQuery
+                SearchTextField(
+                    searchQuery,
+                    onSearchQueryChange = {
+                        searchQuery = it
                     }
+                ) {
+                    debouncedSearchQuery = searchQuery
                 }
+            }
 
-                AppResultHandler(
-                    state = recipeListState,
-                    onRetry = { viewModel.getRecipeListByTeamId(teamId) },
-                    onSuccess = { recipeList ->
-                        val filteredRecipes = remember(recipeList, debouncedSearchQuery) {
-                            if (debouncedSearchQuery.isEmpty()) {
-                                recipeList
-                            } else {
-                                recipeList.filter { recipe ->
-                                    recipe.recipeName.contains(debouncedSearchQuery, ignoreCase = true)
-                                }
+            AppResultHandler(
+                state = recipeListState,
+                onRetry = { viewModel.getRecipeListByTeamId(teamId) },
+                onSuccess = { recipeList ->
+                    val filteredRecipes = remember(recipeList, debouncedSearchQuery) {
+                        if (debouncedSearchQuery.isEmpty()) {
+                            recipeList
+                        } else {
+                            recipeList.filter { recipe ->
+                                recipe.recipeName.contains(debouncedSearchQuery, ignoreCase = true)
                             }
                         }
-
-                        RecipeGridList(filteredRecipes) { recipe ->
-                            onRecipeClick(recipe)
-                        }
                     }
-                )
-            }
+
+                    RecipeGridList(filteredRecipes) { recipe ->
+                        onRecipeClick(recipe)
+                    }
+                }
+            )
         }
     }
 }
