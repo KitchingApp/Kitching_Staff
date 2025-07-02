@@ -1,6 +1,7 @@
-package com.kitching.data.datasource
+package com.kitching.data.datasource.impl
 
 import com.google.firebase.firestore.FirebaseFirestore
+import com.kitching.data.datasource.ScheduleDataSource
 import com.kitching.data.dto.ScheduleDTO
 import com.kitching.data.dto.ScheduleTimeDTO
 import com.kitching.data.dto.UserDTO

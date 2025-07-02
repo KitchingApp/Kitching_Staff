@@ -1,7 +1,7 @@
 package com.kitching.data.repository
 
 import com.kitching.data.datasource.OrderDataSource
-import com.kitching.data.datasource.OrderDataSourceImpl
+import com.kitching.data.datasource.impl.OrderDataSourceImpl
 import com.kitching.domain.entities.Order
 import com.kitching.domain.entities.OrderCategory
 import com.kitching.domain.repository.OrderRepository

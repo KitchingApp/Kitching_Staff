@@ -1,6 +1,7 @@
-package com.kitching.data.datasource
+package com.kitching.data.datasource.impl
 
 import com.google.firebase.firestore.FirebaseFirestore
+import com.kitching.data.datasource.RecipeDataSource
 import com.kitching.data.dto.IngredientDTO
 import com.kitching.data.dto.RecipeDTO
 import com.kitching.data.firebase.COLLECTION_INGREDIENT

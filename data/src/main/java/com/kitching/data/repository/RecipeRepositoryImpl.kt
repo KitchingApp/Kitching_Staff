@@ -1,7 +1,7 @@
 package com.kitching.data.repository
 
 import com.kitching.data.datasource.RecipeDataSource
-import com.kitching.data.datasource.RecipeDataSourceImpl
+import com.kitching.data.datasource.impl.RecipeDataSourceImpl
 import com.kitching.domain.entities.Recipe
 import com.kitching.domain.repository.RecipeRepository
 import com.kitching.domain.util.AppResult

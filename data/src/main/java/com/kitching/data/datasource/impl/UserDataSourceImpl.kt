@@ -1,6 +1,7 @@
-package com.kitching.data.datasource
+package com.kitching.data.datasource.impl
 
 import com.google.firebase.firestore.FirebaseFirestore
+import com.kitching.data.datasource.UserDataSource
 import com.kitching.data.dto.UserDTO
 import com.kitching.data.firebase.COLLECTION_USER
 import com.kitching.domain.entities.User
