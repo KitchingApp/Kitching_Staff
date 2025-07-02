@@ -17,7 +17,6 @@ import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.widget.CustomNavigationBar
 import com.kitching.core.common.CustomTopAppBar
 import com.kitching.core.common.commonstate.NavigationIconInfo
-import com.kitching.core.designsystem.theme.NeutralGray0
 import com.kitching.main.navigation.CustomNavHost
 import com.kitching.main.view.drawer.CustomDrawer
 import kotlinx.coroutines.launch
@@ -59,31 +58,6 @@ fun EntryPointScreen(
             )
         }
     }
-}
-
-@Composable
-fun PrepTabScreen(
-    commonState: CommonState,
-) {
-    commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
-        title = "Kitching",
-        containerColor = NeutralGray0,
-        navIconInfo = NavigationIconInfo.DRAWER,
-        onClickNavIcon = {
-            if (commonState.topAppBarState.value.drawerState.isOpen) {
-                commonState.scope.launch { commonState.topAppBarState.value.drawerState.close() }
-            } else {
-                commonState.scope.launch { commonState.topAppBarState.value.drawerState.open() }
-            }
-        },
-        actionIconInfo = ActionIconInfo.ADD,
-        onClickActionIcon = {
-
-        },
-    )
-    Spacer(modifier = Modifier.height(50.dp))
-
-    Text("PrepTabScreen")
 }
 
 @Composable
