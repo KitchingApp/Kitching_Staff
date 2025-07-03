@@ -30,7 +30,7 @@ fun RecipeStepsSection(steps: List<String>) {
         Text(
             text = stringResource(R.string.recipe_detail_step),
             style = H4_m,
-            modifier = Modifier.padding(vertical = KitchingDimens.Margin.large)
+            modifier = Modifier.padding(top = KitchingDimens.Margin.large, bottom = KitchingDimens.Margin.small)
         )
 
         Box(
