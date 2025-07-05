@@ -20,6 +20,13 @@
     <string name="recipe_detail_twice">X2</string>
     <string name="recipe_detail_unit">Unit</string>
 
+    <string name="prep_empty_screen_message">등록된 프랩이 없습니다.</string>
+    <string name="prep_dialog_confirm_text">추가</string>
+    <string name="prep_dialog_cancel_text">취소</string>
+    <string name="prep_dialog_not_choose_category">카테고리를 선택하세요</string>
+    <string name="prep_dialog_empty_prep_in_category">해당 카테고리에 프랩이 없습니다</string>
+    <string name="prep_dialog_choice_prep">프랩을 선택하세요</string>
+
     <string name="drawer_profile">프로필</string>
     <string name="drawer_team_list">팀 리스트</string>
     <string name="drawer_other_list">Other</string>

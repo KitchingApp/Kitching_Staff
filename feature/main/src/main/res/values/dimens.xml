@@ -25,6 +25,12 @@
     <dimen name="order_spread">0dp</dimen>
     <dimen name="order_arrow_size">20dp</dimen>
 
+    <dimen name="prep_category_box_width">70dp</dimen>
+
+    <dimen name="prep_dialog_height">250dp</dimen>
+    <dimen name="prep_dialog_dropdown_button_height">48dp</dimen>
+    <dimen name="prep_dialog_dropdown_item_height">200dp</dimen>
+
     <dimen name="drawer_page_width">300dp</dimen>
     <dimen name="drawer_page_padding">20dp</dimen>
     <dimen name="drawer_vertical_padding">8dp</dimen>
