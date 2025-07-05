@@ -5,7 +5,7 @@ data class TodoPrep(
     val date: String,
     val categoryId: String,
     val prepId: String,
-    val isDone: Boolean,
+    val done: Boolean,
 )
 
 data class TodoPrepWithDetails(

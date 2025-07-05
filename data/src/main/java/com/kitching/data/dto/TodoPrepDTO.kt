@@ -8,7 +8,7 @@ data class TodoPrepDTO(
     val date: String = "",
     val categoryId: String = "",
     val prepId: String = "",
-    val isDone: Boolean = false,
+    val done: Boolean = false,
 ) {
     fun toDomain(): TodoPrep {
         return TodoPrep(
@@ -16,7 +16,7 @@ data class TodoPrepDTO(
             date = date,
             categoryId = categoryId,
             prepId = prepId,
-            isDone = isDone
+            done = done
         )
     }
 }
