@@ -15,10 +15,4 @@
 
     <dimen name="drawer_other_card_item_height">50dp</dimen>
     <dimen name="drawer_other_card_item_radius">8dp</dimen>
-    
-    <dimen name="recipe_card_item_width">150dp</dimen>
-    <dimen name="recipe_card_item_height">188dp</dimen>
-    <dimen name="recipe_card_item_blur">12dp</dimen>
-    <dimen name="recipe_card_item_image_height">160dp</dimen>
-    <dimen name="recipe_card_item_box_height">28dp</dimen>
 </resources>

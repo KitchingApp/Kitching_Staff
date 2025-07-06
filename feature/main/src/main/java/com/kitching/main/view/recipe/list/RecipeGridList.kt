@@ -14,7 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.kitching.core.common.appresultscreen.EmptyScreen
-import com.kitching.core.common.widget.RecipeCardItem
+import com.kitching.main.view.recipe.item.RecipeCardItem
 import com.kitching.core.designsystem.theme.KitchingDimens
 import com.kitching.domain.entities.Recipe
 

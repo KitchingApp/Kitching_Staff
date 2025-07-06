@@ -22,7 +22,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextAlign
 import com.kitching.core.designsystem.theme.KitchingDimens
 import androidx.core.graphics.toColorInt
-import com.kitching.core.common.widget.TodoPrepItem
+import com.kitching.main.view.prep.item.TodoPrepItem
 import com.kitching.core.designsystem.theme.H3_m
 import com.kitching.core.designsystem.theme.NeutralGray800
 import com.kitching.domain.entities.PrepCategory

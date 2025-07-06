@@ -1,4 +1,4 @@
-package com.kitching.core.common.widget
+package com.kitching.main.view.prep.item
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
