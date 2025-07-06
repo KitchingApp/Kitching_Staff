@@ -9,7 +9,7 @@ interface PrepDataSource {
 
     suspend fun createTodoPrep(todoPrepDTO: TodoPrepDTO): Boolean
 
-    suspend fun updateTodoPrep(todoId: String, isNone: Boolean): Boolean
+    suspend fun updateTodoPrep(todoId: String, isDone: Boolean): Boolean
 
     suspend fun getPrepCategory(teamId: String): List<PrepCategoryDTO>
 

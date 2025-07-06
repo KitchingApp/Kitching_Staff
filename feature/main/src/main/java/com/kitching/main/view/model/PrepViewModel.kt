@@ -2,7 +2,6 @@ package com.kitching.main.view.model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kitching.domain.entities.PrepCategory
 import com.kitching.domain.entities.TodoPrepData
 import com.kitching.domain.repository.PrepRepository
 import com.kitching.domain.util.AppResult
@@ -34,6 +33,17 @@ class PrepViewModel(private val repository: PrepRepository) : ViewModel() {
                 if (it is AppResult.Success) {
                     getTodoPrepsByDate(teamId, date)
                 }
+            }
+        }
+    }
+
+    private val _updateTodoPrepResult = MutableStateFlow<AppResult<Boolean>>(AppResult.Initial)
+    val updateTodoPrepResult get() = _updateTodoPrepResult.asStateFlow()
+
+    fun updateTodoPrep(todoId: String, isDone: Boolean) {
+        viewModelScope.launch {
+            repository.updateTodoPrep(todoId, isDone).collectLatest {
+                _updateTodoPrepResult.value = it
             }
         }
     }

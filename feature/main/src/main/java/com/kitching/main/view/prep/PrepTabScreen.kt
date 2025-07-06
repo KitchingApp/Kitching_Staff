@@ -1,12 +1,8 @@
 package com.kitching.main.view.prep
 
 import com.kitching.main.R
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -26,17 +22,14 @@ import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.NavigationIconInfo
 import com.kitching.core.common.widget.DatePickerModal
 import com.kitching.core.common.widget.DateSelector
-import com.kitching.core.designsystem.theme.KitchingDimens
 import com.kitching.core.designsystem.theme.KitchingStaffTheme
 import com.kitching.core.designsystem.theme.NeutralGray0
-import com.kitching.core.designsystem.theme.defaultHorizontalPadding
 import com.kitching.domain.entities.TodoPrepData
 import com.kitching.domain.util.AppResult
 import com.kitching.main.factory.viewModelFactory
 import com.kitching.main.view.model.PrepViewModel
 import com.kitching.main.view.prep.dialog.TodoPrepDialog
 import com.kitching.main.view.prep.section.TodoPrepList
-import com.kitching.main.view.prep.section.TodoPrepSection
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
@@ -102,8 +95,8 @@ fun PrepTabScreen(
                     } else {
                         TodoPrepList(
                             todoPrepData = todoPrepList
-                        ) { todoId, isNone ->
-
+                        ) { todoId, newDone ->
+                            viewModel.updateTodoPrep(todoId, newDone)
                         }
                     }
                 }

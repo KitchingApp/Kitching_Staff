@@ -30,8 +30,8 @@ fun TodoPrepItem(
     ) {
         Checkbox(
             checked = todoPrep.done,
-            onCheckedChange = {
-                onCheckedStatus(todoPrep.id, todoPrep.done)
+            onCheckedChange = { newChecked ->
+                onCheckedStatus(todoPrep.id, newChecked)
             },
             colors = CheckboxDefaults.colors(
                 checkedColor = PrimaryGreen300,

@@ -3,8 +3,6 @@ package com.kitching.data.repository
 import com.kitching.data.datasource.PrepDataSource
 import com.kitching.data.datasource.impl.PrepDataSourceImpl
 import com.kitching.data.dto.TodoPrepDTO
-import com.kitching.domain.entities.Prep
-import com.kitching.domain.entities.PrepCategory
 import com.kitching.domain.entities.TodoPrepData
 import com.kitching.domain.entities.TodoPrepWithDetails
 import com.kitching.domain.repository.PrepRepository
@@ -77,12 +75,12 @@ class PrepRepositoryImpl(private val dataSource: PrepDataSource = PrepDataSource
 
     override fun updateTodoPrep(
         todoId: String,
-        isNone: Boolean,
+        isDone: Boolean,
     ): Flow<AppResult<Boolean>> = flow {
         emit(AppResult.Loading)
 
         try {
-            val result = dataSource.updateTodoPrep(todoId, isNone)
+            val result = dataSource.updateTodoPrep(todoId, isDone)
             emit(AppResult.Success(result))
         } catch (e: Exception) {
             emit(AppResult.Failure(e))

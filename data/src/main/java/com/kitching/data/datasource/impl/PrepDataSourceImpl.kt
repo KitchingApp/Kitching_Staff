@@ -11,7 +11,7 @@ import com.kitching.data.firebase.COLLECTION_TODO_PREP
 import com.kitching.data.firebase.DOCUMENT_DATE
 import com.kitching.data.firebase.DOCUMENT_ID
 import com.kitching.data.firebase.DOCUMENT_TEAM_ID
-import com.kitching.data.firebase.DOCUMENT_TODO_PREP_IS_DONE
+import com.kitching.data.firebase.DOCUMENT_TODO_PREP_DONE
 import kotlinx.coroutines.tasks.await
 
 class PrepDataSourceImpl(
@@ -37,9 +37,9 @@ class PrepDataSourceImpl(
 
     override suspend fun updateTodoPrep(
         todoId: String,
-        isNone: Boolean,
+        isDone: Boolean,
     ): Boolean = runCatching {
-        db.collection(COLLECTION_TODO_PREP).document(todoId).update(DOCUMENT_TODO_PREP_IS_DONE, isNone).await()
+        db.collection(COLLECTION_TODO_PREP).document(todoId).update(DOCUMENT_TODO_PREP_DONE, isDone).await()
     }.isSuccess
 
     override suspend fun getPrepCategory(teamId: String): List<PrepCategoryDTO> {

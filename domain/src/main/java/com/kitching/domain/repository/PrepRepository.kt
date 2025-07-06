@@ -9,5 +9,5 @@ interface PrepRepository {
 
     fun createTodoPrep(teamId: String, date: String, categoryId: String, prepId: String): Flow<AppResult<Boolean>>
 
-    fun updateTodoPrep(todoId: String, isNone: Boolean): Flow<AppResult<Boolean>>
+    fun updateTodoPrep(todoId: String, isDone: Boolean): Flow<AppResult<Boolean>>
 }

@@ -21,7 +21,7 @@ const val DOCUMENT_SCHEDULE_FIX = "fix"
 const val COLLECTION_STAFF_LEVEL = "staffLevel"
 
 const val COLLECTION_TODO_PREP = "todoPrep"
-const val DOCUMENT_TODO_PREP_IS_DONE = "isDone"
+const val DOCUMENT_TODO_PREP_DONE = "done"
 
 const val COLLECTION_TEAM = "team"
 const val COLLECTION_USER = "user"
