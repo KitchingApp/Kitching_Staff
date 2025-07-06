@@ -21,19 +21,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextAlign
 import com.kitching.core.designsystem.theme.KitchingDimens
-import com.kitching.domain.entities.TodoPrepByCategory
 import androidx.core.graphics.toColorInt
 import com.kitching.core.common.widget.TodoPrepItem
 import com.kitching.core.designsystem.theme.H3_m
 import com.kitching.core.designsystem.theme.NeutralGray800
+import com.kitching.domain.entities.PrepCategory
+import com.kitching.domain.entities.TodoPrepWithDetails
 
 @Composable
 fun TodoPrepSection(
-    todoPrepByCategory: TodoPrepByCategory,
+    categoryName: String,
+    todos: List<TodoPrepWithDetails>,
+    categories: List<PrepCategory>,
     onCheckedStatus: (String, Boolean) -> Unit,
 ) {
-    val category = todoPrepByCategory.category
-    val todos = todoPrepByCategory.todos
+    val category = categories.find { it.categoryName == categoryName }!!
 
     Row(
         modifier = Modifier

@@ -20,6 +20,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kitching.core.common.appresultscreen.AppResultHandler
 import com.kitching.core.common.appresultscreen.EmptyScreen
+import com.kitching.core.common.appresultscreen.ProgressIndicatorScreen
 import com.kitching.core.common.commonstate.ActionIconInfo
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.NavigationIconInfo
@@ -29,10 +30,12 @@ import com.kitching.core.designsystem.theme.KitchingDimens
 import com.kitching.core.designsystem.theme.KitchingStaffTheme
 import com.kitching.core.designsystem.theme.NeutralGray0
 import com.kitching.core.designsystem.theme.defaultHorizontalPadding
+import com.kitching.domain.entities.TodoPrepData
 import com.kitching.domain.util.AppResult
 import com.kitching.main.factory.viewModelFactory
 import com.kitching.main.view.model.PrepViewModel
 import com.kitching.main.view.prep.dialog.TodoPrepDialog
+import com.kitching.main.view.prep.section.TodoPrepList
 import com.kitching.main.view.prep.section.TodoPrepSection
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -49,9 +52,8 @@ fun PrepTabScreen(
     var showDatePicker by remember { mutableStateOf(false) }
     var showDialog by remember { mutableStateOf(false) }
 
-    val todoPrepsByCategory by viewModel.todoPrepsByDate.collectAsStateWithLifecycle()
-    val prepCategories by viewModel.prepCategories.collectAsStateWithLifecycle()
-    val preps by viewModel.preps.collectAsStateWithLifecycle()
+    val todoPrepData by viewModel.todoPrepsByDate.collectAsStateWithLifecycle()
+    val createTodoPrepResult by viewModel.createTodoPrepResult.collectAsStateWithLifecycle()
 
     commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
         title = commonState.appInfoState.value.teamInfo?.teamName ?: "",
@@ -69,11 +71,6 @@ fun PrepTabScreen(
             showDialog = true
         }
     )
-
-    LaunchedEffect(teamId) {
-        viewModel.getPrepCategories(teamId)
-        viewModel.getPreps(teamId)
-    }
 
     LaunchedEffect(teamId, selectedDate) {
         viewModel.getTodoPrepsByDate(teamId, selectedDate.toString())
@@ -95,31 +92,18 @@ fun PrepTabScreen(
             )
 
             AppResultHandler(
-                state = todoPrepsByCategory,
+                state = todoPrepData,
                 onRetry = {
                     viewModel.getTodoPrepsByDate(teamId, selectedDate.toString())
                 },
                 onSuccess = { todoPrepList ->
-                    if (todoPrepList.isEmpty()) {
+                    if (todoPrepList.todos.isEmpty()) {
                         EmptyScreen(stringResource(R.string.prep_empty_screen_message))
                     } else {
-                        LazyColumn(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .defaultHorizontalPadding(),
-                            contentPadding = PaddingValues(KitchingDimens.Margin.xSmall),
-                            verticalArrangement = Arrangement.spacedBy(KitchingDimens.Spacing.xLarge)
-                        ) {
-                            items(
-                                items = todoPrepList,
-                                key = { "${it.category.categoryId}_${selectedDate}" }
-                            ) { todoPrepByCategoryList ->
-                                TodoPrepSection(
-                                    todoPrepByCategory = todoPrepByCategoryList
-                                ) { todoId, currentStatus ->
+                        TodoPrepList(
+                            todoPrepData = todoPrepList
+                        ) { todoId, isNone ->
 
-                                }
-                            }
                         }
                     }
                 }
@@ -147,9 +131,13 @@ fun PrepTabScreen(
                         showDialog = false
                     },
                     selectedDate = selectedDate.toString(),
-                    prepCategories = (prepCategories as AppResult.Success).data,
-                    preps = (preps as AppResult.Success).data
+                    prepCategories = (todoPrepData as AppResult.Success<TodoPrepData>).data.categories,
+                    preps = (todoPrepData as AppResult.Success<TodoPrepData>).data.preps
                 )
+            }
+
+            if (createTodoPrepResult is AppResult.Loading) {
+                ProgressIndicatorScreen()
             }
         }
     }

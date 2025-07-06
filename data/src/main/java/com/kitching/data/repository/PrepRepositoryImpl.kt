@@ -5,7 +5,7 @@ import com.kitching.data.datasource.impl.PrepDataSourceImpl
 import com.kitching.data.dto.TodoPrepDTO
 import com.kitching.domain.entities.Prep
 import com.kitching.domain.entities.PrepCategory
-import com.kitching.domain.entities.TodoPrepByCategory
+import com.kitching.domain.entities.TodoPrepData
 import com.kitching.domain.entities.TodoPrepWithDetails
 import com.kitching.domain.repository.PrepRepository
 import com.kitching.domain.util.AppResult
@@ -17,7 +17,7 @@ class PrepRepositoryImpl(private val dataSource: PrepDataSource = PrepDataSource
     override fun getTodoPrep(
         teamId: String,
         date: String,
-    ): Flow<AppResult<List<TodoPrepByCategory>>> = flow {
+    ): Flow<AppResult<TodoPrepData>> = flow {
         emit(AppResult.Loading)
 
         try {
@@ -37,21 +37,13 @@ class PrepRepositoryImpl(private val dataSource: PrepDataSource = PrepDataSource
                 )
             }
 
-            val groupedByCategory = todoPrepWithDetails
-                .groupBy { it.todoPrep.categoryId }
-                .mapNotNull { (categoryId, todos) ->
-                    val category = categories.find { it.id == categoryId }
+            val todoPrepData = TodoPrepData(
+                categories = categories.map { it.toDomain() },
+                preps = preps.map { it.toDomain() },
+                todos = todoPrepWithDetails
+            )
 
-                    if (category != null) {
-                        TodoPrepByCategory(
-                            category = category.toDomain(),
-                            todos = todos
-                        )
-                    } else null
-                }
-                .sortedBy { it.category.categoryName }
-
-            emit(AppResult.Success(groupedByCategory))
+            emit(AppResult.Success(todoPrepData))
 
         } catch (e: Exception) {
             emit(AppResult.Failure(e))
@@ -92,28 +84,6 @@ class PrepRepositoryImpl(private val dataSource: PrepDataSource = PrepDataSource
         try {
             val result = dataSource.updateTodoPrep(todoId, isNone)
             emit(AppResult.Success(result))
-        } catch (e: Exception) {
-            emit(AppResult.Failure(e))
-        }
-    }
-
-    override fun getPrepCategory(teamId: String): Flow<AppResult<List<PrepCategory>>> = flow {
-        emit(AppResult.Loading)
-
-        try {
-            val categories = dataSource.getPrepCategory(teamId)
-            emit(AppResult.Success(categories.map { it.toDomain() }))
-        } catch (e: Exception) {
-            emit(AppResult.Failure(e))
-        }
-    }
-
-    override fun getPreps(teamId: String): Flow<AppResult<List<Prep>>> = flow {
-        emit(AppResult.Loading)
-
-        try {
-            val preps = dataSource.getPreps(teamId)
-            emit(AppResult.Success(preps.map { it.toDomain() }))
         } catch (e: Exception) {
             emit(AppResult.Failure(e))
         }

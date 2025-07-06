@@ -15,7 +15,8 @@ data class TodoPrepWithDetails(
     val prepName: String,
 )
 
-data class TodoPrepByCategory(
-    val category: PrepCategory,
+data class TodoPrepData(
+    val categories: List<PrepCategory>,
+    val preps: List<Prep>,
     val todos: List<TodoPrepWithDetails>
 )
