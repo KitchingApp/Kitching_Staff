@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,6 +23,7 @@ import coil3.compose.rememberAsyncImagePainter
 import com.kitching.core.designsystem.theme.subTextColor
 import java.time.LocalDateTime
 import com.kitching.core.common.R
+import com.kitching.core.designsystem.theme.KitchingDimens
 
 @Composable
 fun DateSelector(
@@ -32,7 +34,7 @@ fun DateSelector(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .height(60.dp),
+            .height(dimensionResource(R.dimen.date_selector_height)),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -44,13 +46,13 @@ fun DateSelector(
                 Image(
                     painter = rememberAsyncImagePainter(R.drawable.icon_left_triangle),
                     contentDescription = "prev date button",
-                    modifier = Modifier.size(24.dp),
+                    modifier = Modifier.size(KitchingDimens.Size.large),
                     colorFilter = ColorFilter.tint(subTextColor)
                 )
             }
             TextButton(
                 modifier = Modifier
-                    .padding(13.dp, 0.dp)
+                    .padding(horizontal = KitchingDimens.Margin.small)
                     .align(Alignment.CenterVertically),
                 onClick = {
                     onClickDateBtn()
@@ -69,7 +71,7 @@ fun DateSelector(
                 Image(
                     painter = rememberAsyncImagePainter(R.drawable.icon_right_triangle),
                     contentDescription = "next date button",
-                    modifier = Modifier.size(24.dp),
+                    modifier = Modifier.size(KitchingDimens.Size.large),
                     colorFilter = ColorFilter.tint(subTextColor)
                 )
             }
