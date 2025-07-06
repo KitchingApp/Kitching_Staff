@@ -33,6 +33,7 @@ fun TodoPrepSection(
     categoryName: String,
     todos: List<TodoPrepWithDetails>,
     categories: List<PrepCategory>,
+    onDeletePrep: (TodoPrepWithDetails) -> Unit,
     onCheckedStatus: (String, Boolean) -> Unit,
 ) {
     val category = categories.find { it.categoryName == categoryName }!!
@@ -70,6 +71,7 @@ fun TodoPrepSection(
             todos.forEach { todoPrepWithDetails ->
                 TodoPrepItem(
                     todoPrepWithDetails = todoPrepWithDetails,
+                    onDeletePrep = onDeletePrep,
                     onCheckedStatus = onCheckedStatus
                 )
             }

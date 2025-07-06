@@ -47,4 +47,15 @@ class PrepViewModel(private val repository: PrepRepository) : ViewModel() {
             }
         }
     }
+
+    private val _deleteTodoPrepResult = MutableStateFlow<AppResult<Boolean>>(AppResult.Initial)
+    val deleteTodoPrepResult get() = _deleteTodoPrepResult.asStateFlow()
+
+    fun deleteTodoPrep(todoId: String) {
+        viewModelScope.launch {
+            repository.deleteTodoPrep(todoId).collectLatest {
+                _deleteTodoPrepResult.value = it
+            }
+        }
+    }
 }

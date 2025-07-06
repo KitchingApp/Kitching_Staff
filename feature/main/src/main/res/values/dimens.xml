@@ -31,6 +31,9 @@
     <dimen name="prep_dialog_dropdown_button_height">48dp</dimen>
     <dimen name="prep_dialog_dropdown_item_height">200dp</dimen>
 
+    <dimen name="prep_delete_dialog_height">150dp</dimen>
+    <dimen name="prep_delete_dialog_top_padding">50dp</dimen>
+
     <dimen name="recipe_card_item_width">150dp</dimen>
     <dimen name="recipe_card_item_height">188dp</dimen>
     <dimen name="recipe_card_item_blur">12dp</dimen>

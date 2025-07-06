@@ -10,10 +10,12 @@ import androidx.compose.ui.Modifier
 import com.kitching.core.designsystem.theme.KitchingDimens
 import com.kitching.core.designsystem.theme.defaultHorizontalPadding
 import com.kitching.domain.entities.TodoPrepData
+import com.kitching.domain.entities.TodoPrepWithDetails
 
 @Composable
 fun TodoPrepList(
     todoPrepData: TodoPrepData,
+    onDeletePrep: (TodoPrepWithDetails) -> Unit,
     onCheckedStatus: (String, Boolean) -> Unit,
 ) {
     val groupedTodos = todoPrepData.todos.groupBy { it.categoryName }.toList()
@@ -33,6 +35,7 @@ fun TodoPrepList(
                 categoryName = categoryName,
                 todos = todos,
                 categories = todoPrepData.categories,
+                onDeletePrep = onDeletePrep,
                 onCheckedStatus = onCheckedStatus
             )
         }

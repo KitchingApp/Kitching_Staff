@@ -1,5 +1,6 @@
 package com.kitching.main.view.prep.item
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Checkbox
@@ -19,6 +20,7 @@ import com.kitching.domain.entities.TodoPrepWithDetails
 @Composable
 fun TodoPrepItem(
     todoPrepWithDetails: TodoPrepWithDetails,
+    onDeletePrep: (TodoPrepWithDetails) -> Unit,
     onCheckedStatus: (String, Boolean) -> Unit
 ) {
     val todoPrep = todoPrepWithDetails.todoPrep
@@ -46,7 +48,11 @@ fun TodoPrepItem(
                 color = NeutralGray800,
                 textDecoration = if (todoPrep.done) TextDecoration.LineThrough else TextDecoration.None
             ),
-            modifier = Modifier.weight(1f)
+            modifier = Modifier
+                .weight(1f)
+                .clickable {
+                    onDeletePrep(todoPrepWithDetails)
+                }
         )
     }
 }

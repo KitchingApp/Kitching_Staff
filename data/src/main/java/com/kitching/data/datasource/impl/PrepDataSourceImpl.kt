@@ -42,6 +42,10 @@ class PrepDataSourceImpl(
         db.collection(COLLECTION_TODO_PREP).document(todoId).update(DOCUMENT_TODO_PREP_DONE, isDone).await()
     }.isSuccess
 
+    override suspend fun deleteTodoPrep(todoId: String): Boolean = runCatching {
+        db.collection(COLLECTION_TODO_PREP).document(todoId).delete().await()
+    }.isSuccess
+
     override suspend fun getPrepCategory(teamId: String): List<PrepCategoryDTO> {
         return db.collection(COLLECTION_PREP_CATEGORY)
             .whereEqualTo(DOCUMENT_TEAM_ID, teamId)

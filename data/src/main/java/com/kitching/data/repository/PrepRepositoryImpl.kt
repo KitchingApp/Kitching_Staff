@@ -86,4 +86,14 @@ class PrepRepositoryImpl(private val dataSource: PrepDataSource = PrepDataSource
             emit(AppResult.Failure(e))
         }
     }
+
+    override fun deleteTodoPrep(todoId: String): Flow<AppResult<Boolean>> = flow {
+        emit(AppResult.Loading)
+        try {
+            val result = dataSource.deleteTodoPrep(todoId)
+            emit(AppResult.Success(result))
+        } catch (e: Exception) {
+            emit(AppResult.Failure(e))
+        }
+    }
 }
