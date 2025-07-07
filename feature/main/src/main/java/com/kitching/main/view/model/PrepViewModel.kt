@@ -29,10 +29,6 @@ class PrepViewModel(private val repository: PrepRepository) : ViewModel() {
         viewModelScope.launch {
             repository.createTodoPrep(teamId, date, categoryId, prepId).collectLatest {
                 _createTodoPrepResult.value = it
-
-                if (it is AppResult.Success) {
-                    getTodoPrepsByDate(teamId, date)
-                }
             }
         }
     }
@@ -57,5 +53,11 @@ class PrepViewModel(private val repository: PrepRepository) : ViewModel() {
                 _deleteTodoPrepResult.value = it
             }
         }
+    }
+
+    fun resetAppResult() {
+        _createTodoPrepResult.value = AppResult.Initial
+        _updateTodoPrepResult.value = AppResult.Initial
+        _deleteTodoPrepResult.value = AppResult.Initial
     }
 }

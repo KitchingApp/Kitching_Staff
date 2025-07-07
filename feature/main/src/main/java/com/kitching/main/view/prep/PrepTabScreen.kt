@@ -54,15 +54,11 @@ fun PrepTabScreen(
     val updateTodoPrepResult by viewModel.updateTodoPrepResult.collectAsStateWithLifecycle()
     val deleteTodoPrepResult by viewModel.deleteTodoPrepResult.collectAsStateWithLifecycle()
 
-    val snackBarMessage = listOf(
-        stringResource(R.string.prep_create_success),
-        stringResource(R.string.prep_delete_success),
-        stringResource(R.string.prep_fail_message)
-    )
+    val snackBarFailMessage = stringResource(R.string.prep_fail_message)
 
     val isLoading = createTodoPrepResult is AppResult.Loading ||
-            updateTodoPrepResult is AppResult.Loading ||
-            deleteTodoPrepResult is AppResult.Loading
+                    updateTodoPrepResult is AppResult.Loading ||
+                    deleteTodoPrepResult is AppResult.Loading
 
     commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
         title = commonState.appInfoState.value.teamInfo?.teamName ?: "",
@@ -87,27 +83,18 @@ fun PrepTabScreen(
 
     LaunchedEffect(createTodoPrepResult, updateTodoPrepResult, deleteTodoPrepResult) {
         when {
-            createTodoPrepResult is AppResult.Success -> {
-                viewModel.getTodoPrepsByDate(teamId, selectedDate.toString())
-                commonState.snackBarState.showSnackbar(snackBarMessage[0])
-            }
-            createTodoPrepResult is AppResult.Failure -> {
-                commonState.snackBarState.showSnackbar(snackBarMessage[2])
-            }
-
-            updateTodoPrepResult is AppResult.Success -> {
-                viewModel.getTodoPrepsByDate(teamId, selectedDate.toString())
-            }
-            updateTodoPrepResult is AppResult.Failure -> {
-                commonState.snackBarState.showSnackbar(snackBarMessage[2])
-            }
-
+            createTodoPrepResult is AppResult.Success ||
+            updateTodoPrepResult is AppResult.Success ||
             deleteTodoPrepResult is AppResult.Success -> {
                 viewModel.getTodoPrepsByDate(teamId, selectedDate.toString())
-                commonState.snackBarState.showSnackbar(snackBarMessage[1])
+                viewModel.resetAppResult()
             }
+
+            createTodoPrepResult is AppResult.Failure ||
+            updateTodoPrepResult is AppResult.Failure ||
             deleteTodoPrepResult is AppResult.Failure -> {
-                commonState.snackBarState.showSnackbar(snackBarMessage[2])
+                commonState.snackBarState.showSnackbar(snackBarFailMessage)
+                viewModel.resetAppResult()
             }
         }
     }
