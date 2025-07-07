@@ -1,6 +1,8 @@
 package com.kitching.main.view.prep.item
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Checkbox
@@ -17,6 +19,7 @@ import com.kitching.core.designsystem.theme.NeutralGray800
 import com.kitching.core.designsystem.theme.PrimaryGreen300
 import com.kitching.domain.entities.TodoPrepWithDetails
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TodoPrepItem(
     todoPrepWithDetails: TodoPrepWithDetails,
@@ -27,7 +30,15 @@ fun TodoPrepItem(
 
     Row(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .combinedClickable(
+                onClick = {
+                    onCheckedStatus(todoPrep.id, !todoPrep.done)
+                },
+                onLongClick = {
+                    onDeletePrep(todoPrepWithDetails)
+                }
+            ),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Checkbox(
@@ -48,11 +59,7 @@ fun TodoPrepItem(
                 color = NeutralGray800,
                 textDecoration = if (todoPrep.done) TextDecoration.LineThrough else TextDecoration.None
             ),
-            modifier = Modifier
-                .weight(1f)
-                .clickable {
-                    onDeletePrep(todoPrepWithDetails)
-                }
+            modifier = Modifier.weight(1f)
         )
     }
 }
