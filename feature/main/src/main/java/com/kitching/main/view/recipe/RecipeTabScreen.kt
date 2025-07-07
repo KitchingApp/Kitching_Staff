@@ -80,7 +80,8 @@ fun RecipeTabScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .defaultHorizontalPadding(),
+                    .defaultHorizontalPadding()
+                    .padding(bottom = KitchingDimens.Margin.small),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(

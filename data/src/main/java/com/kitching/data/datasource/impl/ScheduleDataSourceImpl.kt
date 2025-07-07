@@ -1,14 +1,15 @@
-package com.kitching.data.datasource
+package com.kitching.data.datasource.impl
 
 import com.google.firebase.firestore.FirebaseFirestore
+import com.kitching.data.datasource.ScheduleDataSource
 import com.kitching.data.dto.ScheduleDTO
 import com.kitching.data.dto.ScheduleTimeDTO
 import com.kitching.data.dto.UserDTO
 import com.kitching.data.firebase.COLLECTION_SCHEDULE
 import com.kitching.data.firebase.COLLECTION_SCHEDULE_TIME
 import com.kitching.data.firebase.COLLECTION_USER
+import com.kitching.data.firebase.DOCUMENT_DATE
 import com.kitching.data.firebase.DOCUMENT_ID
-import com.kitching.data.firebase.DOCUMENT_SCHEDULE_DATE
 import com.kitching.data.firebase.DOCUMENT_SCHEDULE_FIX
 import com.kitching.data.firebase.DOCUMENT_TEAM_ID
 import com.kitching.data.firebase.DOCUMENT_USER_ID
@@ -65,7 +66,7 @@ class ScheduleDataSourceImpl(private val db: FirebaseFirestore = FirebaseFiresto
     ): List<Schedule> {
         val schedules = db.collection(COLLECTION_SCHEDULE)
             .whereEqualTo(DOCUMENT_TEAM_ID, teamId)
-            .whereEqualTo(DOCUMENT_SCHEDULE_DATE, date)
+            .whereEqualTo(DOCUMENT_DATE, date)
             .get()
             .await()
             .toObjects(ScheduleDTO::class.java)

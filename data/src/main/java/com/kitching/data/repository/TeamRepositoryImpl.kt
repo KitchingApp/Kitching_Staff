@@ -1,16 +1,14 @@
 package com.kitching.data.repository
 
 import com.kitching.data.datasource.TeamDataSource
-import com.kitching.data.datasource.TeamDataSourceImpl
+import com.kitching.data.datasource.impl.TeamDataSourceImpl
 import com.kitching.data.datasource.UserTeamDataSource
-import com.kitching.data.datasource.UserTeamDataSourceImpl
+import com.kitching.data.datasource.impl.UserTeamDataSourceImpl
 import com.kitching.domain.entities.Team
 import com.kitching.domain.repository.TeamRepository
 import com.kitching.domain.util.AppResult
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import java.util.UUID
 
 class TeamRepositoryImpl(
     private val teamDataSource: TeamDataSource = TeamDataSourceImpl(),

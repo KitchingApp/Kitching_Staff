@@ -5,6 +5,7 @@ import com.kitching.domain.entities.Prep
 data class PrepDTO(
     val id: String = "",
     val categoryId: String = "",
+    val teamId: String = "",
     val name: String = ""
 ) {
     fun toDomain(): Prep {

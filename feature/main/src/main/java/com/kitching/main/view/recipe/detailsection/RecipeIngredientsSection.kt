@@ -34,7 +34,7 @@ fun RecipeIngredientsSection(ingredients: List<Ingredient>) {
         Text(
             text = stringResource(R.string.recipe_detail_ingredient),
             style = H4_m,
-            modifier = Modifier.padding(vertical = KitchingDimens.Margin.small)
+            modifier = Modifier.padding(top = KitchingDimens.Margin.large, bottom = KitchingDimens.Margin.small)
         )
 
         Column(

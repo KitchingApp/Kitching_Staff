@@ -1,4 +1,4 @@
-package com.kitching.core.common.widget
+package com.kitching.main.view.recipe.item
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import com.kitching.core.common.R
+import com.kitching.main.R
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card

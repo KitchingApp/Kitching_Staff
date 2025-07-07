@@ -7,16 +7,12 @@
     <dimen name="network_retry_btn_height">40dp</dimen>
     <dimen name="network_retry_btn_radius">20dp</dimen>
 
+    <dimen name="date_selector_height">60dp</dimen>
+
     <dimen name="team_card_item_height">60dp</dimen>
     <dimen name="team_card_item_radius">8dp</dimen>
     <dimen name="team_card_item_gap_between_icon_and_text">8dp</dimen>
 
     <dimen name="drawer_other_card_item_height">50dp</dimen>
     <dimen name="drawer_other_card_item_radius">8dp</dimen>
-    
-    <dimen name="recipe_card_item_width">150dp</dimen>
-    <dimen name="recipe_card_item_height">188dp</dimen>
-    <dimen name="recipe_card_item_blur">12dp</dimen>
-    <dimen name="recipe_card_item_image_height">160dp</dimen>
-    <dimen name="recipe_card_item_box_height">28dp</dimen>
 </resources>

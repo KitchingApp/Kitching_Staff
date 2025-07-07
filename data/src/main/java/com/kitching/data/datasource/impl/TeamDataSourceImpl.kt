@@ -1,6 +1,7 @@
-package com.kitching.data.datasource
+package com.kitching.data.datasource.impl
 
 import com.google.firebase.firestore.FirebaseFirestore
+import com.kitching.data.datasource.TeamDataSource
 import com.kitching.data.dto.TeamDTO
 import com.kitching.data.firebase.COLLECTION_TEAM
 import com.kitching.data.firebase.DOCUMENT_ID

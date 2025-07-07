@@ -5,7 +5,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.kitching.core.common.navigation.ScreenRouteDef
 import com.kitching.core.common.commonstate.CommonState
-import com.kitching.main.PrepTabScreen
+import com.kitching.main.view.prep.PrepTabScreen
 
 fun NavGraphBuilder.prepNavGraph(commonState: CommonState) {
     navigation<ScreenRouteDef.BottomTab.PrepGraph>(
