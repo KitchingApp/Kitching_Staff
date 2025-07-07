@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.key
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,7 +38,9 @@ fun TodoPrepSection(
     onDeletePrep: (TodoPrepWithDetails) -> Unit,
     onCheckedStatus: (String, Boolean) -> Unit,
 ) {
-    val category = categories.find { it.categoryName == categoryName }!!
+    val category = remember(categoryName, categories) {
+        categories.find { it.categoryName == categoryName }!!
+    }
 
     Row(
         modifier = Modifier
@@ -69,11 +73,13 @@ fun TodoPrepSection(
             verticalArrangement = Arrangement.spacedBy(KitchingDimens.Spacing.xxxSmall)
         ) {
             todos.forEach { todoPrepWithDetails ->
-                TodoPrepItem(
-                    todoPrepWithDetails = todoPrepWithDetails,
-                    onDeletePrep = onDeletePrep,
-                    onCheckedStatus = onCheckedStatus
-                )
+                key(todoPrepWithDetails.todoPrep.id) {
+                    TodoPrepItem(
+                        todoPrepWithDetails = todoPrepWithDetails,
+                        onDeletePrep = onDeletePrep,
+                        onCheckedStatus = onCheckedStatus
+                    )
+                }
             }
         }
     }
