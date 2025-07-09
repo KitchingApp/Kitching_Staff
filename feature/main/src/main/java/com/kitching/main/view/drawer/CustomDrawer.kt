@@ -135,7 +135,7 @@ fun CustomDrawer(
                         // 아이콘 수정 예정
                         AsyncImage(
                             modifier = Modifier.size(dimensionResource(R.dimen.drawer_alarm_icon_size)),
-                            model = R.drawable.icon_edit,
+                            model = R.drawable.icon_bell,
                             colorFilter = ColorFilter.tint(NeutralGray600),
                             contentDescription = "알림"
                         )

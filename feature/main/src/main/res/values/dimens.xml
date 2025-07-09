@@ -49,5 +49,5 @@
     <dimen name="drawer_profile_image_size">80dp</dimen>
     <dimen name="drawer_profile_border_width">1dp</dimen>
     <dimen name="drawer_profile_spacing">12dp</dimen>
-    <dimen name="drawer_alarm_icon_size">24dp</dimen>
+    <dimen name="drawer_alarm_icon_size">30dp</dimen>
 </resources>
