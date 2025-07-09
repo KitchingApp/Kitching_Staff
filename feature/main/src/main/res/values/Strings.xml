@@ -39,4 +39,7 @@
     <string name="drawer_other_list_invite_code">초대코드</string>
     <string name="drawer_other_list_notice">공지사항</string>
     <string name="drawer_other_list_member">멤버조회</string>
+
+    <string name="other_invite_code_title">초대코드</string>
+    <string name="other_invite_code_message">초대코드를 통해 직원을 관리할 수 있어요!</string>
 </resources>
