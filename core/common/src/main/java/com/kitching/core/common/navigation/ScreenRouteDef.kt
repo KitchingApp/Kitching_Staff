@@ -89,7 +89,5 @@ sealed class ScreenRouteDef {
         data object NoticeDetail : Other()
         @Serializable
         data object MemberList : Other()
-        @Serializable
-        data object MemberDetail : Other()
     }
 }

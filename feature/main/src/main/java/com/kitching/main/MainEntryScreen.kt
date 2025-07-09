@@ -41,7 +41,9 @@ fun EntryPointScreen(
             tabNavController.navigate(ScreenRouteDef.Other.InviteCode)
         },
         onNoticeClick = {  },
-        onMemberClick = {  }
+        onMemberClick = {
+            tabNavController.navigate(ScreenRouteDef.Other.MemberList)
+        }
     ) {
         Scaffold(
             modifier = Modifier.fillMaxSize(),

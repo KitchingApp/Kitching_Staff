@@ -42,4 +42,6 @@
 
     <string name="other_invite_code_title">초대코드</string>
     <string name="other_invite_code_message">초대코드를 통해 직원을 관리할 수 있어요!</string>
+    <string name="other_member_list_title">%s 멤버</string>"
+    <string name="other_staff_level_name_empty">직급 없음</string>
 </resources>

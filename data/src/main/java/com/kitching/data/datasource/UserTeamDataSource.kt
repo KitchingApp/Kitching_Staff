@@ -1,5 +1,7 @@
 package com.kitching.data.datasource
 
+import com.kitching.data.dto.StaffLevelDTO
+import com.kitching.data.dto.UserDTO
 import com.kitching.data.dto.UserTeamDTO
 
 interface UserTeamDataSource {
@@ -10,4 +12,8 @@ interface UserTeamDataSource {
     suspend fun getUserTeams(userId: String): List<UserTeamDTO>
 
     suspend fun createUserTeam(userId: String, teamId: String): Boolean
+
+    suspend fun getUser(userId: String): UserDTO?
+
+    suspend fun getStaffLevel(staffLevelId: String): StaffLevelDTO?
 }
