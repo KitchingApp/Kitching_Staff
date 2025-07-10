@@ -2,6 +2,8 @@ package com.kitching.main.view.other
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -21,9 +23,8 @@ import com.kitching.core.common.widget.DottedDivider
 import com.kitching.core.designsystem.theme.KitchingDimens
 import com.kitching.core.designsystem.theme.KitchingStaffTheme
 import com.kitching.core.designsystem.theme.NeutralGray0
-import com.kitching.core.designsystem.theme.NeutralGray300
+import com.kitching.core.designsystem.theme.NeutralGray600
 import com.kitching.domain.entities.Notice
-import com.kitching.domain.util.AppResult
 import com.kitching.main.R
 import com.kitching.main.factory.viewModelFactory
 import com.kitching.main.view.model.OtherViewModel
@@ -62,20 +63,23 @@ fun NoticeScreen(
                         .fillMaxSize()
                         .padding(KitchingDimens.Margin.large),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(KitchingDimens.Spacing.large)
+                    verticalArrangement = Arrangement.spacedBy(KitchingDimens.Spacing.xxSmall)
                 ){
                     items(
-                        items = noticeList
+                        items = noticeList,
+                        key = { it.noticeId }
                     ) { notice ->
                         NoticeCardItem(notice) {
                             onNoticeClick
                         }
-                    }
 
-                    if (noticeList.size > 1) {
-                        items(noticeList.size - 1) {
-                            DottedDivider(color = NeutralGray300)
-                        }
+                        DottedDivider(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = KitchingDimens.Margin.medium, vertical = KitchingDimens.Margin.xSmall)
+                                .height(KitchingDimens.Border.xxxSmall),
+                            color = NeutralGray600
+                        )
                     }
                 }
             }

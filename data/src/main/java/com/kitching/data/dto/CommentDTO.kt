@@ -3,11 +3,11 @@ package com.kitching.data.dto
 import com.kitching.domain.entities.Comment
 
 data class CommentDTO(
-    val id: String,
-    val userId: String,
-    val userName: String,
-    val upLoadTime: String,
-    val content: String,
+    val id: String = "",
+    val userId: String = "",
+    val userName: String = "",
+    val upLoadTime: String = "",
+    val content: String = "",
 ) {
     fun toDomain(): Comment {
         return Comment(

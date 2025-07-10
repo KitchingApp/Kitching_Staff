@@ -57,4 +57,5 @@
     <dimen name="other_member_card_width">320dp</dimen>
     <dimen name="other_member_card_height">84dp</dimen>
     <dimen name="other_member_card_image_size">64dp</dimen>
+    <dimen name="other_notice_card_height">100dp</dimen>
 </resources>

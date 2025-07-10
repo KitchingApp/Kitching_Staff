@@ -99,14 +99,16 @@ class TeamRepositoryImpl(
 
         val notices = teamDataSource.getNoticeList(teamId)
 
-        val noticeList = notices.map {
+        val noticeList = notices.sortedByDescending { it.date }.map {
             Notice(
                 noticeId = it.id,
                 writerName = userTeamDataSource.getUser(it.writerId)?.userName ?: "",
                 date = it.date,
                 title = it.title,
                 content = it.content,
-                comments = it.comments.map { commentDTO ->
+                comments = it.comments
+                    .sortedBy { commentDTO -> commentDTO.upLoadTime }
+                    .map { commentDTO ->
                     commentDTO.toDomain()
                 }
             )

@@ -1,5 +1,6 @@
 package com.kitching.main.view.other.item
 
+import com.kitching.main.R
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,8 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import com.kitching.core.designsystem.theme.Body1_m
 import com.kitching.core.designsystem.theme.Caption1_R
 import com.kitching.core.designsystem.theme.KitchingDimens
@@ -27,8 +28,7 @@ fun NoticeCardItem(
     Column (
         modifier = Modifier
             .fillMaxWidth()
-            .height(100.dp)
-            .padding(horizontal = KitchingDimens.Margin.large)
+            .height(dimensionResource(R.dimen.other_notice_card_height))
             .clickable { onNoticeClick(notice) },
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
@@ -56,11 +56,13 @@ fun NoticeCardItem(
             )
         }
         Text(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = KitchingDimens.Margin.xSmall),
             text = notice.content,
             style = Caption1_R.copy(NeutralGray800),
             overflow = TextOverflow.Ellipsis,
-            maxLines = 1
+            maxLines = 2
         )
     }
 }
