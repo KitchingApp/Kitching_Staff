@@ -8,6 +8,7 @@ import com.kitching.core.common.navigation.ScreenRouteDef
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.main.view.other.InviteCodeScreen
 import com.kitching.main.view.other.MemberListScreen
+import com.kitching.main.view.other.NoticeScreen
 
 fun NavGraphBuilder.otherNavGraph(commonState: CommonState, navController: NavHostController) {
     navigation<ScreenRouteDef.BottomTab.OtherGraph>(
@@ -24,7 +25,15 @@ fun NavGraphBuilder.otherNavGraph(commonState: CommonState, navController: NavHo
         }
 
         composable<ScreenRouteDef.Other.Notice> {
+            NoticeScreen(
+                commonState = commonState,
+                onNoticeClick = {
 
+                },
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable<ScreenRouteDef.Other.NoticeDetail> {

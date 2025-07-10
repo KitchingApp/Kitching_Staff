@@ -40,7 +40,9 @@ fun EntryPointScreen(
         onInviteCodeClick = {
             tabNavController.navigate(ScreenRouteDef.Other.InviteCode)
         },
-        onNoticeClick = {  },
+        onNoticeClick = {
+            tabNavController.navigate(ScreenRouteDef.Other.Notice)
+        },
         onMemberClick = {
             tabNavController.navigate(ScreenRouteDef.Other.MemberList)
         }
