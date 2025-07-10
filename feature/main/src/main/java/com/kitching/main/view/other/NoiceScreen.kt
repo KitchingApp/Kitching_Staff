@@ -70,7 +70,7 @@ fun NoticeScreen(
                         key = { it.noticeId }
                     ) { notice ->
                         NoticeCardItem(notice) {
-                            onNoticeClick
+                            onNoticeClick(notice)
                         }
 
                         DottedDivider(

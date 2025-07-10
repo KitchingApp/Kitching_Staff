@@ -2,6 +2,7 @@ package com.kitching.core.common.widget
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -40,4 +41,17 @@ fun DottedDivider(
         )
 
     }
+}
+
+@Composable
+fun KitchingVerticalDivider(
+    modifier: Modifier = Modifier,
+    color: Color,
+    thickness: Dp,
+) {
+    VerticalDivider(
+        modifier = modifier,
+        color = color,
+        thickness = thickness
+    )
 }
