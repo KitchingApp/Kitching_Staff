@@ -5,6 +5,7 @@ import com.kitching.data.datasource.impl.TeamDataSourceImpl
 import com.kitching.data.datasource.UserTeamDataSource
 import com.kitching.data.datasource.impl.UserTeamDataSourceImpl
 import com.kitching.domain.entities.Member
+import com.kitching.domain.entities.Notice
 import com.kitching.domain.entities.Team
 import com.kitching.domain.repository.TeamRepository
 import com.kitching.domain.util.AppResult
@@ -89,6 +90,29 @@ class TeamRepositoryImpl(
             )
         }
         emit(AppResult.Success(memberList))
+    }.catch {
+        emit(AppResult.Failure(it))
+    }
+
+    override fun getNoticeList(teamId: String): Flow<AppResult<List<Notice>>> = flow {
+        emit(AppResult.Loading)
+
+        val notices = teamDataSource.getNoticeList(teamId)
+
+        val noticeList = notices.map {
+            Notice(
+                noticeId = it.id,
+                writerName = userTeamDataSource.getUser(it.writerId)?.userName ?: "",
+                date = it.date,
+                title = it.title,
+                content = it.content,
+                comments = it.comments.map { commentDTO ->
+                    commentDTO.toDomain()
+                }
+            )
+        }
+
+        emit(AppResult.Success(noticeList))
     }.catch {
         emit(AppResult.Failure(it))
     }

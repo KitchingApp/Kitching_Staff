@@ -1,11 +1,19 @@
 package com.kitching.data.datasource.impl
 
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.kitching.data.datasource.TeamDataSource
+import com.kitching.data.dto.CommentDTO
+import com.kitching.data.dto.NoticeDTO
 import com.kitching.data.dto.TeamDTO
+import com.kitching.data.firebase.COLLECTION_COMMENTS
+import com.kitching.data.firebase.COLLECTION_NOTICE
 import com.kitching.data.firebase.COLLECTION_TEAM
+import com.kitching.data.firebase.DOCUMENT_DATE
 import com.kitching.data.firebase.DOCUMENT_ID
 import com.kitching.data.firebase.DOCUMENT_INVITE_CODE
+import com.kitching.data.firebase.DOCUMENT_TEAM_ID
+import com.kitching.data.firebase.DOCUMENT_UP_LOAD_TIME
 import kotlinx.coroutines.tasks.await
 
 class TeamDataSourceImpl(private val db: FirebaseFirestore = FirebaseFirestore.getInstance()) :
@@ -21,4 +29,25 @@ class TeamDataSourceImpl(private val db: FirebaseFirestore = FirebaseFirestore.g
     override suspend fun getTeamByInviteCode(inviteCode: String): TeamDTO? =
         db.collection(COLLECTION_TEAM).whereEqualTo(DOCUMENT_INVITE_CODE, inviteCode).get().await()
             .documents.firstOrNull()?.toObject(TeamDTO::class.java)
+
+    override suspend fun getNoticeList(teamId: String): List<NoticeDTO> {
+        return try {
+            db.collection(COLLECTION_NOTICE)
+                .whereEqualTo(DOCUMENT_TEAM_ID, teamId)
+                .get()
+                .await()
+                .documents.mapNotNull { documentSnapshot ->
+                val noticeDTO = documentSnapshot.toObject(NoticeDTO::class.java)
+
+                val comments = documentSnapshot.reference.collection(COLLECTION_COMMENTS)
+                    .get()
+                    .await()
+                    .toObjects(CommentDTO::class.java)
+
+                noticeDTO?.copy(comments = comments)
+            }
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
 }
