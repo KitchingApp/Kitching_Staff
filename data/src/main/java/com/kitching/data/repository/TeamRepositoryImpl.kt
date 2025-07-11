@@ -157,4 +157,15 @@ class TeamRepositoryImpl(
     }.catch {
         emit(AppResult.Failure(it))
     }
+
+    override fun deleteComment(
+        noticeId: String,
+        commentId: String,
+    ): Flow<AppResult<Boolean>> = flow {
+        emit(AppResult.Loading)
+        val deleteSuccess = teamDataSource.deleteComment(noticeId, commentId)
+        emit(AppResult.Success(deleteSuccess))
+    }.catch {
+        emit(AppResult.Failure(it))
+    }
 }

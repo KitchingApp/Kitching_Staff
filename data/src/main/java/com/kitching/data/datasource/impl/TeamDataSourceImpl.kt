@@ -83,4 +83,12 @@ class TeamDataSourceImpl(private val db: FirebaseFirestore = FirebaseFirestore.g
                 this.update(DOCUMENT_ID, this.id).await()
             }
     }.isSuccess
+
+    override suspend fun deleteComment(
+        noticeId: String,
+        commentId: String,
+    ): Boolean = runCatching {
+        db.collection(COLLECTION_NOTICE).document(noticeId)
+            .collection(COLLECTION_COMMENTS).document(commentId).delete().await()
+    }.isSuccess
 }

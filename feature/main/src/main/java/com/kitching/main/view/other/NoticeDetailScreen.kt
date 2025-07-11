@@ -34,6 +34,7 @@ import com.kitching.main.view.model.OtherViewModel
 import com.kitching.main.view.other.detailsection.CommentLine
 import com.kitching.main.view.other.detailsection.CommentTextField
 import com.kitching.main.view.other.detailsection.NoticeContentSection
+import com.kitching.main.view.other.dialog.DeleteCommentDialog
 import com.kitching.main.view.other.item.CommentsItem
 
 @Composable
@@ -48,12 +49,16 @@ fun NoticeDetailScreen(
     var commentText by remember { mutableStateOf("") }
     var useNotice by remember { mutableStateOf<Notice>(notice) }
 
-    val addCommentFailMessage = stringResource(R.string.other_add_comment_fail)
+    var showDeleteDialog by remember { mutableStateOf(false) }
+    var deleteCommentId by remember { mutableStateOf("") }
+
+    val commentFailMessage = stringResource(R.string.other_comment_fail)
 
     val addCommentResult by viewModel.addCommentResult.collectAsStateWithLifecycle()
+    val deleteCommentResult by viewModel.deleteCommentResult.collectAsStateWithLifecycle()
     val noticeByIdResult by viewModel.noticeByIdResult.collectAsStateWithLifecycle()
 
-    val isLoading = addCommentResult is AppResult.Loading || noticeByIdResult is AppResult.Loading
+    val isLoading = addCommentResult is AppResult.Loading || deleteCommentResult is AppResult.Loading || noticeByIdResult is AppResult.Loading
 
     commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
         title = stringResource(R.string.other_notice_title),
@@ -68,12 +73,28 @@ fun NoticeDetailScreen(
             is AppResult.Success -> {
                 commentText = ""
                 viewModel.getNoticeById(useNotice.noticeId)
-                viewModel.resetAddCommentResult()
+                viewModel.resetCommentResult()
             }
             is AppResult.Failure -> {
-                viewModel.resetAddCommentResult()
-                commonState.snackBarState.showSnackbar(addCommentFailMessage)
+                viewModel.resetCommentResult()
+                commonState.snackBarState.showSnackbar(commentFailMessage)
             }
+            else -> {}
+        }
+    }
+
+    LaunchedEffect(deleteCommentResult) {
+        when (deleteCommentResult) {
+            is AppResult.Success -> {
+                viewModel.resetCommentResult()
+                viewModel.getNoticeById(useNotice.noticeId)
+            }
+
+            is AppResult.Failure -> {
+                viewModel.resetCommentResult()
+                commonState.snackBarState.showSnackbar(commentFailMessage)
+            }
+
             else -> {}
         }
     }
@@ -83,6 +104,11 @@ fun NoticeDetailScreen(
             is AppResult.Success -> {
                 val newNotice = (noticeByIdResult as AppResult.Success<Notice>).data
                 useNotice = newNotice
+            }
+
+            is AppResult.Failure -> {
+                viewModel.resetCommentResult()
+                commonState.snackBarState.showSnackbar(commentFailMessage)
             }
 
             else -> {}
@@ -109,7 +135,13 @@ fun NoticeDetailScreen(
                     items = useNotice.comments,
                     key = { it.id }
                 ) { comment ->
-                    CommentsItem(comment)
+                    CommentsItem(
+                        userId = user.userId,
+                        comment = comment
+                    ) { commentId ->
+                        deleteCommentId = commentId
+                        showDeleteDialog = true
+                    }
                 }
             }
 
@@ -120,6 +152,19 @@ fun NoticeDetailScreen(
             ) {
                 viewModel.addComment(useNotice.noticeId, user, commentText)
             }
+        }
+
+        if (showDeleteDialog) {
+            DeleteCommentDialog(
+                onDismiss = {
+                    showDeleteDialog = false
+                    deleteCommentId = ""
+                },
+                onConfirm = {
+                    viewModel.deleteComment(useNotice.noticeId, deleteCommentId)
+                    deleteCommentId = ""
+                }
+            )
         }
 
         if (isLoading) {

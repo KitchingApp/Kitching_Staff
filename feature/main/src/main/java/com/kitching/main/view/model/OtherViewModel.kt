@@ -57,7 +57,19 @@ class OtherViewModel(val repository: TeamRepository) : ViewModel() {
         }
     }
 
-    fun resetAddCommentResult() {
+    private val _deleteCommentResult = MutableStateFlow<AppResult<Boolean>>(AppResult.Initial)
+    val deleteCommentResult get() = _deleteCommentResult.asStateFlow()
+
+    fun deleteComment(noticeId: String, commentId: String) {
+        viewModelScope.launch {
+            repository.deleteComment(noticeId, commentId).collectLatest {
+                _deleteCommentResult.value = it
+            }
+        }
+    }
+
+    fun resetCommentResult() {
         _addCommentResult.value = AppResult.Initial
+        _deleteCommentResult.value = AppResult.Initial
     }
 }

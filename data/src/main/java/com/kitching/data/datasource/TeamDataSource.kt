@@ -16,4 +16,6 @@ interface TeamDataSource {
     suspend fun getNoticeById(noticeId: String): NoticeDTO?
 
     suspend fun addComment(noticeId: String, user: User, comment: String): Boolean
+
+    suspend fun deleteComment(noticeId: String, commentId: String): Boolean
 }

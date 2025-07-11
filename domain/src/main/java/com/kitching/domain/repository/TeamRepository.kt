@@ -21,4 +21,6 @@ interface TeamRepository {
     fun getNoticeById(noticeId: String): Flow<AppResult<Notice>>
 
     fun addComment(noticeId: String, user: User, comment: String): Flow<AppResult<Boolean>>
+
+    fun deleteComment(noticeId: String, commentId: String): Flow<AppResult<Boolean>>
 }
