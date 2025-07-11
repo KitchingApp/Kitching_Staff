@@ -58,4 +58,6 @@
     <dimen name="other_member_card_height">84dp</dimen>
     <dimen name="other_member_card_image_size">64dp</dimen>
     <dimen name="other_notice_card_height">100dp</dimen>
+    <dimen name="other_comment_section_height">60dp</dimen>
+    <dimen name="other_comment_text_field_height">40dp</dimen>
 </resources>

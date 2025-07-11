@@ -46,4 +46,5 @@
     <string name="other_staff_level_name_empty">직급 없음</string>
     <string name="other_notice_title">공지사항</string>
     <string name="other_comment_title">댓글</string>
+    <string name="other_comment_text_field_hint">메세지 입력</string>
 </resources>
