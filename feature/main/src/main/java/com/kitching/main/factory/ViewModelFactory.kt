@@ -10,6 +10,7 @@ import com.kitching.data.repository.TeamRepositoryImpl
 import com.kitching.main.view.model.DrawerViewModel
 import com.kitching.main.view.model.FcmViewModel
 import com.kitching.main.view.model.OrderViewModel
+import com.kitching.main.view.model.OtherViewModel
 import com.kitching.main.view.model.PrepViewModel
 import com.kitching.main.view.model.RecipeViewModel
 import com.kitching.main.view.model.ScheduleViewModel
@@ -31,6 +32,8 @@ val viewModelFactory = object : ViewModelProvider.Factory {
                     RecipeViewModel(RecipeRepositoryImpl())
                 isAssignableFrom(PrepViewModel::class.java) ->
                     PrepViewModel(PrepRepositoryImpl())
+                isAssignableFrom(OtherViewModel::class.java) ->
+                    OtherViewModel(TeamRepositoryImpl())
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }

@@ -17,6 +17,7 @@ import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.widget.CustomNavigationBar
 import com.kitching.core.common.CustomTopAppBar
 import com.kitching.core.common.commonstate.NavigationIconInfo
+import com.kitching.core.common.navigation.ScreenRouteDef
 import com.kitching.main.navigation.CustomNavHost
 import com.kitching.main.view.drawer.CustomDrawer
 import kotlinx.coroutines.launch
@@ -36,6 +37,15 @@ fun EntryPointScreen(
         drawerState = commonState.topAppBarState.value.drawerState,
         commonState = commonState,
         context = appNavController.context,
+        onInviteCodeClick = {
+            tabNavController.navigate(ScreenRouteDef.Other.InviteCode)
+        },
+        onNoticeClick = {
+            tabNavController.navigate(ScreenRouteDef.Other.Notice)
+        },
+        onMemberClick = {
+            tabNavController.navigate(ScreenRouteDef.Other.MemberList)
+        }
     ) {
         Scaffold(
             modifier = Modifier.fillMaxSize(),

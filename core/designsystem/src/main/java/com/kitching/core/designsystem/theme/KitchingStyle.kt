@@ -10,6 +10,8 @@ object KitchingDimens {
         val xSmall = 3.dp
         val small = 4.dp
         val medium = 5.dp
+        val large = 10.dp
+        val xxLarge = 20.dp
     }
     object Corner {
         val xxxSmall = 2.dp

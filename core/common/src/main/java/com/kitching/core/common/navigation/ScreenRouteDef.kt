@@ -86,10 +86,8 @@ sealed class ScreenRouteDef {
         @Serializable
         data object Notice : Other()
         @Serializable
-        data object NoticeDetail : Other()
+        data class NoticeDetail(val notice: com.kitching.domain.entities.Notice) : Other()
         @Serializable
         data object MemberList : Other()
-        @Serializable
-        data object MemberDetail : Other()
     }
 }

@@ -3,6 +3,8 @@ package com.kitching.data.firebase
 const val COLLECTION_FIREBASE_MESSAGING_TOKEN = "firebaseMessagingToken"
 
 const val COLLECTION_NOTICE = "notice"
+const val COLLECTION_COMMENTS = "comments"
+const val DOCUMENT_UP_LOAD_TIME = "upLoadTime"
 
 const val COLLECTION_ORDER = "order"
 const val COLLECTION_ORDER_CATEGORY = "orderCategory"

@@ -48,12 +48,16 @@ import com.kitching.main.factory.viewModelFactory
 import com.kitching.main.view.drawer.list.DrawerOtherList
 import com.kitching.main.view.drawer.list.DrawerTeamList
 import com.kitching.main.view.model.DrawerViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun CustomDrawer(
     drawerState: DrawerState,
     commonState: CommonState,
     context: Context,
+    onInviteCodeClick: () -> Unit,
+    onNoticeClick: () -> Unit,
+    onMemberClick: () -> Unit,
     drawerViewModel: DrawerViewModel = viewModel(factory = viewModelFactory),
     content: @Composable () -> Unit,
 ) {
@@ -132,10 +136,9 @@ fun CustomDrawer(
                             style = H3.copy(color = NeutralGray800),
                         )
 
-                        // 아이콘 수정 예정
                         AsyncImage(
                             modifier = Modifier.size(dimensionResource(R.dimen.drawer_alarm_icon_size)),
-                            model = R.drawable.icon_edit,
+                            model = R.drawable.icon_bell,
                             colorFilter = ColorFilter.tint(NeutralGray600),
                             contentDescription = "알림"
                         )
@@ -186,9 +189,24 @@ fun CustomDrawer(
                     )
 
                     DrawerOtherList(
-                        onInviteCodeClick = { },
-                        onNoticeClick = { },
-                        onMemberClick = { }
+                        onInviteCodeClick = {
+                            commonState.scope.launch {
+                                drawerState.close()
+                            }
+                            onInviteCodeClick()
+                        },
+                        onNoticeClick = {
+                            commonState.scope.launch {
+                                drawerState.close()
+                            }
+                            onNoticeClick()
+                        },
+                        onMemberClick = {
+                            commonState.scope.launch {
+                                drawerState.close()
+                            }
+                            onMemberClick()
+                        }
                     )
                 }
             }

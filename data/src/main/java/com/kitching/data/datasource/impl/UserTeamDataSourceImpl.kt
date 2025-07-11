@@ -2,7 +2,10 @@ package com.kitching.data.datasource.impl
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.kitching.data.datasource.UserTeamDataSource
+import com.kitching.data.dto.StaffLevelDTO
+import com.kitching.data.dto.UserDTO
 import com.kitching.data.dto.UserTeamDTO
+import com.kitching.data.firebase.COLLECTION_USER
 import com.kitching.data.firebase.COLLECTION_USER_TEAM
 import com.kitching.data.firebase.DOCUMENT_ID
 import com.kitching.data.firebase.DOCUMENT_TEAM_ID
@@ -43,4 +46,13 @@ class UserTeamDataSourceImpl(private val db: FirebaseFirestore = FirebaseFiresto
             this.update(DOCUMENT_ID, id).await()
         }
     }.isSuccess
+
+    override suspend fun getUser(userId: String): UserDTO? =
+        db.collection(COLLECTION_USER).document(userId).get().await()
+            .toObject(UserDTO::class.java)
+
+    override suspend fun getStaffLevel(staffLevelId: String): StaffLevelDTO? =
+        db.collection(COLLECTION_USER).document(staffLevelId).get().await()
+            .toObject(StaffLevelDTO::class.java)
+
 }
