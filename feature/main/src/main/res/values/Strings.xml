@@ -47,4 +47,5 @@
     <string name="other_notice_title">공지사항</string>
     <string name="other_comment_title">댓글</string>
     <string name="other_comment_text_field_hint">메세지 입력</string>
+    <string name="other_add_comment_fail">댓글이 안써졌습니다. 잠시 후 다시 시도해주세요.</string>
 </resources>

@@ -11,7 +11,9 @@ import com.kitching.data.firebase.COLLECTION_TEAM
 import com.kitching.data.firebase.DOCUMENT_ID
 import com.kitching.data.firebase.DOCUMENT_INVITE_CODE
 import com.kitching.data.firebase.DOCUMENT_TEAM_ID
+import com.kitching.domain.entities.User
 import kotlinx.coroutines.tasks.await
+import java.time.LocalDateTime
 
 class TeamDataSourceImpl(private val db: FirebaseFirestore = FirebaseFirestore.getInstance()) :
     TeamDataSource {
@@ -34,17 +36,51 @@ class TeamDataSourceImpl(private val db: FirebaseFirestore = FirebaseFirestore.g
                 .get()
                 .await()
                 .documents.mapNotNull { documentSnapshot ->
-                val noticeDTO = documentSnapshot.toObject(NoticeDTO::class.java)
+                    val noticeDTO = documentSnapshot.toObject(NoticeDTO::class.java)
 
-                val comments = documentSnapshot.reference.collection(COLLECTION_COMMENTS)
-                    .get()
-                    .await()
-                    .toObjects(CommentDTO::class.java)
+                    val comments = documentSnapshot.reference.collection(COLLECTION_COMMENTS)
+                        .get()
+                        .await()
+                        .toObjects(CommentDTO::class.java)
 
-                noticeDTO?.copy(comments = comments)
-            }
+                    noticeDTO?.copy(comments = comments)
+                }
         } catch (e: Exception) {
             emptyList()
         }
     }
+
+    override suspend fun getNoticeById(noticeId: String): NoticeDTO? {
+        return try {
+            db.collection(COLLECTION_NOTICE)
+                .document(noticeId).get().await().let { documentSnapshot ->
+                    documentSnapshot.toObject(NoticeDTO::class.java)?.let { noticeDTO ->
+                            documentSnapshot.reference.collection(COLLECTION_COMMENTS)
+                                .get().await().toObjects(CommentDTO::class.java).let { comments ->
+                                    noticeDTO.copy(comments = comments)
+                                }
+                        }
+                }
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    override suspend fun addComment(
+        noticeId: String,
+        user: User,
+        comment: String,
+    ): Boolean = runCatching {
+        val commentDTO = CommentDTO(
+            userId = user.userId,
+            userName = user.userName,
+            upLoadTime = LocalDateTime.now().toString(),
+            content = comment,
+        )
+
+        db.collection(COLLECTION_NOTICE).document(noticeId)
+            .collection(COLLECTION_COMMENTS).add(commentDTO).await().apply {
+                this.update(DOCUMENT_ID, this.id).await()
+            }
+    }.isSuccess
 }

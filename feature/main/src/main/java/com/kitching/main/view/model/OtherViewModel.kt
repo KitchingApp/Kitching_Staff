@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kitching.domain.entities.Member
 import com.kitching.domain.entities.Notice
+import com.kitching.domain.entities.User
 import com.kitching.domain.repository.TeamRepository
 import com.kitching.domain.util.AppResult
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,5 +33,31 @@ class OtherViewModel(val repository: TeamRepository) : ViewModel() {
                 _noticeListResult.value = it
             }
         }
+    }
+
+    private val _noticeByIdResult = MutableStateFlow<AppResult<Notice>>(AppResult.Initial)
+    val noticeByIdResult get() = _noticeByIdResult.asStateFlow()
+
+    fun getNoticeById(noticeId: String) {
+        viewModelScope.launch {
+            repository.getNoticeById(noticeId).collectLatest {
+                _noticeByIdResult.value = it
+            }
+        }
+    }
+
+    private val _addCommentResult = MutableStateFlow<AppResult<Boolean>>(AppResult.Initial)
+    val addCommentResult get() = _addCommentResult.asStateFlow()
+
+    fun addComment(noticeId: String, user: User, comment: String) {
+        viewModelScope.launch {
+            repository.addComment(noticeId, user, comment).collectLatest {
+                _addCommentResult.value = it
+            }
+        }
+    }
+
+    fun resetAddCommentResult() {
+        _addCommentResult.value = AppResult.Initial
     }
 }

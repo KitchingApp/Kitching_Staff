@@ -7,6 +7,7 @@ import com.kitching.data.datasource.impl.UserTeamDataSourceImpl
 import com.kitching.domain.entities.Member
 import com.kitching.domain.entities.Notice
 import com.kitching.domain.entities.Team
+import com.kitching.domain.entities.User
 import com.kitching.domain.repository.TeamRepository
 import com.kitching.domain.util.AppResult
 import kotlinx.coroutines.flow.Flow
@@ -115,6 +116,44 @@ class TeamRepositoryImpl(
         }
 
         emit(AppResult.Success(noticeList))
+    }.catch {
+        emit(AppResult.Failure(it))
+    }
+
+    override fun getNoticeById(noticeId: String): Flow<AppResult<Notice>> = flow {
+        emit(AppResult.Loading)
+        val noticeDTO = teamDataSource.getNoticeById(noticeId)
+
+        val notice = noticeDTO?.let {
+            Notice(
+                noticeId = it.id,
+                writerName = userTeamDataSource.getUser(it.writerId)?.userName ?: "",
+                date = it.date,
+                title = it.title,
+                content = it.content,
+                comments = it.comments
+                    .sortedBy { commentDTO -> commentDTO.upLoadTime }
+                    .map { commentDTO ->
+                    commentDTO.toDomain()
+                }
+            )
+        }
+
+        emit(AppResult.Success(notice!!))
+    }.catch {
+        emit(AppResult.Failure(it))
+    }
+
+    override fun addComment(
+        noticeId: String,
+        user: User,
+        comment: String,
+    ): Flow<AppResult<Boolean>> = flow {
+        emit(AppResult.Loading)
+
+        val addSuccess = teamDataSource.addComment(noticeId, user, comment)
+
+        emit(AppResult.Success(addSuccess))
     }.catch {
         emit(AppResult.Failure(it))
     }
