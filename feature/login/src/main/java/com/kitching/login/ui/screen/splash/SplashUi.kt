@@ -15,7 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import com.kitching.core.designsystem.theme.PrimaryGreen300
+import com.kitching.core.designsystem.PrimaryGreen300
 import com.kitching.login.R
 
 @Composable

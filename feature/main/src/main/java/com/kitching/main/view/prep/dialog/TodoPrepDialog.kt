@@ -39,15 +39,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.core.graphics.toColorInt
+import com.kitching.core.common.util.hexToArgb
 import com.kitching.core.common.widget.CommonDialogComponent
-import com.kitching.core.designsystem.theme.Body1_m
-import com.kitching.core.designsystem.theme.Caption1_m
-import com.kitching.core.designsystem.theme.KitchingDimens
-import com.kitching.core.designsystem.theme.NeutralGray0
-import com.kitching.core.designsystem.theme.NeutralGray500
-import com.kitching.core.designsystem.theme.NeutralGray600
-import com.kitching.core.designsystem.theme.NeutralGray800
-import com.kitching.core.designsystem.theme.PrimaryGreen300
+import com.kitching.core.designsystem.Body1_m
+import com.kitching.core.designsystem.Caption1_m
+import com.kitching.core.designsystem.KitchingDimens
+import com.kitching.core.designsystem.NeutralGray0
+import com.kitching.core.designsystem.NeutralGray500
+import com.kitching.core.designsystem.NeutralGray600
+import com.kitching.core.designsystem.NeutralGray800
+import com.kitching.core.designsystem.PrimaryGreen300
 import com.kitching.domain.entities.Prep
 import com.kitching.domain.entities.PrepCategory
 
@@ -132,7 +133,7 @@ fun TodoPrepDialog(
                         },
                         selected = selectedCategoryId == category.categoryId,
                         colors = FilterChipDefaults.filterChipColors(
-                            containerColor = Color(category.color.toColorInt()),
+                            containerColor = Color(hexToArgb(category.color)),
                             selectedContainerColor = PrimaryGreen300,
                             labelColor = NeutralGray800,
                             selectedLabelColor = NeutralGray0
@@ -140,7 +141,7 @@ fun TodoPrepDialog(
                         border = FilterChipDefaults.filterChipBorder(
                             enabled = true,
                             selected = selectedCategoryId == category.categoryId,
-                            borderColor = Color(category.color.toColorInt()),
+                            borderColor = Color(hexToArgb(category.color)),
                             selectedBorderColor = PrimaryGreen300,
                             borderWidth = KitchingDimens.Border.xxxSmall
                         )

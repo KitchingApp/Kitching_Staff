@@ -24,7 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.kitching.core.designsystem.theme.Body1
+import com.kitching.core.designsystem.Body1
 import com.kitching.domain.entities.Schedule
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow

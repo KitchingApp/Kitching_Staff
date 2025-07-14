@@ -20,12 +20,12 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import coil3.compose.AsyncImage
-import com.kitching.core.designsystem.theme.Caption1_R
-import com.kitching.core.designsystem.theme.KitchingDimens
-import com.kitching.core.designsystem.theme.NeutralGray0
-import com.kitching.core.designsystem.theme.NeutralGray800
-import com.kitching.core.designsystem.theme.ShadowColor
-import com.kitching.core.designsystem.theme.dropShadow
+import com.kitching.core.designsystem.Caption1_R
+import com.kitching.core.designsystem.KitchingDimens
+import com.kitching.core.designsystem.NeutralGray0
+import com.kitching.core.designsystem.NeutralGray800
+import com.kitching.core.designsystem.ShadowColor
+import com.kitching.core.designsystem.dropShadow
 import com.kitching.domain.entities.Recipe
 
 @Composable

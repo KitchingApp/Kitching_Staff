@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextAlign
 import com.kitching.core.common.widget.TeamCardItem
-import com.kitching.core.designsystem.theme.H3_m
-import com.kitching.core.designsystem.theme.NeutralGray400
+import com.kitching.core.designsystem.H3_m
+import com.kitching.core.designsystem.NeutralGray400
 import com.kitching.domain.entities.Team
 
 @Composable

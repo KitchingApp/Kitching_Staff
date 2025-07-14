@@ -12,11 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import coil3.compose.AsyncImage
 import com.kitching.core.common.widget.KitchingHorizontalDivider
-import com.kitching.core.designsystem.theme.H5
-import com.kitching.core.designsystem.theme.KitchingDimens
-import com.kitching.core.designsystem.theme.NeutralGray200
-import com.kitching.core.designsystem.theme.NeutralGray500
-import com.kitching.core.designsystem.theme.defaultHorizontalPadding
+import com.kitching.core.designsystem.H5
+import com.kitching.core.designsystem.KitchingDimens
+import com.kitching.core.designsystem.NeutralGray200
+import com.kitching.core.designsystem.NeutralGray500
+import com.kitching.core.designsystem.defaultHorizontalPadding
 import com.kitching.main.R
 
 @Composable

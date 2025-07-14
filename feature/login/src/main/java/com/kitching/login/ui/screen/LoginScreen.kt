@@ -36,10 +36,10 @@ import coil3.compose.AsyncImage
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.appresultscreen.ProgressIndicatorScreen
 import com.kitching.core.common.commonstate.updateUserInfo
-import com.kitching.core.designsystem.theme.NeutralGray0
-import com.kitching.core.designsystem.theme.NeutralGray300
-import com.kitching.core.designsystem.theme.NeutralGray800
-import com.kitching.core.designsystem.theme.PrimaryGreen300
+import com.kitching.core.designsystem.NeutralGray0
+import com.kitching.core.designsystem.NeutralGray300
+import com.kitching.core.designsystem.NeutralGray800
+import com.kitching.core.designsystem.PrimaryGreen300
 import com.kitching.domain.entities.User
 import com.kitching.domain.util.AppResult
 import com.kitching.login.R

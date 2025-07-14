@@ -32,8 +32,8 @@ import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.appresultscreen.EmptyScreen
 import com.kitching.core.common.widget.TeamCardItem
 import com.kitching.core.common.commonstate.updateTeamInfo
-import com.kitching.core.designsystem.theme.KitchingStaffTheme
-import com.kitching.core.designsystem.theme.PrimaryGreen300
+import com.kitching.core.designsystem.KitchingStaffTheme
+import com.kitching.core.designsystem.PrimaryGreen300
 import com.kitching.domain.entities.Team
 import com.kitching.domain.util.AppResult
 import com.kitching.login.R
@@ -102,7 +102,7 @@ fun TeamSelectScreen(
                     ) {
                         AsyncImage(
                             modifier = Modifier.size(dimensionResource(R.dimen.go_to_invite_code_screen_icon_button_size)),
-                            model = com.kitching.core.common.R.drawable.icon_add,
+                            model = R.drawable.icon_add,
                             contentDescription = stringResource(R.string.icon_description_go_to_invite_code_screen),
                             colorFilter = ColorFilter.tint(PrimaryGreen300)
                         )

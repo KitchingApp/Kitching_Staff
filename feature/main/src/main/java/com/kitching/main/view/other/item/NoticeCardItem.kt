@@ -13,11 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextOverflow
-import com.kitching.core.designsystem.theme.Body1_m
-import com.kitching.core.designsystem.theme.Caption1_R
-import com.kitching.core.designsystem.theme.KitchingDimens
-import com.kitching.core.designsystem.theme.NeutralGray600
-import com.kitching.core.designsystem.theme.NeutralGray800
+import com.kitching.core.designsystem.Body1_m
+import com.kitching.core.designsystem.Caption1_R
+import com.kitching.core.designsystem.KitchingDimens
+import com.kitching.core.designsystem.NeutralGray600
+import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.domain.entities.Notice
 
 @Composable

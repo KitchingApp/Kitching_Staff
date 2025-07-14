@@ -14,11 +14,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import com.kitching.core.designsystem.theme.Caption1_R
-import com.kitching.core.designsystem.theme.H4_m
-import com.kitching.core.designsystem.theme.KitchingDimens
-import com.kitching.core.designsystem.theme.NeutralGray500
-import com.kitching.core.designsystem.theme.defaultHorizontalPadding
+import com.kitching.core.designsystem.Caption1_R
+import com.kitching.core.designsystem.H4_m
+import com.kitching.core.designsystem.KitchingDimens
+import com.kitching.core.designsystem.NeutralGray500
+import com.kitching.core.designsystem.defaultHorizontalPadding
 
 @Composable
 fun RecipeStepsSection(steps: List<String>) {

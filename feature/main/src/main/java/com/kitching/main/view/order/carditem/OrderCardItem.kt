@@ -16,9 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import coil3.compose.AsyncImage
-import com.kitching.core.designsystem.theme.H3_m
-import com.kitching.core.designsystem.theme.NeutralGray300
-import com.kitching.core.designsystem.theme.NeutralGray800
+import com.kitching.core.designsystem.H3_m
+import com.kitching.core.designsystem.NeutralGray300
+import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.domain.entities.Order
 import com.kitching.main.R
 
