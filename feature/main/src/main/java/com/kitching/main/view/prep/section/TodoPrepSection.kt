@@ -22,11 +22,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextAlign
-import com.kitching.core.designsystem.theme.KitchingDimens
-import androidx.core.graphics.toColorInt
+import com.kitching.core.designsystem.KitchingDimens
+import com.kitching.core.common.util.hexToArgb
 import com.kitching.main.view.prep.item.TodoPrepItem
-import com.kitching.core.designsystem.theme.H3_m
-import com.kitching.core.designsystem.theme.NeutralGray800
+import com.kitching.core.designsystem.H3_m
+import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.domain.entities.PrepCategory
 import com.kitching.domain.entities.TodoPrepWithDetails
 
@@ -55,7 +55,7 @@ fun TodoPrepSection(
                 .width(dimensionResource(R.dimen.prep_category_box_width))
                 .padding(horizontal = KitchingDimens.Margin.xSmall)
                 .background(
-                    color = Color(category.color.toColorInt()),
+                    color = Color(hexToArgb(category.color)),
                     shape = RoundedCornerShape(KitchingDimens.Corner.xSmall)
                 ),
             contentAlignment = Alignment.Center

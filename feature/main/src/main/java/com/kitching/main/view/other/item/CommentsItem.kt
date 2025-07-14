@@ -16,11 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import coil3.compose.AsyncImage
 import com.kitching.core.common.widget.KitchingVerticalDivider
-import com.kitching.core.designsystem.theme.Body2_m
-import com.kitching.core.designsystem.theme.Caption1_m
-import com.kitching.core.designsystem.theme.KitchingDimens
-import com.kitching.core.designsystem.theme.NeutralGray400
-import com.kitching.core.designsystem.theme.NeutralGray800
+import com.kitching.core.designsystem.Body2_m
+import com.kitching.core.designsystem.Caption1_m
+import com.kitching.core.designsystem.KitchingDimens
+import com.kitching.core.designsystem.NeutralGray400
+import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.domain.entities.Comment
 import com.kitching.main.R
 

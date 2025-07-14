@@ -20,9 +20,9 @@ import com.kitching.core.common.commonstate.NavigationIconInfo
 import com.kitching.core.common.widget.DatePickerModal
 import com.kitching.core.common.widget.DateSelector
 import com.kitching.core.common.widget.TabPager
-import com.kitching.core.designsystem.theme.KitchingStaffTheme
-import com.kitching.core.designsystem.theme.NeutralGray0
-import com.kitching.core.designsystem.theme.PrimaryGreen300
+import com.kitching.core.designsystem.KitchingStaffTheme
+import com.kitching.core.designsystem.NeutralGray0
+import com.kitching.core.designsystem.PrimaryGreen300
 import com.kitching.domain.entities.ScheduleTime
 import com.kitching.domain.util.AppResult
 import com.kitching.main.factory.viewModelFactory

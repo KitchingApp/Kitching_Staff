@@ -8,8 +8,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import com.kitching.core.designsystem.theme.KitchingDimens
-import com.kitching.core.designsystem.theme.defaultHorizontalPadding
+import com.kitching.core.designsystem.KitchingDimens
+import com.kitching.core.designsystem.defaultHorizontalPadding
 import com.kitching.domain.entities.TodoPrepData
 import com.kitching.domain.entities.TodoPrepWithDetails
 

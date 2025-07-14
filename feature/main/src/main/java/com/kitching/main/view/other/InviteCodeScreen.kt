@@ -31,17 +31,17 @@ import coil3.compose.AsyncImage
 import com.kitching.core.common.commonstate.ActionIconInfo
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.NavigationIconInfo
-import com.kitching.core.designsystem.theme.Caption1_m
-import com.kitching.core.designsystem.theme.H5_m
-import com.kitching.core.designsystem.theme.KitchingDimens
-import com.kitching.core.designsystem.theme.KitchingStaffTheme
-import com.kitching.core.designsystem.theme.NeutralGray0
-import com.kitching.core.designsystem.theme.NeutralGray800
-import com.kitching.core.designsystem.theme.PrimaryGreen300
-import com.kitching.core.designsystem.theme.SecondaryLightGreen500
-import com.kitching.core.designsystem.theme.ShadowColor
-import com.kitching.core.designsystem.theme.defaultHorizontalPadding
-import com.kitching.core.designsystem.theme.dropShadow
+import com.kitching.core.designsystem.Caption1_m
+import com.kitching.core.designsystem.H5_m
+import com.kitching.core.designsystem.KitchingDimens
+import com.kitching.core.designsystem.KitchingStaffTheme
+import com.kitching.core.designsystem.NeutralGray0
+import com.kitching.core.designsystem.NeutralGray800
+import com.kitching.core.designsystem.PrimaryGreen300
+import com.kitching.core.designsystem.SecondaryLightGreen500
+import com.kitching.core.designsystem.ShadowColor
+import com.kitching.core.designsystem.defaultHorizontalPadding
+import com.kitching.core.designsystem.dropShadow
 
 @Composable
 fun InviteCodeScreen(

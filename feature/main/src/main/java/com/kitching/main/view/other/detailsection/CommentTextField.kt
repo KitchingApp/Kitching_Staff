@@ -24,12 +24,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import coil3.compose.AsyncImage
-import com.kitching.core.designsystem.theme.Body1_m
-import com.kitching.core.designsystem.theme.KitchingDimens
-import com.kitching.core.designsystem.theme.NeutralGray100
-import com.kitching.core.designsystem.theme.NeutralGray200
-import com.kitching.core.designsystem.theme.NeutralGray500
-import com.kitching.core.designsystem.theme.NeutralGray800
+import com.kitching.core.designsystem.Body1_m
+import com.kitching.core.designsystem.KitchingDimens
+import com.kitching.core.designsystem.NeutralGray100
+import com.kitching.core.designsystem.NeutralGray200
+import com.kitching.core.designsystem.NeutralGray500
+import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.main.R
 
 @Composable

@@ -20,10 +20,10 @@ import com.kitching.core.common.commonstate.ActionIconInfo
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.NavigationIconInfo
 import com.kitching.core.common.widget.DottedDivider
-import com.kitching.core.designsystem.theme.KitchingDimens
-import com.kitching.core.designsystem.theme.KitchingStaffTheme
-import com.kitching.core.designsystem.theme.NeutralGray0
-import com.kitching.core.designsystem.theme.NeutralGray600
+import com.kitching.core.designsystem.KitchingDimens
+import com.kitching.core.designsystem.KitchingStaffTheme
+import com.kitching.core.designsystem.NeutralGray0
+import com.kitching.core.designsystem.NeutralGray600
 import com.kitching.domain.entities.Notice
 import com.kitching.main.R
 import com.kitching.main.factory.viewModelFactory

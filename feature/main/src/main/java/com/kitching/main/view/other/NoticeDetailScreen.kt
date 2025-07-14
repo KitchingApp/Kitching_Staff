@@ -22,10 +22,10 @@ import com.kitching.core.common.appresultscreen.ProgressIndicatorScreen
 import com.kitching.core.common.commonstate.ActionIconInfo
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.NavigationIconInfo
-import com.kitching.core.designsystem.theme.KitchingDimens
-import com.kitching.core.designsystem.theme.KitchingStaffTheme
-import com.kitching.core.designsystem.theme.NeutralGray0
-import com.kitching.core.designsystem.theme.defaultHorizontalPadding
+import com.kitching.core.designsystem.KitchingDimens
+import com.kitching.core.designsystem.KitchingStaffTheme
+import com.kitching.core.designsystem.NeutralGray0
+import com.kitching.core.designsystem.defaultHorizontalPadding
 import com.kitching.domain.entities.Notice
 import com.kitching.domain.util.AppResult
 import com.kitching.main.R

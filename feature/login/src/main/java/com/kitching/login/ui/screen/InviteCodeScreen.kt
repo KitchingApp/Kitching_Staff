@@ -44,15 +44,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.appresultscreen.ProgressIndicatorScreen
-import com.kitching.core.designsystem.theme.Body1
-import com.kitching.core.designsystem.theme.H2
-import com.kitching.core.designsystem.theme.H3_m
-import com.kitching.core.designsystem.theme.KitchingStaffTheme
-import com.kitching.core.designsystem.theme.NeutralGray0
-import com.kitching.core.designsystem.theme.NeutralGray300
-import com.kitching.core.designsystem.theme.NeutralGray600
-import com.kitching.core.designsystem.theme.NeutralGray800
-import com.kitching.core.designsystem.theme.PrimaryGreen300
+import com.kitching.core.designsystem.Body1
+import com.kitching.core.designsystem.H2
+import com.kitching.core.designsystem.H3_m
+import com.kitching.core.designsystem.KitchingStaffTheme
+import com.kitching.core.designsystem.NeutralGray0
+import com.kitching.core.designsystem.NeutralGray300
+import com.kitching.core.designsystem.NeutralGray600
+import com.kitching.core.designsystem.NeutralGray800
+import com.kitching.core.designsystem.PrimaryGreen300
 import com.kitching.domain.entities.Team
 import com.kitching.domain.util.AppResult
 import com.kitching.login.R
@@ -115,7 +115,7 @@ fun InviteCodeScreen(
                     }) {
                         AsyncImage(
                             modifier = Modifier.size(dimensionResource(R.dimen.top_app_bar_for_invite_code_screen_navigation_icon_size)),
-                            model = com.kitching.core.common.R.drawable.icon_line_back,
+                            model = R.drawable.icon_line_back,
                             contentDescription = stringResource(R.string.icon_description_go_to_team_select_screen),
                             colorFilter = ColorFilter.tint(NeutralGray600)
                         )

@@ -9,12 +9,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.kitching.core.common.widget.KitchingVerticalDivider
-import com.kitching.core.designsystem.theme.Body1_m
-import com.kitching.core.designsystem.theme.Body2_m
-import com.kitching.core.designsystem.theme.H2
-import com.kitching.core.designsystem.theme.KitchingDimens
-import com.kitching.core.designsystem.theme.NeutralGray800
-import com.kitching.core.designsystem.theme.defaultHorizontalPadding
+import com.kitching.core.designsystem.Body1_m
+import com.kitching.core.designsystem.Body2_m
+import com.kitching.core.designsystem.H2
+import com.kitching.core.designsystem.KitchingDimens
+import com.kitching.core.designsystem.NeutralGray800
+import com.kitching.core.designsystem.defaultHorizontalPadding
 import com.kitching.domain.entities.Notice
 
 @Composable

@@ -19,11 +19,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
-import com.kitching.core.designsystem.theme.Body1_m
-import com.kitching.core.designsystem.theme.NeutralGray0
-import com.kitching.core.designsystem.theme.NeutralGray800
-import com.kitching.core.designsystem.theme.PrimaryGreen50
-import com.kitching.core.designsystem.theme.PrimaryGreen700
+import com.kitching.core.designsystem.Body1_m
+import com.kitching.core.designsystem.NeutralGray0
+import com.kitching.core.designsystem.NeutralGray800
+import com.kitching.core.designsystem.PrimaryGreen50
+import com.kitching.core.designsystem.PrimaryGreen700
 
 @Composable
 fun ScheduleCardItem(

@@ -5,8 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.kitching.app.common.askNotificationPermission
 import com.kitching.app.fcm.ScheduleRejectedNotificationChannel
-import com.kitching.core.designsystem.theme.KitchingStaffTheme
-import com.kitching.core.navigation.AppNavHost
+import com.kitching.app.navigation.AppNavHost
+import com.kitching.core.designsystem.KitchingStaffTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

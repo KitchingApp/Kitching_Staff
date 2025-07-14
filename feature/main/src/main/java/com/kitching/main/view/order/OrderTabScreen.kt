@@ -33,11 +33,11 @@ import com.kitching.core.common.commonstate.ActionIconInfo
 import com.kitching.core.common.appresultscreen.CombinedAppResultHandler
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.NavigationIconInfo
-import com.kitching.core.designsystem.theme.H2
-import com.kitching.core.designsystem.theme.KitchingStaffTheme
-import com.kitching.core.designsystem.theme.NeutralGray0
-import com.kitching.core.designsystem.theme.NeutralGray800
-import com.kitching.core.designsystem.theme.defaultHorizontalPadding
+import com.kitching.core.designsystem.H2
+import com.kitching.core.designsystem.KitchingStaffTheme
+import com.kitching.core.designsystem.NeutralGray0
+import com.kitching.core.designsystem.NeutralGray800
+import com.kitching.core.designsystem.defaultHorizontalPadding
 import com.kitching.domain.entities.Order
 import com.kitching.domain.util.AppResult
 import com.kitching.main.factory.viewModelFactory

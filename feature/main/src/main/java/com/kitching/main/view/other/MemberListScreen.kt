@@ -17,9 +17,9 @@ import com.kitching.core.common.appresultscreen.AppResultHandler
 import com.kitching.core.common.commonstate.ActionIconInfo
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.NavigationIconInfo
-import com.kitching.core.designsystem.theme.KitchingDimens
-import com.kitching.core.designsystem.theme.KitchingStaffTheme
-import com.kitching.core.designsystem.theme.NeutralGray0
+import com.kitching.core.designsystem.KitchingDimens
+import com.kitching.core.designsystem.KitchingStaffTheme
+import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.main.R
 import com.kitching.main.factory.viewModelFactory
 import com.kitching.main.view.model.OtherViewModel

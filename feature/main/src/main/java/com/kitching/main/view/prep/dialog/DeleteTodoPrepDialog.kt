@@ -9,9 +9,9 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.kitching.core.common.widget.CommonDialogComponent
-import com.kitching.core.designsystem.theme.Body1_m
-import com.kitching.core.designsystem.theme.KitchingDimens
-import com.kitching.core.designsystem.theme.NeutralGray800
+import com.kitching.core.designsystem.Body1_m
+import com.kitching.core.designsystem.KitchingDimens
+import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.domain.entities.TodoPrepWithDetails
 
 @Composable

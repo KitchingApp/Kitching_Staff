@@ -9,7 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
-import com.kitching.core.designsystem.theme.defaultHorizontalPadding
+import com.kitching.core.designsystem.defaultHorizontalPadding
 import com.kitching.domain.entities.Schedule
 
 @Composable

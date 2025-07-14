@@ -7,10 +7,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import com.kitching.core.common.widget.DrawerOtherItem
-import com.kitching.core.designsystem.theme.KitchingDimens
+import com.kitching.core.designsystem.KitchingDimens
 
 @Composable
 fun DrawerOtherList(

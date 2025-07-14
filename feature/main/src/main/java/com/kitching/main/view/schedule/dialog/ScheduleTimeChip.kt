@@ -11,11 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.kitching.core.designsystem.theme.H5_m
-import com.kitching.core.designsystem.theme.NeutralGray0
-import com.kitching.core.designsystem.theme.NeutralGray800
-import com.kitching.core.designsystem.theme.PrimaryGreen300
-import com.kitching.core.designsystem.theme.SecondaryLightGreen100
+import com.kitching.core.designsystem.H5_m
+import com.kitching.core.designsystem.NeutralGray0
+import com.kitching.core.designsystem.NeutralGray800
+import com.kitching.core.designsystem.PrimaryGreen300
+import com.kitching.core.designsystem.SecondaryLightGreen100
 import com.kitching.domain.entities.ScheduleTime
 
 @Composable
