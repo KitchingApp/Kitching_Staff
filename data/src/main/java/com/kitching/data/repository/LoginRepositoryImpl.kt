@@ -30,6 +30,6 @@ class LoginRepositoryImpl(
             emit(AppResult.Success(user.toDomain()))
         } catch (e: Exception) {
             emit(AppResult.Failure(e))
-            }
+        }
     }
 }
