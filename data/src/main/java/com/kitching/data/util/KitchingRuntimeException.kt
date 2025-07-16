@@ -166,6 +166,24 @@ sealed class KitchingRuntimeException(
     ) : KitchingRuntimeException(message, cause, errorCode)
 
     /**
+     * UserTeam 생성 실패 에러
+     */
+    class UserTeamCreateFailedException(
+        message: String = USER_TEAM_CREATE_FAILED_MESSAGE,
+        cause: Throwable? = null,
+        errorCode: String? = USER_TEAM_CREATE_FAILED_ERROR_CODE
+    ) : KitchingRuntimeException(message, cause, errorCode)
+
+    /**
+     * UserTeam 이미 존재 에러
+     */
+    class UserTeamAlreadyExistsException(
+        message: String = USER_TEAM_ALREADY_EXISTS_MESSAGE,
+        cause: Throwable? = null,
+        errorCode: String? = USER_TEAM_ALREADY_EXISTS_ERROR_CODE
+    ) : KitchingRuntimeException(message, cause, errorCode)
+
+    /**
      * 알 수 없는 에러
      */
     class UnknownException(

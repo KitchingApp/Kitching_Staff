@@ -51,6 +51,10 @@ object ExceptionHandler {
                 COMMENT_DELETE_FAILED_MESSAGE
             is KitchingRuntimeException.TeamNotFoundException ->
                 TEAM_NOT_FOUND_MESSAGE
+            is KitchingRuntimeException.UserTeamCreateFailedException ->
+                USER_TEAM_CREATE_FAILED_MESSAGE
+            is KitchingRuntimeException.UserTeamAlreadyExistsException ->
+                USER_TEAM_ALREADY_EXISTS_MESSAGE
         }
     }
 
