@@ -15,14 +15,10 @@ class RecipeRepositoryImpl(
     override fun getRecipes(teamId: String): Flow<AppResult<List<Recipe>>> = flow {
         emit(AppResult.Loading)
 
-        try {
-            val recipes = dataSource.getRecipes(teamId).map { it.toDomain() }
+        val recipes = dataSource.getRecipes(teamId).map { it.toDomain() }
 
-            emit(AppResult.Success(recipes))
-        } catch (e: Exception) {
-            emit(AppResult.Failure(e))
-        }
-    }.catch { exception ->
-        emit(AppResult.Failure(exception))
+        emit(AppResult.Success(recipes))
+    }.catch {
+        emit(AppResult.Failure(it))
     }
 }

@@ -36,3 +36,6 @@ const val DOCUMENT_TEAM_ID = "teamId"
 const val DOCUMENT_USER_ID = "userId"
 
 const val DOCUMENT_INVITE_CODE = "inviteCode"
+
+const val FIELD_USER_NAME = "userName"
+const val FIELD_USER_IMAGE = "userImage"

@@ -18,12 +18,27 @@ class ScheduleRepositoryImpl(private val dataSource: ScheduleDataSource = Schedu
         teamId: String,
     ): Flow<AppResult<List<Schedule>>> = flow {
         emit(AppResult.Loading)
-        try {
-            val schedules = dataSource.getMySchedules(userId, teamId)
-            emit(AppResult.Success(schedules))
-        } catch (e: Exception) {
-            emit(AppResult.Failure(e))
+
+        val schedules = dataSource.getMySchedules(userId, teamId)
+        val scheduleTimes = dataSource.getScheduleTimes(teamId)
+
+        val domainSchedules = schedules.map { scheduleDTO ->
+            val scheduleTime = scheduleTimes.find { it.id == scheduleDTO.scheduleTimeId }
+
+            Schedule(
+                scheduleId = scheduleDTO.id,
+                userId = scheduleDTO.userId,
+                userName = "",
+                scheduleTimeName = scheduleTime?.name ?: "",
+                date = scheduleDTO.date,
+                fix = scheduleDTO.fix,
+                color = scheduleTime?.color ?: "00ffff"
+            )
         }
+
+        emit(AppResult.Success(domainSchedules))
+    }.catch {
+        emit(AppResult.Failure(it))
     }
 
     override fun getScheduleByDate(
@@ -31,28 +46,36 @@ class ScheduleRepositoryImpl(private val dataSource: ScheduleDataSource = Schedu
         date: String,
     ): Flow<AppResult<List<Schedule>>> = flow {
         emit(AppResult.Loading)
-        try {
-            val schedules = dataSource.getScheduleByDate(teamId, date)
-            emit(AppResult.Success(schedules))
-        } catch (e: Exception) {
-            emit(AppResult.Failure(e))
+
+        val schedules = dataSource.getScheduleByDate(teamId, date)
+        val scheduleTimes = dataSource.getScheduleTimes(teamId)
+
+        val domainSchedules = schedules.map { scheduleDTO ->
+            val scheduleTime = scheduleTimes.find { it.id == scheduleDTO.scheduleTimeId }
+            val user = dataSource.getUserById(scheduleDTO.userId)
+
+            Schedule(
+                scheduleId = scheduleDTO.id,
+                userId = scheduleDTO.userId,
+                userName = user.userName,
+                scheduleTimeName = scheduleTime?.name ?: "",
+                date = scheduleDTO.date,
+                fix = scheduleDTO.fix,
+                color = scheduleTime?.color ?: "#00ffff"
+            )
         }
+
+        emit(AppResult.Success(domainSchedules))
+    }.catch {
+        emit(AppResult.Failure(it))
     }
 
-    override fun getScheduleTimes(teamId: String): Flow<AppResult<List<ScheduleTime>>> =
-        flow {
+    override fun getScheduleTimes(teamId: String): Flow<AppResult<List<ScheduleTime>>> = flow {
             emit(AppResult.Loading)
+
             val scheduleTimes = dataSource.getScheduleTimes(teamId)
-            if (scheduleTimes.isEmpty()) emit(AppResult.Success(emptyList()))
-            else emit(AppResult.Success(scheduleTimes.map {
-                ScheduleTime(
-                    scheduleTimeId = it.id,
-                    scheduleTimeName = it.name,
-                    startTime = it.startTime,
-                    endTime = it.endTime,
-                    color = it.color
-                )
-            }))
+
+            emit(AppResult.Success(scheduleTimes.map { it.toDomain() }))
         }.catch {
             emit(AppResult.Failure(it))
         }
@@ -65,20 +88,18 @@ class ScheduleRepositoryImpl(private val dataSource: ScheduleDataSource = Schedu
         fix: Boolean
     ): Flow<AppResult<Boolean>> = flow {
         emit(AppResult.Loading)
-        emit(
-            AppResult.Success(
-                dataSource.createApplySchedule(
-                    ScheduleDTO(
-                        id = "",
-                        teamId = teamId,
-                        userId = userId,
-                        scheduleTimeId = scheduleTimeId,
-                        date = dateString,
-                        fix = fix
-                    )
-                )
-            )
+
+        val schedule = ScheduleDTO(
+            teamId = teamId,
+            userId = userId,
+            scheduleTimeId = scheduleTimeId,
+            date = dateString,
+            fix = fix
         )
+
+        val result = dataSource.createApplySchedule(schedule)
+
+        emit(AppResult.Success(result))
     }.catch {
         emit(AppResult.Failure(it))
     }

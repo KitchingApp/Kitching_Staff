@@ -18,18 +18,21 @@ class LoginRepositoryImpl(
         userImage: String,
     ) = flow {
         emit(AppResult.Loading)
-        emit(AppResult.Success(dataSource.checkAndSaveUser(uid, userName, userImage)))
+
+        val result = dataSource.checkAndSaveUser(uid, userName, userImage)
+
+        emit(AppResult.Success(result))
     }.catch {
         emit(AppResult.Failure(it))
     }
 
     override fun getUserById(userId: String): Flow<AppResult<User>> = flow {
         emit(AppResult.Loading)
-        try {
-            val user = dataSource.getUserById(userId)
-            emit(AppResult.Success(user.toDomain()))
-        } catch (e: Exception) {
-            emit(AppResult.Failure(e))
-            }
+
+        val user = dataSource.getUserById(userId)
+
+        emit(AppResult.Success(user.toDomain()))
+    }.catch {
+        emit(AppResult.Failure(it))
     }
 }
