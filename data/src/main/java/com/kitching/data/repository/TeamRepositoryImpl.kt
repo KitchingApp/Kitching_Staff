@@ -6,7 +6,6 @@ import com.kitching.data.datasource.UserTeamDataSource
 import com.kitching.data.datasource.impl.UserTeamDataSourceImpl
 import com.kitching.domain.entities.Member
 import com.kitching.domain.entities.Notice
-import com.kitching.domain.entities.Team
 import com.kitching.domain.entities.User
 import com.kitching.domain.repository.TeamRepository
 import com.kitching.domain.util.AppResult
@@ -24,14 +23,9 @@ class TeamRepositoryImpl(
         val userTeams = userTeamDataSource.getUserTeams(userId)
 
         val teamList = userTeams.flatMap { userTeamDTO ->
-            teamDataSource.getTeamList(userTeamDTO.teamId).map { dto ->
-                Team(
-                    teamId = dto.id,
-                    teamName = dto.teamName,
-                    teamAmount = dto.teamAmount
-                )
-            }
+            teamDataSource.getTeamList(userTeamDTO.teamId).map { it.toDomain() }
         }
+
         emit(AppResult.Success(teamList))
     }.catch {
         emit(AppResult.Failure(it))
@@ -39,12 +33,10 @@ class TeamRepositoryImpl(
 
     override fun getTeam(teamId: String) = flow {
         emit(AppResult.Loading)
+
         val team = teamDataSource.getTeam(teamId)
-        if (team != null) {
-            emit(
-                AppResult.Success(team.toDomain())
-            )
-        } else throw Throwable("team is not exists")
+
+        emit(AppResult.Success(team.toDomain()))
     }.catch {
         emit(AppResult.Failure(it))
     }
@@ -54,22 +46,12 @@ class TeamRepositoryImpl(
         inviteCode: String,
     ) = flow {
         emit(AppResult.Loading)
+
         val team = teamDataSource.getTeamByInviteCode(inviteCode)
 
-        if (team != null) {
-            val joinSuccess = userTeamDataSource.createUserTeam(
-                userId = userId,
-                teamId = team.id
-            )
+        userTeamDataSource.createUserTeam(userId = userId, teamId = team.id)
 
-            if (joinSuccess) {
-                emit(AppResult.Success(team.toDomain()))
-            } else {
-                emit(AppResult.Failure(Exception("팀 참여 실패")))
-            }
-        } else {
-            emit(AppResult.Failure(Exception("해당 초대코드의 팀이 없습니다. 다시 입력해주세요.")))
-        }
+        emit(AppResult.Success(team.toDomain()))
     }.catch {
         emit(AppResult.Failure(it))
     }
@@ -77,19 +59,23 @@ class TeamRepositoryImpl(
     override fun getAllMemberList(teamId: String): Flow<AppResult<List<Member>>> = flow {
         emit(AppResult.Loading)
 
-        val memberList = userTeamDataSource.getAllMembers(teamId).map {
-            val user = userTeamDataSource.getUser(it.userId)
+        val memberList = userTeamDataSource.getAllMembers(teamId).map { userTeamDTO ->
+            val user = userTeamDataSource.getUser(userTeamDTO.userId)
+            val staffLevel = if (userTeamDTO.staffLevelId.isNotBlank()) {
+                userTeamDataSource.getStaffLevel(userTeamDTO.staffLevelId)
+            } else null
 
             Member(
-                userTeamId = it.id,
-                userId = it.userId,
+                userTeamId = userTeamDTO.id,
+                userId = userTeamDTO.userId,
                 userName = user?.userName ?: "",
                 userImage = user?.userImage ?: "",
-                staffLevelId = it.staffLevelId,
-                staffLevelName = if (it.staffLevelId.isBlank()) "" else userTeamDataSource.getStaffLevel(it.staffLevelId)?.name ?: "",
-                manager = it.manager
+                staffLevelId = userTeamDTO.staffLevelId,
+                staffLevelName = staffLevel?.name ?: "",
+                manager = userTeamDTO.manager
             )
         }
+
         emit(AppResult.Success(memberList))
     }.catch {
         emit(AppResult.Failure(it))
@@ -122,6 +108,7 @@ class TeamRepositoryImpl(
 
     override fun getNoticeById(noticeId: String): Flow<AppResult<Notice>> = flow {
         emit(AppResult.Loading)
+
         val noticeDTO = teamDataSource.getNoticeById(noticeId)
 
         val notice = noticeDTO?.let {
@@ -163,7 +150,9 @@ class TeamRepositoryImpl(
         commentId: String,
     ): Flow<AppResult<Boolean>> = flow {
         emit(AppResult.Loading)
+
         val deleteSuccess = teamDataSource.deleteComment(noticeId, commentId)
+
         emit(AppResult.Success(deleteSuccess))
     }.catch {
         emit(AppResult.Failure(it))

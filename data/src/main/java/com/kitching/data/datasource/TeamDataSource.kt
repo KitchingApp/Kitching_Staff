@@ -5,7 +5,7 @@ import com.kitching.data.dto.TeamDTO
 import com.kitching.domain.entities.User
 
 interface TeamDataSource {
-    suspend fun getTeam(teamId: String): TeamDTO?
+    suspend fun getTeam(teamId: String): TeamDTO
 
     suspend fun getTeamList(teamId: String): List<TeamDTO>
 
