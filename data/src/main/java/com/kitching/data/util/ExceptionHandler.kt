@@ -43,6 +43,8 @@ object ExceptionHandler {
                 TODO_PREP_UPDATE_FAILED_MESSAGE
             is KitchingRuntimeException.TodoPrepUpdateFailedException ->
                 TODO_PREP_DELETE_FAILED_MESSAGE
+            is KitchingRuntimeException.ScheduleCreateFailedException ->
+                SCHEDULE_CREATE_FAILED_MESSAGE
         }
     }
 

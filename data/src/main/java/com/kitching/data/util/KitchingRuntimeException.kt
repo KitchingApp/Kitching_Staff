@@ -130,6 +130,15 @@ sealed class KitchingRuntimeException(
     ) : KitchingRuntimeException(message, cause, errorCode)
 
     /**
+     * Schedule 생성 실패 에러
+     */
+    class ScheduleCreateFailedException(
+        message: String = SCHEDULE_CREATE_FAILED_MESSAGE,
+        cause: Throwable? = null,
+        errorCode: String? = SCHEDULE_CREATE_FAILED_ERROR_CODE
+    ) : KitchingRuntimeException(message, cause, errorCode)
+
+    /**
      * 알 수 없는 에러
      */
     class UnknownException(
