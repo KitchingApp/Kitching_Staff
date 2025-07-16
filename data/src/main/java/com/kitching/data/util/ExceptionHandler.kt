@@ -45,6 +45,10 @@ object ExceptionHandler {
                 TODO_PREP_DELETE_FAILED_MESSAGE
             is KitchingRuntimeException.ScheduleCreateFailedException ->
                 SCHEDULE_CREATE_FAILED_MESSAGE
+            is KitchingRuntimeException.CommentAddFailedException ->
+                COMMENT_ADD_FAILED_MESSAGE
+            is KitchingRuntimeException.CommentDeleteFailedException ->
+                COMMENT_DELETE_FAILED_MESSAGE
         }
     }
 

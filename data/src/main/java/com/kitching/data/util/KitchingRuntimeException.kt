@@ -139,6 +139,24 @@ sealed class KitchingRuntimeException(
     ) : KitchingRuntimeException(message, cause, errorCode)
 
     /**
+     * 댓글 추가 실패 에러
+     */
+    class CommentAddFailedException(
+        message: String = COMMENT_ADD_FAILED_MESSAGE,
+        cause: Throwable? = null,
+        errorCode: String? = COMMENT_ADD_FAILED_ERROR_CODE
+    ) : KitchingRuntimeException(message, cause, errorCode)
+
+    /**
+     * 댓글 삭제 실패 에러
+     */
+    class CommentDeleteFailedException(
+        message: String = COMMENT_DELETE_FAILED_MESSAGE,
+        cause: Throwable? = null,
+        errorCode: String? = COMMENT_DELETE_FAILED_ERROR_CODE
+    ) : KitchingRuntimeException(message, cause, errorCode)
+
+    /**
      * 알 수 없는 에러
      */
     class UnknownException(
