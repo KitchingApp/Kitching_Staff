@@ -33,66 +33,26 @@ class ScheduleDataSourceImpl(private val db: FirebaseFirestore = FirebaseFiresto
     override suspend fun getMySchedules(
         userId: String,
         teamId: String,
-    ): List<Schedule> = ExceptionHandler.safeCall {
-        val schedules = db.collection(COLLECTION_SCHEDULE)
+    ): List<ScheduleDTO> = ExceptionHandler.safeCall {
+        db.collection(COLLECTION_SCHEDULE)
             .whereEqualTo(DOCUMENT_USER_ID, userId)
             .whereEqualTo(DOCUMENT_TEAM_ID, teamId)
             .whereEqualTo(DOCUMENT_SCHEDULE_FIX, true)
             .get()
             .await()
             .toObjects(ScheduleDTO::class.java)
-
-        val scheduleTimes = db.collection(COLLECTION_SCHEDULE_TIME)
-            .whereEqualTo(DOCUMENT_TEAM_ID, teamId)
-            .get()
-            .await()
-            .toObjects(ScheduleTimeDTO::class.java)
-
-        schedules.map { scheduleDTO ->
-            val scheduleTime = scheduleTimes.find { it.id == scheduleDTO.scheduleTimeId }
-            Schedule(
-                scheduleId = scheduleDTO.id,
-                userId = scheduleDTO.userId,
-                userName = "",
-                scheduleTimeName = scheduleTime?.name ?: "",
-                date = scheduleDTO.date,
-                fix = scheduleDTO.fix,
-                color = scheduleTime?.color ?: "#00ffff"
-            )
-        }
     }
 
     override suspend fun getScheduleByDate(
         teamId: String,
         date: String,
-    ): List<Schedule> = ExceptionHandler.safeCall {
-        val schedules = db.collection(COLLECTION_SCHEDULE)
+    ): List<ScheduleDTO> = ExceptionHandler.safeCall {
+        db.collection(COLLECTION_SCHEDULE)
             .whereEqualTo(DOCUMENT_TEAM_ID, teamId)
             .whereEqualTo(DOCUMENT_DATE, date)
             .get()
             .await()
             .toObjects(ScheduleDTO::class.java)
-
-        val scheduleTimes = db.collection(COLLECTION_SCHEDULE_TIME)
-            .whereEqualTo(DOCUMENT_TEAM_ID, teamId)
-            .get()
-            .await()
-            .toObjects(ScheduleTimeDTO::class.java)
-
-        schedules.map { scheduleDTO ->
-            val scheduleTime = scheduleTimes.find { it.id == scheduleDTO.scheduleTimeId }
-            val user = getUserById(scheduleDTO.userId)
-
-            Schedule(
-                scheduleId = scheduleDTO.id,
-                userId = scheduleDTO.userId,
-                userName = user.userName,
-                scheduleTimeName = scheduleTime?.name ?: "",
-                date = scheduleDTO.date,
-                fix = scheduleDTO.fix,
-                color = scheduleTime?.color ?: "00ffff"
-            )
-        }
     }
 
     override suspend fun getScheduleTimes(teamId: String): List<ScheduleTimeDTO>  = ExceptionHandler.safeCall {
