@@ -9,7 +9,7 @@ interface TeamDataSource {
 
     suspend fun getTeamList(teamId: String): List<TeamDTO>
 
-    suspend fun getTeamByInviteCode(inviteCode: String): TeamDTO?
+    suspend fun getTeamByInviteCode(inviteCode: String): TeamDTO
 
     suspend fun getNoticeList(teamId: String): List<NoticeDTO>
 

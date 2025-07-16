@@ -29,9 +29,11 @@ class TeamDataSourceImpl(private val db: FirebaseFirestore = FirebaseFirestore.g
             .toObjects(TeamDTO::class.java)
     }
 
-    override suspend fun getTeamByInviteCode(inviteCode: String): TeamDTO? = ExceptionHandler.safeCall {
-        db.collection(COLLECTION_TEAM).whereEqualTo(DOCUMENT_INVITE_CODE, inviteCode).get().await()
+    override suspend fun getTeamByInviteCode(inviteCode: String): TeamDTO = ExceptionHandler.safeCall {
+        val teamDto = db.collection(COLLECTION_TEAM).whereEqualTo(DOCUMENT_INVITE_CODE, inviteCode).get().await()
             .documents.firstOrNull()?.toObject(TeamDTO::class.java)
+
+        teamDto ?: throw KitchingRuntimeException.TeamNotFoundException()
     }
 
     override suspend fun getNoticeList(teamId: String): List<NoticeDTO> = ExceptionHandler.safeCall {

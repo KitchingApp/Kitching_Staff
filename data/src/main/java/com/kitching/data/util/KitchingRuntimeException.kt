@@ -157,6 +157,15 @@ sealed class KitchingRuntimeException(
     ) : KitchingRuntimeException(message, cause, errorCode)
 
     /**
+     * Team 찾기 실패 에러
+     */
+    class TeamNotFoundException(
+        message: String = TEAM_NOT_FOUND_MESSAGE,
+        cause: Throwable? = null,
+        errorCode: String? = TEAM_NOT_FOUND_ERROR_CODE
+    ) : KitchingRuntimeException(message, cause, errorCode)
+
+    /**
      * 알 수 없는 에러
      */
     class UnknownException(

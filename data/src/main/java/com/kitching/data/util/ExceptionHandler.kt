@@ -49,6 +49,8 @@ object ExceptionHandler {
                 COMMENT_ADD_FAILED_MESSAGE
             is KitchingRuntimeException.CommentDeleteFailedException ->
                 COMMENT_DELETE_FAILED_MESSAGE
+            is KitchingRuntimeException.TeamNotFoundException ->
+                TEAM_NOT_FOUND_MESSAGE
         }
     }
 
