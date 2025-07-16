@@ -103,6 +103,33 @@ sealed class KitchingRuntimeException(
     ) : KitchingRuntimeException(message, cause, errorCode)
 
     /**
+     * TodoPrep 생성 실패 에러
+     */
+    class TodoPrepCreateFailedException(
+        message: String = TODO_PREP_CREATE_FAILED_MESSAGE,
+        cause: Throwable? = null,
+        errorCode: String? = TODO_PREP_CREATE_FAILED_ERROR_CODE
+    ) : KitchingRuntimeException(message, cause, errorCode)
+
+    /**
+     * TodoPrep 업데이트 실패 에러
+     */
+    class TodoPrepUpdateFailedException(
+        message: String = TODO_PREP_UPDATE_FAILED_MESSAGE,
+        cause: Throwable? = null,
+        errorCode: String? = TODO_PREP_UPDATE_FAILED_ERROR_CODE
+    ) : KitchingRuntimeException(message, cause, errorCode)
+
+    /**
+     * TodoPrep 삭제 실패 에러
+     */
+    class TodoPrepDeleteFailedException(
+        message: String = TODO_PREP_DELETE_FAILED_MESSAGE,
+        cause: Throwable? = null,
+        errorCode: String? = TODO_PREP_DELETE_FAILED_ERROR_CODE
+    ) : KitchingRuntimeException(message, cause, errorCode)
+
+    /**
      * 알 수 없는 에러
      */
     class UnknownException(

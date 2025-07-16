@@ -37,6 +37,12 @@ object ExceptionHandler {
                 USER_NOT_FOUND_MESSAGE
             is KitchingRuntimeException.UserSaveFailedException ->
                 USER_SAVE_FAILED_MESSAGE
+            is KitchingRuntimeException.TodoPrepCreateFailedException ->
+                TODO_PREP_CREATE_FAILED_MESSAGE
+            is KitchingRuntimeException.TodoPrepDeleteFailedException ->
+                TODO_PREP_UPDATE_FAILED_MESSAGE
+            is KitchingRuntimeException.TodoPrepUpdateFailedException ->
+                TODO_PREP_DELETE_FAILED_MESSAGE
         }
     }
 
