@@ -61,9 +61,7 @@ class TeamRepositoryImpl(
 
         val memberList = userTeamDataSource.getAllMembers(teamId).map { userTeamDTO ->
             val user = userTeamDataSource.getUser(userTeamDTO.userId)
-            val staffLevel = if (userTeamDTO.staffLevelId.isNotBlank()) {
-                userTeamDataSource.getStaffLevel(userTeamDTO.staffLevelId)
-            } else null
+            val staffLevel = if (userTeamDTO.staffLevelId.isNotEmpty()) userTeamDataSource.getStaffLevel(userTeamDTO.staffLevelId) else null
 
             Member(
                 userTeamId = userTeamDTO.id,
