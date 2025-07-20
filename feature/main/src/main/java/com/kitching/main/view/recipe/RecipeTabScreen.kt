@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.kitching.core.common.appresultscreen.AppResultHandler
+import com.kitching.core.common.appresultscreen.UiStateHandler
 import com.kitching.core.common.commonstate.ActionIconInfo
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.NavigationIconInfo
@@ -100,25 +100,24 @@ fun RecipeTabScreen(
                 }
             }
 
-            AppResultHandler(
-                state = recipeListState,
-                onRetry = { viewModel.getRecipeListByTeamId(teamId) },
-                onSuccess = { recipeList ->
-                    val filteredRecipes = remember(recipeList, debouncedSearchQuery) {
-                        if (debouncedSearchQuery.isEmpty()) {
-                            recipeList
-                        } else {
-                            recipeList.filter { recipe ->
-                                recipe.recipeName.contains(debouncedSearchQuery, ignoreCase = true)
-                            }
+            UiStateHandler(
+                uiState = recipeListState,
+                onRetry = { viewModel.getRecipeListByTeamId(teamId) }
+            ) { recipeList ->
+                val filteredRecipes = remember(recipeList, debouncedSearchQuery) {
+                    if (debouncedSearchQuery.isEmpty()) {
+                        recipeList
+                    } else {
+                        recipeList.filter { recipe ->
+                            recipe.recipeName.contains(debouncedSearchQuery, ignoreCase = true)
                         }
                     }
-
-                    RecipeGridList(filteredRecipes) { recipe ->
-                        onRecipeClick(recipe)
-                    }
                 }
-            )
+
+                RecipeGridList(filteredRecipes) { recipe ->
+                    onRecipeClick(recipe)
+                }
+            }
         }
     }
 }
