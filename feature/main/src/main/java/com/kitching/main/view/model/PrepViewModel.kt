@@ -5,59 +5,112 @@ import androidx.lifecycle.viewModelScope
 import com.kitching.domain.entities.TodoPrepData
 import com.kitching.domain.repository.PrepRepository
 import com.kitching.domain.util.AppResult
+import com.kitching.domain.util.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class PrepViewModel(private val repository: PrepRepository) : ViewModel() {
-    private val _todoPrepsByDate = MutableStateFlow<AppResult<TodoPrepData>>(AppResult.Initial)
+    private val _todoPrepsByDate = MutableStateFlow(UiState<TodoPrepData>())
     val todoPrepsByDate get() = _todoPrepsByDate.asStateFlow()
 
     fun getTodoPrepsByDate(teamId: String, date: String) {
         viewModelScope.launch {
-            repository.getTodoPrep(teamId, date).collectLatest {
-                _todoPrepsByDate.value = it
+            repository.getTodoPrep(teamId, date).collectLatest { result ->
+                when (result) {
+                    is AppResult.Initial -> {
+                        _todoPrepsByDate.value = _todoPrepsByDate.value
+                    }
+
+                    is AppResult.Loading -> {
+                        _todoPrepsByDate.value = _todoPrepsByDate.value.toLoading()
+                    }
+
+                    is AppResult.Success -> {
+                        _todoPrepsByDate.value = _todoPrepsByDate.value.toSuccess(result.data)
+                    }
+
+                    is AppResult.Failure -> {
+                        _todoPrepsByDate.value = _todoPrepsByDate.value.toError(result.exception.message ?: "")
+                    }
+                }
             }
         }
     }
 
-    private val _createTodoPrepResult = MutableStateFlow<AppResult<Boolean>>(AppResult.Initial)
-    val createTodoPrepResult get() = _createTodoPrepResult.asStateFlow()
+    private val _actionTodoPrepResult = MutableStateFlow(UiState<Boolean>())
+    val actionTodoPrepResult get() = _actionTodoPrepResult.asStateFlow()
 
     fun createTodoPrep(teamId: String, date: String, categoryId: String, prepId: String) {
         viewModelScope.launch {
-            repository.createTodoPrep(teamId, date, categoryId, prepId).collectLatest {
-                _createTodoPrepResult.value = it
+            repository.createTodoPrep(teamId, date, categoryId, prepId).collectLatest { result ->
+                when (result) {
+                    is AppResult.Initial -> {
+                        _actionTodoPrepResult.value = _actionTodoPrepResult.value
+                    }
+
+                    is AppResult.Loading -> {
+                        _actionTodoPrepResult.value = _actionTodoPrepResult.value.toLoading()
+                    }
+
+                    is AppResult.Success -> {
+                        _actionTodoPrepResult.value = _actionTodoPrepResult.value.toSuccess(result.data)
+                    }
+
+                    is AppResult.Failure -> {
+                        _actionTodoPrepResult.value = _actionTodoPrepResult.value.toError(result.exception.message ?: "")
+                    }
+                }
             }
         }
     }
-
-    private val _updateTodoPrepResult = MutableStateFlow<AppResult<Boolean>>(AppResult.Initial)
-    val updateTodoPrepResult get() = _updateTodoPrepResult.asStateFlow()
 
     fun updateTodoPrep(todoId: String, isDone: Boolean) {
         viewModelScope.launch {
-            repository.updateTodoPrep(todoId, isDone).collectLatest {
-                _updateTodoPrepResult.value = it
+            repository.updateTodoPrep(todoId, isDone).collectLatest { result ->
+                when (result) {
+                    is AppResult.Initial -> {
+                        _actionTodoPrepResult.value = _actionTodoPrepResult.value
+                    }
+
+                    is AppResult.Loading -> {
+                        _actionTodoPrepResult.value = _actionTodoPrepResult.value.toLoading()
+                    }
+
+                    is AppResult.Success -> {
+                        _actionTodoPrepResult.value = _actionTodoPrepResult.value.toSuccess(result.data)
+                    }
+
+                    is AppResult.Failure -> {
+                        _actionTodoPrepResult.value = _actionTodoPrepResult.value.toError(result.exception.message ?: "")
+                    }
+                }
             }
         }
     }
-
-    private val _deleteTodoPrepResult = MutableStateFlow<AppResult<Boolean>>(AppResult.Initial)
-    val deleteTodoPrepResult get() = _deleteTodoPrepResult.asStateFlow()
 
     fun deleteTodoPrep(todoId: String) {
         viewModelScope.launch {
-            repository.deleteTodoPrep(todoId).collectLatest {
-                _deleteTodoPrepResult.value = it
+            repository.deleteTodoPrep(todoId).collectLatest { result ->
+                when (result) {
+                    is AppResult.Initial -> {
+                        _actionTodoPrepResult.value = _actionTodoPrepResult.value
+                    }
+
+                    is AppResult.Loading -> {
+                        _actionTodoPrepResult.value = _actionTodoPrepResult.value.toLoading()
+                    }
+
+                    is AppResult.Success -> {
+                        _actionTodoPrepResult.value = _actionTodoPrepResult.value.toSuccess(result.data)
+                    }
+
+                    is AppResult.Failure -> {
+                        _actionTodoPrepResult.value = _actionTodoPrepResult.value.toError(result.exception.message ?: "")
+                    }
+                }
             }
         }
-    }
-
-    fun resetAppResult() {
-        _createTodoPrepResult.value = AppResult.Initial
-        _updateTodoPrepResult.value = AppResult.Initial
-        _deleteTodoPrepResult.value = AppResult.Initial
     }
 }

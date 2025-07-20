@@ -14,9 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.kitching.core.common.appresultscreen.AppResultHandler
 import com.kitching.core.common.appresultscreen.EmptyScreen
 import com.kitching.core.common.appresultscreen.ProgressIndicatorScreen
+import com.kitching.core.common.appresultscreen.UiStateHandler
 import com.kitching.core.common.commonstate.ActionIconInfo
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.NavigationIconInfo
@@ -24,9 +24,7 @@ import com.kitching.core.common.widget.DatePickerModal
 import com.kitching.core.common.widget.DateSelector
 import com.kitching.core.designsystem.KitchingStaffTheme
 import com.kitching.core.designsystem.NeutralGray0
-import com.kitching.domain.entities.TodoPrepData
 import com.kitching.domain.entities.TodoPrepWithDetails
-import com.kitching.domain.util.AppResult
 import com.kitching.main.factory.viewModelFactory
 import com.kitching.main.view.model.PrepViewModel
 import com.kitching.main.view.prep.dialog.DeleteTodoPrepDialog
@@ -50,15 +48,7 @@ fun PrepTabScreen(
     var showDeleteDialog by remember { mutableStateOf(false) }
 
     val todoPrepData by viewModel.todoPrepsByDate.collectAsStateWithLifecycle()
-    val createTodoPrepResult by viewModel.createTodoPrepResult.collectAsStateWithLifecycle()
-    val updateTodoPrepResult by viewModel.updateTodoPrepResult.collectAsStateWithLifecycle()
-    val deleteTodoPrepResult by viewModel.deleteTodoPrepResult.collectAsStateWithLifecycle()
-
-    val snackBarFailMessage = stringResource(R.string.prep_fail_message)
-
-    val isLoading = createTodoPrepResult is AppResult.Loading ||
-                    updateTodoPrepResult is AppResult.Loading ||
-                    deleteTodoPrepResult is AppResult.Loading
+    val actionState by viewModel.actionTodoPrepResult.collectAsStateWithLifecycle()
 
     commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
         title = commonState.appInfoState.value.teamInfo?.teamName ?: "",
@@ -73,7 +63,9 @@ fun PrepTabScreen(
         },
         actionIconInfo = ActionIconInfo.ADD,
         onClickActionIcon = {
-            showDialog = true
+            if (todoPrepData.isSuccess) {
+                showDialog = true
+            }
         }
     )
 
@@ -81,20 +73,14 @@ fun PrepTabScreen(
         viewModel.getTodoPrepsByDate(teamId, selectedDate.toString())
     }
 
-    LaunchedEffect(createTodoPrepResult, updateTodoPrepResult, deleteTodoPrepResult) {
+    LaunchedEffect(actionState) {
         when {
-            createTodoPrepResult is AppResult.Success ||
-            updateTodoPrepResult is AppResult.Success ||
-            deleteTodoPrepResult is AppResult.Success -> {
+            actionState.isSuccess -> {
                 viewModel.getTodoPrepsByDate(teamId, selectedDate.toString())
-                viewModel.resetAppResult()
             }
 
-            createTodoPrepResult is AppResult.Failure ||
-            updateTodoPrepResult is AppResult.Failure ||
-            deleteTodoPrepResult is AppResult.Failure -> {
-                commonState.snackBarState.showSnackbar(snackBarFailMessage)
-                viewModel.resetAppResult()
+            actionState.isError -> {
+                commonState.snackBarState.showSnackbar(actionState.error ?: "")
             }
         }
     }
@@ -114,28 +100,27 @@ fun PrepTabScreen(
                 }
             )
 
-            AppResultHandler(
-                state = todoPrepData,
+            UiStateHandler(
+                uiState = todoPrepData,
                 onRetry = {
                     viewModel.getTodoPrepsByDate(teamId, selectedDate.toString())
-                },
-                onSuccess = { todoPrepList ->
-                    if (todoPrepList.todos.isEmpty()) {
-                        EmptyScreen(stringResource(R.string.prep_empty_screen_message))
-                    } else {
-                        TodoPrepList(
-                            todoPrepData = todoPrepList,
-                            onDeletePrep = { todoPrepWithDetails ->
-                                deletePrepDetail = todoPrepWithDetails
-                                showDeleteDialog = true
-                            },
-                            onCheckedStatus = { todoId, newDone ->
-                                viewModel.updateTodoPrep(todoId, newDone)
-                            }
-                        )
-                    }
                 }
-            )
+            ) { todoPrepList ->
+                if (todoPrepList.todos.isEmpty()) {
+                    EmptyScreen(stringResource(R.string.prep_empty_screen_message))
+                } else {
+                    TodoPrepList(
+                        todoPrepData = todoPrepList,
+                        onDeletePrep = { todoPrepWithDetails ->
+                            deletePrepDetail = todoPrepWithDetails
+                            showDeleteDialog = true
+                        },
+                        onCheckedStatus = { todoId, newDone ->
+                            viewModel.updateTodoPrep(todoId, newDone)
+                        }
+                    )
+                }
+            }
 
             if (showDatePicker) {
                 DatePickerModal(
@@ -152,16 +137,18 @@ fun PrepTabScreen(
             }
 
             if (showDialog) {
-                TodoPrepDialog(
-                    onDismiss = { showDialog = false },
-                    onConfirm = { categoryId, prepId ->
-                        viewModel.createTodoPrep(teamId, selectedDate.toString(), categoryId, prepId)
-                        showDialog = false
-                    },
-                    selectedDate = selectedDate.toString(),
-                    prepCategories = (todoPrepData as AppResult.Success<TodoPrepData>).data.categories,
-                    preps = (todoPrepData as AppResult.Success<TodoPrepData>).data.preps
-                )
+                todoPrepData.data?.let { todoPrepData ->
+                    TodoPrepDialog(
+                        onDismiss = { showDialog = false },
+                        onConfirm = { categoryId, prepId ->
+                            viewModel.createTodoPrep(teamId, selectedDate.toString(), categoryId, prepId)
+                            showDialog = false
+                        },
+                        selectedDate = selectedDate.toString(),
+                        prepCategories = todoPrepData.categories,
+                        preps = todoPrepData.preps
+                    )
+                }
             }
 
             if (showDeleteDialog && deletePrepDetail != null) {
@@ -176,7 +163,7 @@ fun PrepTabScreen(
                 )
             }
 
-            if (isLoading) {
+            if (actionState.isLoading) {
                 ProgressIndicatorScreen()
             }
         }
