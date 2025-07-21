@@ -32,7 +32,7 @@ class PrepViewModel(private val repository: PrepRepository) : ViewModel() {
                     }
 
                     is AppResult.Failure -> {
-                        _todoPrepsByDate.value = _todoPrepsByDate.value.toError(result.exception.message ?: "")
+                        _todoPrepsByDate.value = _todoPrepsByDate.value.toError(result.exception.message.toString())
                     }
                 }
             }
@@ -59,7 +59,7 @@ class PrepViewModel(private val repository: PrepRepository) : ViewModel() {
                     }
 
                     is AppResult.Failure -> {
-                        _actionTodoPrepResult.value = _actionTodoPrepResult.value.toError(result.exception.message ?: "")
+                        _actionTodoPrepResult.value = _actionTodoPrepResult.value.toError(result.exception.message.toString())
                     }
                 }
             }
@@ -83,7 +83,7 @@ class PrepViewModel(private val repository: PrepRepository) : ViewModel() {
                     }
 
                     is AppResult.Failure -> {
-                        _actionTodoPrepResult.value = _actionTodoPrepResult.value.toError(result.exception.message ?: "")
+                        _actionTodoPrepResult.value = _actionTodoPrepResult.value.toError(result.exception.message.toString())
                     }
                 }
             }
@@ -107,7 +107,7 @@ class PrepViewModel(private val repository: PrepRepository) : ViewModel() {
                     }
 
                     is AppResult.Failure -> {
-                        _actionTodoPrepResult.value = _actionTodoPrepResult.value.toError(result.exception.message ?: "")
+                        _actionTodoPrepResult.value = _actionTodoPrepResult.value.toError(result.exception.message.toString())
                     }
                 }
             }

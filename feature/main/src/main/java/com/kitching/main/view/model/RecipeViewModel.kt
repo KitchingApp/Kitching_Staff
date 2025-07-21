@@ -31,7 +31,7 @@ class RecipeViewModel(
                         _recipeList.value = _recipeList.value.toSuccess(result.data)
                     }
                     is AppResult.Failure -> {
-                        _recipeList.value = _recipeList.value.toError(result.exception.message ?: "")
+                        _recipeList.value = _recipeList.value.toError(result.exception.message.toString())
                     }
                 }
             }

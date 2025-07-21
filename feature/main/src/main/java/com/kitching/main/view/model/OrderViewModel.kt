@@ -35,7 +35,7 @@ class OrderViewModel(private val orderRepository: OrderRepository) : ViewModel()
 
                     is AppResult.Failure -> {
                         _orderCategories.value =
-                            _orderCategories.value.toError(result.exception.message ?: "")
+                            _orderCategories.value.toError(result.exception.message.toString())
                     }
                 }
             }
@@ -63,7 +63,7 @@ class OrderViewModel(private val orderRepository: OrderRepository) : ViewModel()
 
                     is AppResult.Failure -> {
                         _orderItems.value =
-                            _orderItems.value.toError(result.exception.message ?: "")
+                            _orderItems.value.toError(result.exception.message.toString())
                     }
                 }
             }
