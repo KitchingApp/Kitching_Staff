@@ -11,6 +11,7 @@ import com.kitching.domain.entities.User
 import com.kitching.domain.repository.LoginRepository
 import com.kitching.domain.repository.TeamRepository
 import com.kitching.domain.util.AppResult
+import com.kitching.domain.util.UiState
 import com.kitching.login.SplashEntryPoint
 import com.kitching.login.SplashResult
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,12 +26,12 @@ class LoginViewModel(
     private val teamRepository: TeamRepository
 ) : ViewModel() {
 
-    private val _splashResult = MutableStateFlow<AppResult<SplashResult>>(AppResult.Initial)
-    val splashResult: StateFlow<AppResult<SplashResult>> = _splashResult
+    private val _splashResult = MutableStateFlow(UiState<SplashResult>())
+    val splashResult get() = _splashResult.asStateFlow()
 
     fun initializeAppInfoState(context: Context) {
         viewModelScope.launch {
-            _splashResult.value = AppResult.Loading
+            _splashResult.value = _splashResult.value.toLoading()
 
             try {
                 /**
@@ -47,7 +48,7 @@ class LoginViewModel(
                 when {
                     // 둘 다 없으면 로그인 화면
                     userId.isEmpty() && teamId.isEmpty() -> {
-                        _splashResult.value = AppResult.Success(
+                        _splashResult.value = _splashResult.value.toSuccess(
                             SplashResult(entryPoint = SplashEntryPoint.LOGIN)
                         )
                     }
@@ -55,7 +56,8 @@ class LoginViewModel(
                     // userId만 있으면 사용자 정보 로드 후 팀선택 화면
                     userId.isNotEmpty() && teamId.isEmpty() -> {
                         val user = loadUserFromFirebase(userId)
-                        _splashResult.value = AppResult.Success(
+
+                        _splashResult.value = _splashResult.value.toSuccess(
                             SplashResult(
                                 entryPoint = SplashEntryPoint.TEAM_SELECT,
                                 user = user
@@ -66,8 +68,10 @@ class LoginViewModel(
                     // 둘 다 있으면 사용자 정보와 팀 정보 로드 후 메인 화면
                     userId.isNotEmpty() && teamId.isNotEmpty() -> {
                         val user = loadUserFromFirebase(userId)
+
                         val team = loadTeamFromFirebase(teamId)
-                        _splashResult.value = AppResult.Success(
+
+                        _splashResult.value = _splashResult.value.toSuccess(
                             SplashResult(
                                 entryPoint = SplashEntryPoint.MAIN,
                                 user = user,
@@ -77,15 +81,13 @@ class LoginViewModel(
                     }
 
                     else -> {
-                        _splashResult.value = AppResult.Success(
+                        _splashResult.value = _splashResult.value.toSuccess(
                             SplashResult(entryPoint = SplashEntryPoint.LOGIN)
                         )
                     }
                 }
-
-
             } catch (e: Exception) {
-                _splashResult.value = AppResult.Failure(e)
+                _splashResult.value = _splashResult.value.toError(e.message.toString())
             }
         }
     }
