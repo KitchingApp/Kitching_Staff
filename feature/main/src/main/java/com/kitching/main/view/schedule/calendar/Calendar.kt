@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.kitching.core.common.appresultscreen.AppResultHandler
+import com.kitching.core.common.appresultscreen.UiStateHandler
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.main.factory.viewModelFactory
 import com.kitching.main.view.model.ScheduleViewModel
@@ -40,7 +40,7 @@ fun Calendar(
     commonState: CommonState,
     state: CalendarState,
     onDoubleSelect: (LocalDate) -> Unit,
-    viewModel: ScheduleViewModel = viewModel(factory = viewModelFactory)
+    viewModel: ScheduleViewModel = viewModel(factory = viewModelFactory),
 ) {
     val userId = commonState.appInfoState.value.userInfo?.userId.toString()
     val teamId = commonState.appInfoState.value.teamInfo?.teamId.toString()
@@ -76,65 +76,68 @@ fun Calendar(
         }
     }
 
-    AppResultHandler(state = schedules,
-        onSuccess = { scheduleList ->
-            Column(
-                modifier = modifier.background(Color.White)
-            ) {
-                // 상단의 연/월 + 버튼들
-                TopBarSection(state = state)
-                // 월~일 헤더
-                DayOfWeekLabels()
+    UiStateHandler(
+        uiState = schedules,
+        onRetry = {
+            viewModel.fetchSchedules(userId, teamId)
+        }
+    ) { scheduleList ->
+        Column(
+            modifier = modifier.background(Color.White)
+        ) {
+            // 상단의 연/월 + 버튼들
+            TopBarSection(state = state)
+            // 월~일 헤더
+            DayOfWeekLabels()
 
-                // 날짜 Pager
-                HorizontalPager(
-                    state = state.datePagerState,
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(horizontal = 8.dp)
-                ) { page ->
-                    // 이 페이지가 가리키는 YearMonth
-                    val pageYearMonth = remember {
-                        val baseYM = YearMonth.from(LocalDate.now())
-                        val offset = page - (Int.MAX_VALUE / 2)
-                        baseYM.plusMonths(offset.toLong())
-                    }
-                    val daysOfMonth = remember(pageYearMonth) {
-                        state.getDaysOfMonth(pageYearMonth)
-                    }
+            // 날짜 Pager
+            HorizontalPager(
+                state = state.datePagerState,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 8.dp)
+            ) { page ->
+                // 이 페이지가 가리키는 YearMonth
+                val pageYearMonth = remember {
+                    val baseYM = YearMonth.from(LocalDate.now())
+                    val offset = page - (Int.MAX_VALUE / 2)
+                    baseYM.plusMonths(offset.toLong())
+                }
+                val daysOfMonth = remember(pageYearMonth) {
+                    state.getDaysOfMonth(pageYearMonth)
+                }
 
-                    Column(Modifier.fillMaxSize()) {
-                        // 1주(7일) 단위로 나누어 그리기
-                        daysOfMonth.chunked(7).forEach { weekDates ->
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .weight(1f)
-                            ) {
-                                weekDates.forEach { date ->
-                                    CalendarDay(
-                                        date = date,
-                                        isToday = (date == state.currentDate),
-                                        isSelected = (date == state.selectedDate),
-                                        isVisibleMonth = (YearMonth.from(date) == pageYearMonth),
-                                        schedules = scheduleList,
-                                        onClick = {
-                                            if (state.onDateSelected(date)) {
-                                                onDoubleSelect(date)
-                                            }
-                                        },
-                                        modifier = Modifier
-                                            .weight(1f)
-                                            .fillMaxHeight()
-                                    )
-                                }
+                Column(Modifier.fillMaxSize()) {
+                    // 1주(7일) 단위로 나누어 그리기
+                    daysOfMonth.chunked(7).forEach { weekDates ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f)
+                        ) {
+                            weekDates.forEach { date ->
+                                CalendarDay(
+                                    date = date,
+                                    isToday = (date == state.currentDate),
+                                    isSelected = (date == state.selectedDate),
+                                    isVisibleMonth = (YearMonth.from(date) == pageYearMonth),
+                                    schedules = scheduleList,
+                                    onClick = {
+                                        if (state.onDateSelected(date)) {
+                                            onDoubleSelect(date)
+                                        }
+                                    },
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .fillMaxHeight()
+                                )
                             }
                         }
                     }
                 }
             }
         }
-    )
+    }
 }
 
 @Composable

@@ -11,10 +11,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kitching.core.common.commonstate.ActionIconInfo
-import com.kitching.core.common.appresultscreen.AppResultHandler
+import com.kitching.core.common.appresultscreen.ProgressIndicatorScreen
+import com.kitching.core.common.appresultscreen.UiStateHandler
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.NavigationIconInfo
 import com.kitching.core.common.widget.DatePickerModal
@@ -23,8 +25,7 @@ import com.kitching.core.common.widget.TabPager
 import com.kitching.core.designsystem.KitchingStaffTheme
 import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.PrimaryGreen300
-import com.kitching.domain.entities.ScheduleTime
-import com.kitching.domain.util.AppResult
+import com.kitching.main.R
 import com.kitching.main.factory.viewModelFactory
 import com.kitching.main.view.schedule.dialog.ScheduleApplyDialog
 import com.kitching.main.view.schedule.tab.scheduleTabs
@@ -51,6 +52,8 @@ fun ScheduleDetailScreen(
     val scheduleTimesState by viewModel.scheduleTimes.collectAsStateWithLifecycle()
     val applyScheduleResult by viewModel.scheduleResult.collectAsStateWithLifecycle()
 
+    val applyScheduleSuccessMessage = stringResource(R.string.schedule_apply_success)
+
     val scheduleByDate by viewModel.scheduleByDate.collectAsStateWithLifecycle()
 
     commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
@@ -70,12 +73,24 @@ fun ScheduleDetailScreen(
         }
     )
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(teamId) {
         viewModel.getScheduleTimes(teamId)
     }
 
     LaunchedEffect(selectedDate) {
         viewModel.fetchScheduleByDate(teamId, selectedDate.toString())
+    }
+
+    LaunchedEffect(applyScheduleResult) {
+        when {
+            applyScheduleResult.isSuccess -> {
+                commonState.snackBarState.showSnackbar(applyScheduleSuccessMessage)
+            }
+
+            applyScheduleResult.isError -> {
+                commonState.snackBarState.showSnackbar(applyScheduleResult.error.toString())
+            }
+        }
     }
 
     KitchingStaffTheme {
@@ -94,20 +109,22 @@ fun ScheduleDetailScreen(
                 }
             )
 
-            AppResultHandler(
-                state = scheduleByDate,
-                onSuccess = { schedules ->
-                    val tabs = scheduleTabs(schedules)
-
-                    TabPager(
-                        tabs = tabs,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f),
-                        indicatorColor = PrimaryGreen300
-                    )
+            UiStateHandler (
+                uiState = scheduleByDate,
+                onRetry = {
+                    viewModel.fetchScheduleByDate(teamId, selectedDate.toString())
                 }
-            )
+            ) { schedules ->
+                val tabs = scheduleTabs(schedules)
+
+                TabPager(
+                    tabs = tabs,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    indicatorColor = PrimaryGreen300
+                )
+            }
 
             if (showDatePicker) {
                 DatePickerModal(
@@ -135,22 +152,14 @@ fun ScheduleDetailScreen(
                             scheduleTimeId = selectedScheduleTimeId.value
                         )
                     },
-                    scheduleTimes = (scheduleTimesState as AppResult.Success<List<ScheduleTime>>).data,
+                    scheduleTimes = scheduleTimesState.data,
                     selectedScheduleTimeId = selectedScheduleTimeId
                 )
             }
 
-            AppResultHandler(
-                state = applyScheduleResult,
-                onSuccess = {
-                    showApplyDialog = false
-//                    Toast.makeText(commonState.navController.context, stringResource(R.string.schedule_apply_success), Toast.LENGTH_SHORT).show()
-                },
-                onFailure = {
-                    showApplyDialog = false
-//                    Toast.makeText(commonState.navController.context, stringResource(R.string.schedule_apply_fail), Toast.LENGTH_SHORT).show()
-                }
-            )
+            if (applyScheduleResult.isLoading) {
+                ProgressIndicatorScreen()
+            }
         }
     }
 }
