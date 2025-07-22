@@ -13,8 +13,8 @@ import com.kitching.data.firebase.DOCUMENT_ID
 import com.kitching.data.firebase.DOCUMENT_SCHEDULE_FIX
 import com.kitching.data.firebase.DOCUMENT_TEAM_ID
 import com.kitching.data.firebase.DOCUMENT_USER_ID
-import com.kitching.data.util.ExceptionHandler
-import com.kitching.data.util.KitchingRuntimeException
+import com.kitching.domain.exception.ExceptionHandler
+import com.kitching.domain.exception.KitchingRuntimeException
 import kotlinx.coroutines.tasks.await
 
 class ScheduleDataSourceImpl(private val db: FirebaseFirestore = FirebaseFirestore.getInstance()) :

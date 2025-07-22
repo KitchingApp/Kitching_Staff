@@ -1,4 +1,4 @@
-package com.kitching.data.util
+package com.kitching.domain.exception
 
 object ExceptionHandler {
     /**

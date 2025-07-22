@@ -7,7 +7,7 @@ import com.kitching.data.dto.RecipeDTO
 import com.kitching.data.firebase.COLLECTION_INGREDIENT
 import com.kitching.data.firebase.COLLECTION_RECIPE
 import com.kitching.data.firebase.DOCUMENT_TEAM_ID
-import com.kitching.data.util.ExceptionHandler
+import com.kitching.domain.exception.ExceptionHandler
 import kotlinx.coroutines.tasks.await
 
 class RecipeDataSourceImpl(

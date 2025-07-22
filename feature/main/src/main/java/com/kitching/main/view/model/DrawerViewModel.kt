@@ -8,6 +8,7 @@ import com.kitching.domain.entities.Team
 import com.kitching.domain.repository.TeamRepository
 import com.kitching.domain.util.AppResult
 import com.kitching.domain.util.UiState
+import com.kitching.domain.util.getDisplayMessage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -30,7 +31,7 @@ class DrawerViewModel(private val teamRepository: TeamRepository) : ViewModel() 
                     }
 
                     is AppResult.Failure -> {
-                        _teamListResult.value = _teamListResult.value.toError(result.exception.message.toString())
+                        _teamListResult.value = _teamListResult.value.toError(result.getDisplayMessage())
                     }
                 }
             }
@@ -53,7 +54,7 @@ class DrawerViewModel(private val teamRepository: TeamRepository) : ViewModel() 
                     }
 
                     is AppResult.Failure -> {
-                        _teamChangeResult.value = _teamChangeResult.value.toError(result.exception.message.toString())
+                        _teamChangeResult.value = _teamChangeResult.value.toError(result.getDisplayMessage())
                     }
                 }
             }
@@ -73,7 +74,7 @@ class DrawerViewModel(private val teamRepository: TeamRepository) : ViewModel() 
                     }
 
                     is AppResult.Failure -> {
-                        _teamChangeResult.value = _teamChangeResult.value.toError(result.exception.message.toString())
+                        _teamChangeResult.value = _teamChangeResult.value.toError(result.getDisplayMessage())
                     }
                 }
             }

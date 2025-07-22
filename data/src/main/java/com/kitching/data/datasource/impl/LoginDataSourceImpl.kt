@@ -6,8 +6,8 @@ import com.kitching.data.dto.UserDTO
 import com.kitching.data.firebase.COLLECTION_USER
 import com.kitching.data.firebase.FIELD_USER_IMAGE
 import com.kitching.data.firebase.FIELD_USER_NAME
-import com.kitching.data.util.ExceptionHandler
-import com.kitching.data.util.KitchingRuntimeException
+import com.kitching.domain.exception.ExceptionHandler
+import com.kitching.domain.exception.KitchingRuntimeException
 import kotlinx.coroutines.tasks.await
 
 class LoginDataSourceImpl(
