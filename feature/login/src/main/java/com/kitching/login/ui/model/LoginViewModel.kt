@@ -18,7 +18,6 @@ import com.kitching.login.SplashResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
@@ -34,16 +33,8 @@ class LoginViewModel(
             _splashResult.value = _splashResult.value.toLoading()
 
             try {
-                /**
-                 * 추후 AppResult에 따라 핸들리필요할듯 지금은 빠르게 불러와져서 문제 없는듯함
-                 * */
-
-                val userIdResult = PreferencesDataSource(context).getUserId().first()
-                val teamIdResult = PreferencesDataSource(context).getTeamId().first()
-
-
-                val userId = (userIdResult as AppResult.Success<String>).data
-                val teamId = (teamIdResult as AppResult.Success<String>).data
+                val userId = PreferencesDataSource(context).getUserId()
+                val teamId = PreferencesDataSource(context).getTeamId()
 
                 when {
                     // 둘 다 없으면 로그인 화면
@@ -55,29 +46,19 @@ class LoginViewModel(
 
                     // userId만 있으면 사용자 정보 로드 후 팀선택 화면
                     userId.isNotEmpty() && teamId.isEmpty() -> {
-                        val user = loadUserFromFirebase(userId)
-
-                        _splashResult.value = _splashResult.value.toSuccess(
-                            SplashResult(
-                                entryPoint = SplashEntryPoint.TEAM_SELECT,
-                                user = user
+                        loadUserFromFirebase(userId) { user ->
+                            _splashResult.value = _splashResult.value.toSuccess(
+                                SplashResult(
+                                    entryPoint = SplashEntryPoint.TEAM_SELECT,
+                                    user = user
+                                )
                             )
-                        )
+                        }
                     }
 
                     // 둘 다 있으면 사용자 정보와 팀 정보 로드 후 메인 화면
                     userId.isNotEmpty() && teamId.isNotEmpty() -> {
-                        val user = loadUserFromFirebase(userId)
-
-                        val team = loadTeamFromFirebase(teamId)
-
-                        _splashResult.value = _splashResult.value.toSuccess(
-                            SplashResult(
-                                entryPoint = SplashEntryPoint.MAIN,
-                                user = user,
-                                team = team
-                            )
-                        )
+                        loadUserAndTeam(userId, teamId)
                     }
 
                     else -> {
@@ -92,35 +73,74 @@ class LoginViewModel(
         }
     }
 
-    private suspend fun loadUserFromFirebase(userId: String): User? {
-        try {
-            var userResult: User? = null
-
+    private fun loadUserFromFirebase(userId: String, onResult: (User?) -> Unit) {
+        viewModelScope.launch {
             loginRepository.getUserById(userId).collectLatest { result ->
-                if (result is AppResult.Success) {
-                   userResult = result.data
+                when (result) {
+                    is AppResult.Loading -> {
+                        _splashResult.value = _splashResult.value.toLoading()
+                    }
+
+                    is AppResult.Success -> {
+                        onResult(result.data)
+                    }
+
+                    is AppResult.Failure -> {
+                        _splashResult.value = _splashResult.value.toError(result.getDisplayMessage())
+                    }
                 }
             }
-
-            return userResult
-        } catch (e: Exception) {
-            return null
         }
     }
 
-    private suspend fun loadTeamFromFirebase(teamId: String): Team? {
-        try {
-            var teamResult: Team? = null
-
+    private fun loadTeamFromFirebase(teamId: String, onResult: (Team?) -> Unit) {
+        viewModelScope.launch {
             teamRepository.getTeam(teamId).collectLatest { result ->
-                if (result is AppResult.Success) {
-                    teamResult = result.data
+                when (result) {
+                    is AppResult.Loading -> {
+                        _splashResult.value = _splashResult.value.toLoading()
+                    }
+
+                    is AppResult.Success -> {
+                        onResult(result.data)
+                    }
+
+                    is AppResult.Failure -> {
+                        _splashResult.value = _splashResult.value.toError(result.getDisplayMessage())
+                    }
                 }
             }
+        }
+    }
 
-            return teamResult
-        } catch (e: Exception) {
-            return null
+    private fun loadUserAndTeam(userId: String, teamId: String) {
+        var user: User? = null
+        var team: Team? = null
+        var userLoaded = false
+        var teamLoaded = false
+
+        fun checkBothLoaded() {
+            if (userLoaded && teamLoaded) {
+                _splashResult.value = _splashResult.value.toSuccess(
+                    SplashResult(
+                        entryPoint = SplashEntryPoint.MAIN,
+                        user = user,
+                        team = team
+                    )
+                )
+            }
+        }
+
+        loadUserFromFirebase(userId) { loadedUser ->
+            user = loadedUser
+            userLoaded = true
+            checkBothLoaded()
+        }
+
+        loadTeamFromFirebase(teamId) { loadedTeam ->
+            team = loadedTeam
+            teamLoaded = true
+            checkBothLoaded()
         }
     }
 
@@ -183,26 +203,8 @@ class LoginViewModel(
 
     private fun saveUserIdToDataStore(context: Context, userId: String) {
         viewModelScope.launch {
-            PreferencesDataSource(context).saveUserId(userId).collectLatest { result ->
-                when (result) {
-                    is AppResult.Loading -> {
-                        _kakaoLoginState.value = _kakaoLoginState.value.toLoading()
-                    }
+            PreferencesDataSource(context).saveUserId(userId)
 
-                    is AppResult.Success -> {
-                        loadUserData(userId)
-                    }
-
-                    is AppResult.Failure -> {
-                        _kakaoLoginState.value = _kakaoLoginState.value.toError(result.exception.message.toString())
-                    }
-                }
-            }
-        }
-    }
-
-    private fun loadUserData(userId: String) {
-        viewModelScope.launch {
             loginRepository.getUserById(userId).collectLatest { result ->
                 when (result) {
                     is AppResult.Loading -> {
@@ -226,26 +228,8 @@ class LoginViewModel(
 
     fun saveTeamIdToDataStore(teamId: String, context: Context) {
         viewModelScope.launch {
-            PreferencesDataSource(context).saveTeamId(teamId).collectLatest { result ->
-                when (result) {
-                    is AppResult.Loading -> {
-                        _teamIdSaveResult.value = _teamIdSaveResult.value.toLoading()
-                    }
+            PreferencesDataSource(context).saveTeamId(teamId)
 
-                    is AppResult.Success -> {
-                        loadTeamData(teamId)
-                    }
-
-                    is AppResult.Failure -> {
-                        _teamIdSaveResult.value = _teamIdSaveResult.value.toError(result.exception.message.toString())
-                    }
-                }
-            }
-        }
-    }
-
-    private fun loadTeamData(teamId: String) {
-        viewModelScope.launch {
             teamRepository.getTeam(teamId).collectLatest { result ->
                 when (result) {
                     is AppResult.Loading -> {
