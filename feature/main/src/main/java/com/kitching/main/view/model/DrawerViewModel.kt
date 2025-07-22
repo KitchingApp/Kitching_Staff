@@ -43,21 +43,9 @@ class DrawerViewModel(private val teamRepository: TeamRepository) : ViewModel() 
 
     fun changeTeam(context: Context, teamId: String) {
         viewModelScope.launch {
-            PreferencesDataSource(context).saveTeamId(teamId).collectLatest { result ->
-                when (result) {
-                    is AppResult.Loading -> {
-                        _teamChangeResult.value = _teamChangeResult.value.toLoading()
-                    }
+            PreferencesDataSource(context).saveTeamId(teamId)
 
-                    is AppResult.Success -> {
-                        loadTeam(teamId)
-                    }
-
-                    is AppResult.Failure -> {
-                        _teamChangeResult.value = _teamChangeResult.value.toError(result.getDisplayMessage())
-                    }
-                }
-            }
+            loadTeam(teamId)
         }
     }
 
