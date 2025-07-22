@@ -10,7 +10,6 @@ import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.clearAppInfo
 import com.kitching.core.common.commonstate.updateAppInfo
 import com.kitching.core.common.commonstate.updateUserInfo
-import com.kitching.domain.util.AppResult
 import com.kitching.login.SplashEntryPoint
 import com.kitching.login.ui.model.LoginViewModel
 import com.kitching.login.ui.model.LoginViewModelFactory
@@ -34,38 +33,39 @@ fun SplashScreen(
     }
 
     LaunchedEffect(splashResult) {
-        when (splashResult) {
-            is AppResult.Success -> {
-                val result = (splashResult as AppResult.Success).data
+        when {
+            splashResult.isSuccess -> {
+                val result = splashResult.data
 
-                when (result.entryPoint) {
-                    SplashEntryPoint.LOGIN -> {
-                        commonState.clearAppInfo()
-                        goLogin()
-                    }
-                    SplashEntryPoint.TEAM_SELECT -> {
-                        val user = result.user
+                result?.let {
+                    when (result.entryPoint) {
+                        SplashEntryPoint.LOGIN -> {
+                            commonState.clearAppInfo()
+                            goLogin()
+                        }
+                        SplashEntryPoint.TEAM_SELECT -> {
+                            val user = result.user
 
-                        commonState.updateUserInfo(user)
-                        goTeamSelect()
-                    }
-                    SplashEntryPoint.MAIN -> {
-                        val user = result.user
-                        val team = result.team
+                            commonState.updateUserInfo(user)
+                            goTeamSelect()
+                        }
+                        SplashEntryPoint.MAIN -> {
+                            val user = result.user
+                            val team = result.team
 
-                        commonState.updateAppInfo(user, team)
+                            commonState.updateAppInfo(user, team)
 
-                        goMain()
+                            goMain()
+                        }
                     }
                 }
+
             }
 
-            is AppResult.Failure -> {
+            splashResult.isError -> {
                 commonState.clearAppInfo()
                 goLogin()
             }
-
-            else -> {  }
         }
     }
 

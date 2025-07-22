@@ -40,8 +40,6 @@ import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.NeutralGray300
 import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.core.designsystem.PrimaryGreen300
-import com.kitching.domain.entities.User
-import com.kitching.domain.util.AppResult
 import com.kitching.login.R
 import com.kitching.login.ui.model.LoginViewModel
 import com.kitching.login.ui.model.LoginViewModelFactory
@@ -59,21 +57,17 @@ fun LoginScreen(
     val kakaoLoginState by loginViewModel.kakaoLoginState.collectAsStateWithLifecycle()
 
     LaunchedEffect(kakaoLoginState) {
-        when (kakaoLoginState) {
-            is AppResult.Success -> {
-                val user = (kakaoLoginState as AppResult.Success<User>).data
+        when {
+            kakaoLoginState.isSuccess -> {
+                val user = kakaoLoginState.data
 
                 commonState.updateUserInfo(user)
-
                 onLoginSuccess()
             }
 
-            is AppResult.Failure -> {
-                val exception = (kakaoLoginState as AppResult.Failure).exception
-                commonState.snackBarState.showSnackbar(exception.message.toString())
+            kakaoLoginState.isError -> {
+                commonState.snackBarState.showSnackbar(kakaoLoginState.error.toString())
             }
-
-            else -> {}
         }
     }
 
@@ -189,7 +183,7 @@ fun LoginScreen(
         }
     }
 
-    if (kakaoLoginState is AppResult.Loading) {
+    if (kakaoLoginState.isLoading) {
         ProgressIndicatorScreen()
     }
 }

@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.kitching.core.common.appresultscreen.AppResultHandler
+import com.kitching.core.common.appresultscreen.UiStateHandler
 import com.kitching.core.common.commonstate.ActionIconInfo
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.NavigationIconInfo
@@ -49,8 +49,8 @@ fun MemberListScreen(
     }
 
     KitchingStaffTheme {
-        AppResultHandler(
-            state = memberList,
+        UiStateHandler (
+            uiState = memberList,
             onRetry = { viewModel.getAllMemberList(teamId) },
             onSuccess = { memberList ->
                 LazyColumn(

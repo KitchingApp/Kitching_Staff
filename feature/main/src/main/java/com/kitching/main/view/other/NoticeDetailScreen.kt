@@ -27,7 +27,6 @@ import com.kitching.core.designsystem.KitchingStaffTheme
 import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.defaultHorizontalPadding
 import com.kitching.domain.entities.Notice
-import com.kitching.domain.util.AppResult
 import com.kitching.main.R
 import com.kitching.main.factory.viewModelFactory
 import com.kitching.main.view.model.OtherViewModel
@@ -52,13 +51,8 @@ fun NoticeDetailScreen(
     var showDeleteDialog by remember { mutableStateOf(false) }
     var deleteCommentId by remember { mutableStateOf("") }
 
-    val commentFailMessage = stringResource(R.string.other_comment_fail)
-
-    val addCommentResult by viewModel.addCommentResult.collectAsStateWithLifecycle()
-    val deleteCommentResult by viewModel.deleteCommentResult.collectAsStateWithLifecycle()
     val noticeByIdResult by viewModel.noticeByIdResult.collectAsStateWithLifecycle()
-
-    val isLoading = addCommentResult is AppResult.Loading || deleteCommentResult is AppResult.Loading || noticeByIdResult is AppResult.Loading
+    val commentActonResult by viewModel.commentAction.collectAsStateWithLifecycle()
 
     commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
         title = stringResource(R.string.other_notice_title),
@@ -68,50 +62,28 @@ fun NoticeDetailScreen(
         actionIconInfo = ActionIconInfo.NULL,
     )
 
-    LaunchedEffect(addCommentResult) {
-        when (addCommentResult) {
-            is AppResult.Success -> {
+    LaunchedEffect(commentActonResult) {
+        when {
+            commentActonResult.isSuccess -> {
                 commentText = ""
                 viewModel.getNoticeById(useNotice.noticeId)
-                viewModel.resetCommentResult()
             }
-            is AppResult.Failure -> {
-                viewModel.resetCommentResult()
-                commonState.snackBarState.showSnackbar(commentFailMessage)
+            commentActonResult.isError -> {
+                commonState.snackBarState.showSnackbar(commentActonResult.error.toString())
             }
-            else -> {}
-        }
-    }
-
-    LaunchedEffect(deleteCommentResult) {
-        when (deleteCommentResult) {
-            is AppResult.Success -> {
-                viewModel.resetCommentResult()
-                viewModel.getNoticeById(useNotice.noticeId)
-            }
-
-            is AppResult.Failure -> {
-                viewModel.resetCommentResult()
-                commonState.snackBarState.showSnackbar(commentFailMessage)
-            }
-
-            else -> {}
         }
     }
 
     LaunchedEffect(noticeByIdResult) {
-        when (noticeByIdResult) {
-            is AppResult.Success -> {
-                val newNotice = (noticeByIdResult as AppResult.Success<Notice>).data
-                useNotice = newNotice
+        when {
+            noticeByIdResult.isSuccess -> {
+                noticeByIdResult.data?.let { updateNotice ->
+                    useNotice = updateNotice
+                }
             }
-
-            is AppResult.Failure -> {
-                viewModel.resetCommentResult()
-                commonState.snackBarState.showSnackbar(commentFailMessage)
+            noticeByIdResult.isError -> {
+                commonState.snackBarState.showSnackbar(noticeByIdResult.error.toString())
             }
-
-            else -> {}
         }
     }
 
@@ -167,7 +139,7 @@ fun NoticeDetailScreen(
             )
         }
 
-        if (isLoading) {
+        if (commentActonResult.isLoading) {
             ProgressIndicatorScreen()
         }
     }

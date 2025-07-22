@@ -11,8 +11,8 @@ import com.kitching.data.firebase.COLLECTION_TEAM
 import com.kitching.data.firebase.DOCUMENT_ID
 import com.kitching.data.firebase.DOCUMENT_INVITE_CODE
 import com.kitching.data.firebase.DOCUMENT_TEAM_ID
-import com.kitching.data.util.ExceptionHandler
-import com.kitching.data.util.KitchingRuntimeException
+import com.kitching.domain.exception.ExceptionHandler
+import com.kitching.domain.exception.KitchingRuntimeException
 import com.kitching.domain.entities.User
 import kotlinx.coroutines.tasks.await
 import java.time.LocalDateTime

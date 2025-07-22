@@ -30,7 +30,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import com.kitching.core.common.commonstate.ActionIconInfo
-import com.kitching.core.common.appresultscreen.CombinedAppResultHandler
+import com.kitching.core.common.appresultscreen.CombinedUiStateHandler
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.NavigationIconInfo
 import com.kitching.core.designsystem.H2
@@ -39,7 +39,6 @@ import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.core.designsystem.defaultHorizontalPadding
 import com.kitching.domain.entities.Order
-import com.kitching.domain.util.AppResult
 import com.kitching.main.factory.viewModelFactory
 import com.kitching.main.view.order.carditem.CategoryCardItem
 import com.kitching.main.view.order.carditem.OrderItemsList
@@ -102,16 +101,17 @@ fun OrderTabScreen(
                             dimensionResource(R.dimen.order_icon_copy_size)
                         ),
                     onClick = {
-                        when (orderItemsState) {
-                            is AppResult.Success -> {
-                                val orderItems = (orderItemsState as AppResult.Success<List<Order>>).data
-                                val orderText = generateOrderText(orderItems, orderCounts)
-                                copyToClipboard(context, orderText)
-                                Toast.makeText(context, "발주내역이 복사되었습니다.", Toast.LENGTH_SHORT).show()
-
+                        when {
+                            orderItemsState.isSuccess -> {
+                                orderItemsState.data?.let { orderItems ->
+                                    val orderText = generateOrderText(orderItems, orderCounts)
+                                    copyToClipboard(context, orderText)
+                                    Toast.makeText(context, "발주내역이 복사되었습니다.", Toast.LENGTH_SHORT).show()
+                                }
                             }
-                            else -> {
-                                Toast.makeText(context, "발주내역을 가져올 수 없습니다..", Toast.LENGTH_SHORT).show()
+
+                            orderItemsState.isError -> {
+                                Toast.makeText(context, "발주내역을 가져올 수 없습니다.", Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
@@ -123,9 +123,13 @@ fun OrderTabScreen(
                 }
             }
 
-            CombinedAppResultHandler(
+            CombinedUiStateHandler(
                 firstState = orderCategoriesState,
                 secondState = orderItemsState,
+                onRetry = Pair(
+                    { viewModel.fetchOrderCategories(teamId) },
+                    { viewModel.fetchOrderItems(teamId) }
+                ),
                 onSuccess = { orderCategories, orderItems ->
                     LazyColumn(
                         modifier = Modifier.fillMaxWidth(),

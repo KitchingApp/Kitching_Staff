@@ -28,8 +28,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
-import com.kitching.core.common.appresultscreen.AppResultHandler
 import com.kitching.core.common.appresultscreen.ProgressIndicatorScreen
+import com.kitching.core.common.appresultscreen.UiStateHandler
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.updateTeamInfo
 import com.kitching.core.common.widget.KitchingHorizontalDivider
@@ -42,8 +42,6 @@ import com.kitching.core.designsystem.NeutralGray300
 import com.kitching.core.designsystem.NeutralGray600
 import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.core.designsystem.PrimaryGreen300
-import com.kitching.domain.entities.Team
-import com.kitching.domain.util.AppResult
 import com.kitching.main.factory.viewModelFactory
 import com.kitching.main.view.drawer.list.DrawerOtherList
 import com.kitching.main.view.drawer.list.DrawerTeamList
@@ -73,20 +71,21 @@ fun CustomDrawer(
     }
 
     LaunchedEffect(teamChangeResult) {
-        when (teamChangeResult) {
-            is AppResult.Success<*> -> {
-                val newTeam = (teamChangeResult as AppResult.Success<Team>).data
-                val message = context.getString(R.string.drawer_team_change_success, newTeam.teamName)
+        when {
+            teamChangeResult.isSuccess -> {
+                teamChangeResult.data?.let { newTeam ->
+                    val message = context.getString(R.string.drawer_team_change_success, newTeam.teamName)
 
-                commonState.updateTeamInfo(newTeam)
-                drawerState.close()
-                commonState.snackBarState.showSnackbar(message)
+                    commonState.updateTeamInfo(newTeam)
+                    drawerState.close()
+                    commonState.snackBarState.showSnackbar(message)
+                }
             }
-            is AppResult.Failure -> {
+
+            teamChangeResult.isError -> {
                 val message = context.getString(R.string.drawer_team_change_fail)
                 commonState.snackBarState.showSnackbar(message)
             }
-            else -> {}
         }
     }
 
@@ -160,17 +159,19 @@ fun CustomDrawer(
                         style = H3_m.copy(color = NeutralGray800)
                     )
 
-                    AppResultHandler(
-                        state = teamListResult,
-                        onSuccess = { teamList ->
-                            DrawerTeamList(
-                                teamList = teamList.filter { it.teamId != currentTeamId },
-                                onTeamClick = { team ->
-                                    drawerViewModel.changeTeam(context, team.teamId)
-                                }
-                            )
+                    UiStateHandler(
+                        uiState = teamListResult,
+                        onRetry = {
+                            drawerViewModel.getTeamListByUserId(userId)
                         }
-                    )
+                    ) { teamList ->
+                        DrawerTeamList(
+                            teamList = teamList.filter { it.teamId != currentTeamId },
+                            onTeamClick = { team ->
+                                drawerViewModel.changeTeam(context, team.teamId)
+                            }
+                        )
+                    }
 
                     KitchingHorizontalDivider(
                         modifier = Modifier
@@ -216,7 +217,7 @@ fun CustomDrawer(
         content()
     }
 
-    if (teamChangeResult is AppResult.Loading) {
+    if (teamChangeResult.isLoading) {
         ProgressIndicatorScreen()
     }
 }

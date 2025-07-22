@@ -1,4 +1,4 @@
-package com.kitching.data.util
+package com.kitching.domain.exception
 
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseNetworkException

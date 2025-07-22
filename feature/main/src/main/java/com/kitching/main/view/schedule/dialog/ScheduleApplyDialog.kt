@@ -7,6 +7,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.kitching.core.common.widget.CommonDialogComponent
+import com.kitching.core.designsystem.Body1_m
 import com.kitching.core.designsystem.H5
 import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.domain.entities.ScheduleTime
@@ -17,7 +18,7 @@ fun ScheduleApplyDialog(
     selectedDate: LocalDate,
     onDismissRequest: () -> Unit,
     onClickConfirm: () -> Unit,
-    scheduleTimes: List<ScheduleTime>,
+    scheduleTimes: List<ScheduleTime>?,
     selectedScheduleTimeId: MutableState<String>
 ) {
     CommonDialogComponent(
@@ -32,10 +33,16 @@ fun ScheduleApplyDialog(
     ) {
         Text(
             text = selectedDate.toString(),
-            style = H5,
-            color = NeutralGray800
+            style = H5.copy(color = NeutralGray800),
         )
 
-        ScheduleTimeChip(scheduleTimes, selectedScheduleTimeId)
+        if (scheduleTimes.isNullOrEmpty()) {
+            Text(
+                text = stringResource(R.string.schedule_time_empty),
+                style = Body1_m.copy(color = NeutralGray800),
+            )
+        } else {
+            ScheduleTimeChip(scheduleTimes, selectedScheduleTimeId)
+        }
     }
 }
