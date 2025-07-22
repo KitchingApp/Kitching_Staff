@@ -124,12 +124,13 @@ class LoginViewModel(
         }
     }
 
-    private val _kakaoLoginState = MutableStateFlow<AppResult<User>>(AppResult.Initial)
-    val kakaoLoginState: StateFlow<AppResult<User>> = _kakaoLoginState
+    private val _kakaoLoginState = MutableStateFlow(UiState<User>())
+    val kakaoLoginState get() = _kakaoLoginState.asStateFlow()
 
     fun performKakaoLogin(context: Context) {
         viewModelScope.launch {
-            _kakaoLoginState.value = AppResult.Loading
+            _kakaoLoginState.value = _kakaoLoginState.value.toLoading()
+
             if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
                 UserApiClient.instance.loginWithKakaoTalk(context) { token, error ->
                     handleKakaoLoginResult(token, error, context)
@@ -144,11 +145,11 @@ class LoginViewModel(
 
     private fun handleKakaoLoginResult(token: OAuthToken?, error: Throwable?, context: Context) {
         if (error != null) {
-            _kakaoLoginState.value = AppResult.Failure(error)
+            _kakaoLoginState.value = _kakaoLoginState.value.toError(error.message.toString())
         } else if (token != null) {
             UserApiClient.instance.me { user, userApiClientError ->
                 if (userApiClientError != null) {
-                    _kakaoLoginState.value = AppResult.Failure(userApiClientError)
+                    _kakaoLoginState.value = _kakaoLoginState.value.toError(userApiClientError.message.toString())
                 } else if (user != null) {
                     val kakaoUid = user.id.toString()
                     val kakaoNickname = user.kakaoAccount?.profile?.nickname ?: ""
@@ -164,17 +165,20 @@ class LoginViewModel(
         viewModelScope.launch {
             loginRepository.checkAndSaveUser(userId, userNickname, userImage).collectLatest { result ->
                 when (result) {
+                    is AppResult.Initial -> {
+                        _kakaoLoginState.value = _kakaoLoginState.value
+                    }
+
+                    is AppResult.Loading -> {
+                        _kakaoLoginState.value = _kakaoLoginState.value.toLoading()
+                    }
+
                     is AppResult.Success -> {
                         saveUserIdToDataStore(context, userId)
                     }
+
                     is AppResult.Failure -> {
-                        _kakaoLoginState.value = AppResult.Failure(result.exception)
-                    }
-                    AppResult.Loading -> {
-                        _kakaoLoginState.value = AppResult.Loading
-                    }
-                    AppResult.Initial -> {
-                        _kakaoLoginState.value = AppResult.Initial
+                        _kakaoLoginState.value = _kakaoLoginState.value.toError(result.exception.message.toString())
                     }
                 }
             }
@@ -185,17 +189,20 @@ class LoginViewModel(
         viewModelScope.launch {
             PreferencesDataSource(context).saveUserId(userId).collectLatest { result ->
                 when (result) {
-                    is AppResult.Success<*> -> {
+                    is AppResult.Initial -> {
+                        _kakaoLoginState.value = _kakaoLoginState.value
+                    }
+
+                    is AppResult.Loading -> {
+                        _kakaoLoginState.value = _kakaoLoginState.value.toLoading()
+                    }
+
+                    is AppResult.Success -> {
                         loadUserData(userId)
                     }
+
                     is AppResult.Failure -> {
-                        _kakaoLoginState.value = AppResult.Failure(result.exception)
-                    }
-                    AppResult.Loading -> {
-                        _kakaoLoginState.value = AppResult.Loading
-                    }
-                    AppResult.Initial -> {
-                        _kakaoLoginState.value = AppResult.Initial
+                        _kakaoLoginState.value = _kakaoLoginState.value.toError(result.exception.message.toString())
                     }
                 }
             }
@@ -204,8 +211,24 @@ class LoginViewModel(
 
     private fun loadUserData(userId: String) {
         viewModelScope.launch {
-            loginRepository.getUserById(userId).collectLatest {
-                _kakaoLoginState.value = it
+            loginRepository.getUserById(userId).collectLatest { result ->
+                when (result) {
+                    is AppResult.Initial -> {
+                        _kakaoLoginState.value = _kakaoLoginState.value
+                    }
+
+                    is AppResult.Loading -> {
+                        _kakaoLoginState.value = _kakaoLoginState.value.toLoading()
+                    }
+
+                    is AppResult.Success -> {
+                        _kakaoLoginState.value = _kakaoLoginState.value.toSuccess(result.data)
+                    }
+
+                    is AppResult.Failure -> {
+                        _kakaoLoginState.value = _kakaoLoginState.value.toError(result.exception.message.toString())
+                    }
+                }
             }
         }
     }
