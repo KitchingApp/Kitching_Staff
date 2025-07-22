@@ -15,7 +15,6 @@ import com.kitching.domain.util.UiState
 import com.kitching.login.SplashEntryPoint
 import com.kitching.login.SplashResult
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
@@ -308,13 +307,29 @@ class LoginViewModel(
         }
     }
 
-    private val _joinTeamResult = MutableStateFlow<AppResult<Team>>(AppResult.Initial)
+    private val _joinTeamResult = MutableStateFlow(UiState<Team>())
     val joinTeamResult get() = _joinTeamResult.asStateFlow()
 
     fun joinTeamByInviteCode(userId: String, inviteCode: String) {
         viewModelScope.launch {
-            teamRepository.joinTeamByInviteCode(userId, inviteCode).collectLatest {
-                _joinTeamResult.value = it
+            teamRepository.joinTeamByInviteCode(userId, inviteCode).collectLatest { result ->
+                when (result) {
+                    is AppResult.Initial -> {
+                        _joinTeamResult.value = _joinTeamResult.value
+                    }
+
+                    is AppResult.Loading -> {
+                        _joinTeamResult.value = _joinTeamResult.value.toLoading()
+                    }
+
+                    is AppResult.Success -> {
+                        _joinTeamResult.value = _joinTeamResult.value.toSuccess(result.data)
+                    }
+
+                    is AppResult.Failure -> {
+                        _joinTeamResult.value = _joinTeamResult.value.toError(result.exception.message.toString())
+                    }
+                }
             }
         }
     }

@@ -25,9 +25,9 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
@@ -42,8 +42,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
-import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.appresultscreen.ProgressIndicatorScreen
+import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.designsystem.Body1
 import com.kitching.core.designsystem.H2
 import com.kitching.core.designsystem.H3_m
@@ -53,8 +53,6 @@ import com.kitching.core.designsystem.NeutralGray300
 import com.kitching.core.designsystem.NeutralGray600
 import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.core.designsystem.PrimaryGreen300
-import com.kitching.domain.entities.Team
-import com.kitching.domain.util.AppResult
 import com.kitching.login.R
 import com.kitching.login.ui.model.LoginViewModel
 import com.kitching.login.ui.model.LoginViewModelFactory
@@ -72,17 +70,16 @@ fun InviteCodeScreen(
     val joinTeamResult by loginViewModel.joinTeamResult.collectAsStateWithLifecycle()
 
     LaunchedEffect(joinTeamResult) {
-        when (joinTeamResult) {
-            is AppResult.Success -> {
-                val team = (joinTeamResult as AppResult.Success<Team>).data
-                commonState.snackBarState.showSnackbar("${team.teamName}에 합류하였습니다.")
+        when {
+            joinTeamResult.isSuccess -> {
+                val team = joinTeamResult.data
+                commonState.snackBarState.showSnackbar("${team?.teamName}에 합류하였습니다.")
                 goTeamSelect()
             }
-            is AppResult.Failure -> {
-                val exception = (joinTeamResult as AppResult.Failure).exception
-                commonState.snackBarState.showSnackbar(exception.message.toString())
+
+            joinTeamResult.isError -> {
+                commonState.snackBarState.showSnackbar(joinTeamResult.error.toString())
             }
-            else -> {}
         }
     }
 
@@ -201,7 +198,7 @@ fun InviteCodeScreen(
         }
     }
 
-    if (joinTeamResult is AppResult.Loading) {
+    if (joinTeamResult.isLoading) {
         ProgressIndicatorScreen()
     }
 }
