@@ -19,10 +19,6 @@ class PrepViewModel(private val repository: PrepRepository) : ViewModel() {
         viewModelScope.launch {
             repository.getTodoPrep(teamId, date).collectLatest { result ->
                 when (result) {
-                    is AppResult.Initial -> {
-                        _todoPrepsByDate.value = _todoPrepsByDate.value
-                    }
-
                     is AppResult.Loading -> {
                         _todoPrepsByDate.value = _todoPrepsByDate.value.toLoading()
                     }
@@ -46,10 +42,6 @@ class PrepViewModel(private val repository: PrepRepository) : ViewModel() {
         viewModelScope.launch {
             repository.createTodoPrep(teamId, date, categoryId, prepId).collectLatest { result ->
                 when (result) {
-                    is AppResult.Initial -> {
-                        _actionTodoPrepResult.value = _actionTodoPrepResult.value
-                    }
-
                     is AppResult.Loading -> {
                         _actionTodoPrepResult.value = _actionTodoPrepResult.value.toLoading()
                     }
@@ -70,10 +62,6 @@ class PrepViewModel(private val repository: PrepRepository) : ViewModel() {
         viewModelScope.launch {
             repository.updateTodoPrep(todoId, isDone).collectLatest { result ->
                 when (result) {
-                    is AppResult.Initial -> {
-                        _actionTodoPrepResult.value = _actionTodoPrepResult.value
-                    }
-
                     is AppResult.Loading -> {
                         _actionTodoPrepResult.value = _actionTodoPrepResult.value.toLoading()
                     }
@@ -94,10 +82,6 @@ class PrepViewModel(private val repository: PrepRepository) : ViewModel() {
         viewModelScope.launch {
             repository.deleteTodoPrep(todoId).collectLatest { result ->
                 when (result) {
-                    is AppResult.Initial -> {
-                        _actionTodoPrepResult.value = _actionTodoPrepResult.value
-                    }
-
                     is AppResult.Loading -> {
                         _actionTodoPrepResult.value = _actionTodoPrepResult.value.toLoading()
                     }

@@ -21,10 +21,6 @@ class OrderViewModel(private val orderRepository: OrderRepository) : ViewModel()
         viewModelScope.launch {
             orderRepository.getOrderCategories(teamId).collectLatest { result ->
                 when (result) {
-                    is AppResult.Initial -> {
-                        _orderCategories.value = _orderCategories.value
-                    }
-
                     is AppResult.Loading -> {
                         _orderCategories.value = _orderCategories.value.toLoading()
                     }
@@ -49,10 +45,6 @@ class OrderViewModel(private val orderRepository: OrderRepository) : ViewModel()
         viewModelScope.launch {
             orderRepository.getOrderItems(teamId).collectLatest { result ->
                 when (result) {
-                    is AppResult.Initial -> {
-                        _orderItems.value = _orderItems.value
-                    }
-
                     is AppResult.Loading -> {
                         _orderItems.value = _orderItems.value.toLoading()
                     }

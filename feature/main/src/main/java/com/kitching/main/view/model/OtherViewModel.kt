@@ -21,10 +21,6 @@ class OtherViewModel(val repository: TeamRepository) : ViewModel() {
         viewModelScope.launch {
             repository.getAllMemberList(teamId).collectLatest { result ->
                 when (result) {
-                    is AppResult.Initial -> {
-                        _memberListResult.value = _memberListResult.value
-                    }
-
                     is AppResult.Loading -> {
                         _memberListResult.value = _memberListResult.value.toLoading()
                     }
@@ -48,10 +44,6 @@ class OtherViewModel(val repository: TeamRepository) : ViewModel() {
         viewModelScope.launch {
             repository.getNoticeList(teamId).collectLatest { result ->
                 when (result) {
-                    is AppResult.Initial -> {
-                        _noticeListResult.value = _noticeListResult.value
-                    }
-
                     is AppResult.Loading -> {
                         _noticeListResult.value = _noticeListResult.value.toLoading()
                     }
@@ -75,10 +67,6 @@ class OtherViewModel(val repository: TeamRepository) : ViewModel() {
         viewModelScope.launch {
             repository.getNoticeById(noticeId).collectLatest { result ->
                 when(result) {
-                    is AppResult.Initial -> {
-                        _noticeByIdResult.value = _noticeByIdResult.value
-                    }
-
                     is AppResult.Loading -> {
                         _noticeByIdResult.value = _noticeByIdResult.value.toLoading()
                     }
@@ -102,10 +90,6 @@ class OtherViewModel(val repository: TeamRepository) : ViewModel() {
         viewModelScope.launch {
             repository.addComment(noticeId, user, comment).collectLatest { result ->
                 when (result) {
-                    is AppResult.Initial -> {
-                        _commentAction.value = _commentAction.value
-                    }
-
                     is AppResult.Loading -> {
                         _commentAction.value = _commentAction.value.toLoading()
                     }
@@ -126,10 +110,6 @@ class OtherViewModel(val repository: TeamRepository) : ViewModel() {
         viewModelScope.launch {
             repository.deleteComment(noticeId, commentId).collectLatest { result ->
                 when (result) {
-                    is AppResult.Initial -> {
-                        _commentAction.value = _commentAction.value
-                    }
-
                     is AppResult.Loading -> {
                         _commentAction.value = _commentAction.value.toLoading()
                     }

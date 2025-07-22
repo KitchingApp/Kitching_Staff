@@ -21,10 +21,6 @@ class ScheduleViewModel(private val scheduleRepository: ScheduleRepository) : Vi
         viewModelScope.launch {
             scheduleRepository.getMySchedules(userId, teamId).collectLatest { result ->
                     when (result) {
-                        is AppResult.Initial -> {
-                            _mySchedules.value = _mySchedules.value
-                        }
-
                         is AppResult.Loading -> {
                             _mySchedules.value = _mySchedules.value.toLoading()
                         }
@@ -48,10 +44,6 @@ class ScheduleViewModel(private val scheduleRepository: ScheduleRepository) : Vi
         viewModelScope.launch {
             scheduleRepository.getScheduleByDate(teamId, date).collectLatest { result ->
                 when (result) {
-                    is AppResult.Initial -> {
-                        _scheduleByDate.value = _scheduleByDate.value
-                    }
-
                     is AppResult.Loading -> {
                         _scheduleByDate.value = _scheduleByDate.value.toLoading()
                     }
@@ -75,10 +67,6 @@ class ScheduleViewModel(private val scheduleRepository: ScheduleRepository) : Vi
         viewModelScope.launch {
             scheduleRepository.getScheduleTimes(teamId).collectLatest { result ->
                 when (result) {
-                    is AppResult.Initial -> {
-                        _scheduleTimes.value = _scheduleTimes.value
-                    }
-
                     is AppResult.Loading -> {
                         _scheduleTimes.value = _scheduleTimes.value.toLoading()
                     }
@@ -109,10 +97,6 @@ class ScheduleViewModel(private val scheduleRepository: ScheduleRepository) : Vi
             scheduleRepository.createApplySchedule(teamId, dateString, userId, scheduleTimeId, fix)
                 .collectLatest { result ->
                     when (result) {
-                        is AppResult.Initial -> {
-                            _scheduleResult.value = _scheduleResult.value
-                        }
-
                         is AppResult.Loading -> {
                             _scheduleResult.value = _scheduleResult.value.toLoading()
                         }

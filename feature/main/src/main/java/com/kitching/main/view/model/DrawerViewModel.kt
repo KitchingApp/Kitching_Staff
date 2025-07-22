@@ -21,15 +21,14 @@ class DrawerViewModel(private val teamRepository: TeamRepository) : ViewModel() 
         viewModelScope.launch {
             teamRepository.getTeamsByUserId(userId).collectLatest { result ->
                 when (result) {
-                    is AppResult.Initial -> {
-                        _teamListResult.value = _teamListResult.value
-                    }
                     is AppResult.Loading -> {
                         _teamListResult.value = _teamListResult.value.toLoading()
                     }
+
                     is AppResult.Success -> {
                         _teamListResult.value = _teamListResult.value.toSuccess(result.data)
                     }
+
                     is AppResult.Failure -> {
                         _teamListResult.value = _teamListResult.value.toError(result.exception.message.toString())
                     }
@@ -45,15 +44,14 @@ class DrawerViewModel(private val teamRepository: TeamRepository) : ViewModel() 
         viewModelScope.launch {
             PreferencesDataSource(context).saveTeamId(teamId).collectLatest { result ->
                 when (result) {
-                    is AppResult.Initial -> {
-                        _teamChangeResult.value = _teamChangeResult.value
-                    }
                     is AppResult.Loading -> {
                         _teamChangeResult.value = _teamChangeResult.value.toLoading()
                     }
+
                     is AppResult.Success -> {
                         loadTeam(teamId)
                     }
+
                     is AppResult.Failure -> {
                         _teamChangeResult.value = _teamChangeResult.value.toError(result.exception.message.toString())
                     }
@@ -66,15 +64,14 @@ class DrawerViewModel(private val teamRepository: TeamRepository) : ViewModel() 
         viewModelScope.launch {
             teamRepository.getTeam(teamId).collectLatest { result ->
                 when (result) {
-                    is AppResult.Initial -> {
-                        _teamChangeResult.value = _teamChangeResult.value
-                    }
                     is AppResult.Loading -> {
                         _teamChangeResult.value = _teamChangeResult.value.toLoading()
                     }
+
                     is AppResult.Success -> {
                         _teamChangeResult.value = _teamChangeResult.value.toSuccess(result.data)
                     }
+
                     is AppResult.Failure -> {
                         _teamChangeResult.value = _teamChangeResult.value.toError(result.exception.message.toString())
                     }

@@ -164,10 +164,6 @@ class LoginViewModel(
         viewModelScope.launch {
             loginRepository.checkAndSaveUser(userId, userNickname, userImage).collectLatest { result ->
                 when (result) {
-                    is AppResult.Initial -> {
-                        _kakaoLoginState.value = _kakaoLoginState.value
-                    }
-
                     is AppResult.Loading -> {
                         _kakaoLoginState.value = _kakaoLoginState.value.toLoading()
                     }
@@ -188,10 +184,6 @@ class LoginViewModel(
         viewModelScope.launch {
             PreferencesDataSource(context).saveUserId(userId).collectLatest { result ->
                 when (result) {
-                    is AppResult.Initial -> {
-                        _kakaoLoginState.value = _kakaoLoginState.value
-                    }
-
                     is AppResult.Loading -> {
                         _kakaoLoginState.value = _kakaoLoginState.value.toLoading()
                     }
@@ -212,10 +204,6 @@ class LoginViewModel(
         viewModelScope.launch {
             loginRepository.getUserById(userId).collectLatest { result ->
                 when (result) {
-                    is AppResult.Initial -> {
-                        _kakaoLoginState.value = _kakaoLoginState.value
-                    }
-
                     is AppResult.Loading -> {
                         _kakaoLoginState.value = _kakaoLoginState.value.toLoading()
                     }
@@ -239,15 +227,14 @@ class LoginViewModel(
         viewModelScope.launch {
             PreferencesDataSource(context).saveTeamId(teamId).collectLatest { result ->
                 when (result) {
-                    is AppResult.Initial -> {
-                        _teamIdSaveResult.value = _teamIdSaveResult.value
-                    }
                     is AppResult.Loading -> {
                         _teamIdSaveResult.value = _teamIdSaveResult.value.toLoading()
                     }
+
                     is AppResult.Success -> {
                         loadTeamData(teamId)
                     }
+
                     is AppResult.Failure -> {
                         _teamIdSaveResult.value = _teamIdSaveResult.value.toError(result.exception.message.toString())
                     }
@@ -260,10 +247,6 @@ class LoginViewModel(
         viewModelScope.launch {
             teamRepository.getTeam(teamId).collectLatest { result ->
                 when (result) {
-                    is AppResult.Initial -> {
-                        _teamIdSaveResult.value = _teamIdSaveResult.value
-                    }
-
                     is AppResult.Loading -> {
                         _teamIdSaveResult.value = _teamIdSaveResult.value.toLoading()
                     }
@@ -287,10 +270,6 @@ class LoginViewModel(
         viewModelScope.launch {
             teamRepository.getTeamsByUserId(userId).collectLatest { result ->
                 when (result) {
-                    is AppResult.Initial -> {
-                        _teamList.value = _teamList.value
-                    }
-
                     is AppResult.Loading -> {
                         _teamList.value = _teamList.value.toLoading()
                     }
@@ -314,10 +293,6 @@ class LoginViewModel(
         viewModelScope.launch {
             teamRepository.joinTeamByInviteCode(userId, inviteCode).collectLatest { result ->
                 when (result) {
-                    is AppResult.Initial -> {
-                        _joinTeamResult.value = _joinTeamResult.value
-                    }
-
                     is AppResult.Loading -> {
                         _joinTeamResult.value = _joinTeamResult.value.toLoading()
                     }

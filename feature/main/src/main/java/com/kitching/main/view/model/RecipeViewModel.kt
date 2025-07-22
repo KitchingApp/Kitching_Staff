@@ -21,15 +21,14 @@ class RecipeViewModel(
         viewModelScope.launch {
             repository.getRecipes(teamId).collectLatest { result ->
                 when (result) {
-                    is AppResult.Initial -> {
-                        _recipeList.value = _recipeList.value
-                    }
                     is AppResult.Loading -> {
                         _recipeList.value = _recipeList.value.toLoading()
                     }
+
                     is AppResult.Success -> {
                         _recipeList.value = _recipeList.value.toSuccess(result.data)
                     }
+
                     is AppResult.Failure -> {
                         _recipeList.value = _recipeList.value.toError(result.exception.message.toString())
                     }
