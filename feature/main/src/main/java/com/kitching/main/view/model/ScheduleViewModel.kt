@@ -7,6 +7,7 @@ import com.kitching.domain.entities.ScheduleTime
 import com.kitching.domain.repository.ScheduleRepository
 import com.kitching.domain.util.AppResult
 import com.kitching.domain.util.UiState
+import com.kitching.domain.util.getDisplayMessage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -30,7 +31,7 @@ class ScheduleViewModel(private val scheduleRepository: ScheduleRepository) : Vi
                         }
 
                         is AppResult.Failure -> {
-                            _mySchedules.value = _mySchedules.value.toError(result.exception.message.toString())
+                            _mySchedules.value = _mySchedules.value.toError(result.getDisplayMessage())
                         }
                     }
                 }
@@ -53,7 +54,7 @@ class ScheduleViewModel(private val scheduleRepository: ScheduleRepository) : Vi
                     }
 
                     is AppResult.Failure -> {
-                        _scheduleByDate.value = _scheduleByDate.value.toError(result.exception.message.toString())
+                        _scheduleByDate.value = _scheduleByDate.value.toError(result.getDisplayMessage())
                     }
                 }
             }
@@ -76,7 +77,7 @@ class ScheduleViewModel(private val scheduleRepository: ScheduleRepository) : Vi
                     }
 
                     is AppResult.Failure -> {
-                        _scheduleTimes.value = _scheduleTimes.value.toError(result.exception.message.toString())
+                        _scheduleTimes.value = _scheduleTimes.value.toError(result.getDisplayMessage())
                     }
                 }
             }
@@ -107,7 +108,7 @@ class ScheduleViewModel(private val scheduleRepository: ScheduleRepository) : Vi
                         }
 
                         is AppResult.Failure -> {
-                            _scheduleResult.value = _scheduleResult.value.toError(result.exception.message.toString())
+                            _scheduleResult.value = _scheduleResult.value.toError(result.getDisplayMessage())
                         }
                     }
                 }

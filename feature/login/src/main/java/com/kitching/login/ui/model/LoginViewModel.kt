@@ -12,6 +12,7 @@ import com.kitching.domain.repository.LoginRepository
 import com.kitching.domain.repository.TeamRepository
 import com.kitching.domain.util.AppResult
 import com.kitching.domain.util.UiState
+import com.kitching.domain.util.getDisplayMessage
 import com.kitching.login.SplashEntryPoint
 import com.kitching.login.SplashResult
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -173,7 +174,7 @@ class LoginViewModel(
                     }
 
                     is AppResult.Failure -> {
-                        _kakaoLoginState.value = _kakaoLoginState.value.toError(result.exception.message.toString())
+                        _kakaoLoginState.value = _kakaoLoginState.value.toError(result.getDisplayMessage())
                     }
                 }
             }
@@ -213,7 +214,7 @@ class LoginViewModel(
                     }
 
                     is AppResult.Failure -> {
-                        _kakaoLoginState.value = _kakaoLoginState.value.toError(result.exception.message.toString())
+                        _kakaoLoginState.value = _kakaoLoginState.value.toError(result.getDisplayMessage())
                     }
                 }
             }
@@ -256,7 +257,7 @@ class LoginViewModel(
                     }
 
                     is AppResult.Failure -> {
-                        _teamIdSaveResult.value = _teamIdSaveResult.value.toError(result.exception.message.toString())
+                        _teamIdSaveResult.value = _teamIdSaveResult.value.toError(result.getDisplayMessage())
                     }
                 }
             }
@@ -279,7 +280,7 @@ class LoginViewModel(
                     }
 
                     is AppResult.Failure -> {
-                        _teamList.value = _teamList.value.toError(result.exception.message.toString())
+                        _teamList.value = _teamList.value.toError(result.getDisplayMessage())
                     }
                 }
             }
@@ -302,7 +303,7 @@ class LoginViewModel(
                     }
 
                     is AppResult.Failure -> {
-                        _joinTeamResult.value = _joinTeamResult.value.toError(result.exception.message.toString())
+                        _joinTeamResult.value = _joinTeamResult.value.toError(result.getDisplayMessage())
                     }
                 }
             }

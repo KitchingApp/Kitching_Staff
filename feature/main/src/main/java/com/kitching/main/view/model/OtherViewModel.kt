@@ -8,6 +8,7 @@ import com.kitching.domain.entities.User
 import com.kitching.domain.repository.TeamRepository
 import com.kitching.domain.util.AppResult
 import com.kitching.domain.util.UiState
+import com.kitching.domain.util.getDisplayMessage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -30,7 +31,7 @@ class OtherViewModel(val repository: TeamRepository) : ViewModel() {
                     }
 
                     is AppResult.Failure -> {
-                        _memberListResult.value = _memberListResult.value.toError(result.exception.message.toString())
+                        _memberListResult.value = _memberListResult.value.toError(result.getDisplayMessage())
                     }
                 }
             }
@@ -53,7 +54,7 @@ class OtherViewModel(val repository: TeamRepository) : ViewModel() {
                     }
 
                     is AppResult.Failure -> {
-                        _noticeListResult.value = _noticeListResult.value.toError(result.exception.message.toString())
+                        _noticeListResult.value = _noticeListResult.value.toError(result.getDisplayMessage())
                     }
                 }
             }
@@ -76,7 +77,7 @@ class OtherViewModel(val repository: TeamRepository) : ViewModel() {
                     }
 
                     is AppResult.Failure -> {
-                        _noticeByIdResult.value = _noticeByIdResult.value.toError(result.exception.message.toString())
+                        _noticeByIdResult.value = _noticeByIdResult.value.toError(result.getDisplayMessage())
                     }
                 }
             }
@@ -99,7 +100,7 @@ class OtherViewModel(val repository: TeamRepository) : ViewModel() {
                     }
 
                     is AppResult.Failure -> {
-                        _commentAction.value = _commentAction.value.toError(result.exception.message.toString())
+                        _commentAction.value = _commentAction.value.toError(result.getDisplayMessage())
                     }
                 }
             }
@@ -119,7 +120,7 @@ class OtherViewModel(val repository: TeamRepository) : ViewModel() {
                     }
 
                     is AppResult.Failure -> {
-                        _commentAction.value = _commentAction.value.toError(result.exception.message.toString())
+                        _commentAction.value = _commentAction.value.toError(result.getDisplayMessage())
                     }
                 }
             }

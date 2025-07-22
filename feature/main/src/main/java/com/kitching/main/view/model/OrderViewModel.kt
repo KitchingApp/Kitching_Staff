@@ -7,6 +7,7 @@ import com.kitching.domain.entities.OrderCategory
 import com.kitching.domain.repository.OrderRepository
 import com.kitching.domain.util.AppResult
 import com.kitching.domain.util.UiState
+import com.kitching.domain.util.getDisplayMessage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -31,7 +32,7 @@ class OrderViewModel(private val orderRepository: OrderRepository) : ViewModel()
 
                     is AppResult.Failure -> {
                         _orderCategories.value =
-                            _orderCategories.value.toError(result.exception.message.toString())
+                            _orderCategories.value.toError(result.getDisplayMessage())
                     }
                 }
             }
@@ -55,7 +56,7 @@ class OrderViewModel(private val orderRepository: OrderRepository) : ViewModel()
 
                     is AppResult.Failure -> {
                         _orderItems.value =
-                            _orderItems.value.toError(result.exception.message.toString())
+                            _orderItems.value.toError(result.getDisplayMessage())
                     }
                 }
             }

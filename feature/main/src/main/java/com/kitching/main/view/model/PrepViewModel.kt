@@ -6,6 +6,7 @@ import com.kitching.domain.entities.TodoPrepData
 import com.kitching.domain.repository.PrepRepository
 import com.kitching.domain.util.AppResult
 import com.kitching.domain.util.UiState
+import com.kitching.domain.util.getDisplayMessage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -28,7 +29,7 @@ class PrepViewModel(private val repository: PrepRepository) : ViewModel() {
                     }
 
                     is AppResult.Failure -> {
-                        _todoPrepsByDate.value = _todoPrepsByDate.value.toError(result.exception.message.toString())
+                        _todoPrepsByDate.value = _todoPrepsByDate.value.toError(result.getDisplayMessage())
                     }
                 }
             }
@@ -51,7 +52,7 @@ class PrepViewModel(private val repository: PrepRepository) : ViewModel() {
                     }
 
                     is AppResult.Failure -> {
-                        _actionTodoPrepResult.value = _actionTodoPrepResult.value.toError(result.exception.message.toString())
+                        _actionTodoPrepResult.value = _actionTodoPrepResult.value.toError(result.getDisplayMessage())
                     }
                 }
             }
@@ -71,7 +72,7 @@ class PrepViewModel(private val repository: PrepRepository) : ViewModel() {
                     }
 
                     is AppResult.Failure -> {
-                        _actionTodoPrepResult.value = _actionTodoPrepResult.value.toError(result.exception.message.toString())
+                        _actionTodoPrepResult.value = _actionTodoPrepResult.value.toError(result.getDisplayMessage())
                     }
                 }
             }
@@ -91,7 +92,7 @@ class PrepViewModel(private val repository: PrepRepository) : ViewModel() {
                     }
 
                     is AppResult.Failure -> {
-                        _actionTodoPrepResult.value = _actionTodoPrepResult.value.toError(result.exception.message.toString())
+                        _actionTodoPrepResult.value = _actionTodoPrepResult.value.toError(result.getDisplayMessage())
                     }
                 }
             }

@@ -6,6 +6,7 @@ import com.kitching.domain.entities.Recipe
 import com.kitching.domain.repository.RecipeRepository
 import com.kitching.domain.util.AppResult
 import com.kitching.domain.util.UiState
+import com.kitching.domain.util.getDisplayMessage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -30,7 +31,7 @@ class RecipeViewModel(
                     }
 
                     is AppResult.Failure -> {
-                        _recipeList.value = _recipeList.value.toError(result.exception.message.toString())
+                        _recipeList.value = _recipeList.value.toError(result.getDisplayMessage())
                     }
                 }
             }
