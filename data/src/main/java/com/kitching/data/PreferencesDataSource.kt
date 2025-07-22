@@ -6,11 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.kitching.domain.util.AppResult
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.first
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "team")
 
@@ -21,51 +17,15 @@ class PreferencesDataSource(private val context: Context) {
         private val FCM_TOKEN = stringPreferencesKey("fcm_token")
     }
 
-    fun saveUserId(userId: String): Flow<AppResult<Boolean>> = flow {
-        emit(AppResult.Loading)
-        context.dataStore.edit { preferences -> preferences[USER_ID] = userId }
-        emit(AppResult.Success(true))
-    }.catch {
-        emit(AppResult.Failure(it))
-    }
+    private val preferencesData = context.dataStore
 
-    fun getUserId(): Flow<AppResult<String>> = context.dataStore.data.map { preferences ->
-        AppResult.Loading
-        AppResult.Success(preferences[USER_ID] ?: "")
-    }.catch {
-        AppResult.Failure(it)
-    }
+    suspend fun saveUserId(userId: String) = preferencesData.edit { preferences -> preferences[USER_ID] = userId }
 
-    fun clearUserId(): Flow<AppResult<Boolean>> = flow {
-        emit(AppResult.Loading)
-        context.dataStore.edit { preferences -> preferences.remove(USER_ID) }
-        emit(AppResult.Success(true))
-    }.catch {
-        emit(AppResult.Failure(it))
-    }
+    suspend fun getUserId(): String = preferencesData.data.first()[USER_ID] ?: ""
 
-    fun saveTeamId(teamId: String): Flow<AppResult<Boolean>> = flow {
-        emit(AppResult.Loading)
-        context.dataStore.edit { preferences -> preferences[TEAM_ID] = teamId }
-        emit(AppResult.Success(true))
-    }.catch {
-        emit(AppResult.Failure(it))
-    }
+    suspend fun saveTeamId(teamId: String) = preferencesData.edit { preferences -> preferences[TEAM_ID] = teamId }
 
-    fun getTeamId(): Flow<AppResult<String>> = context.dataStore.data.map { preferences ->
-        AppResult.Loading
-        AppResult.Success(preferences[TEAM_ID] ?: "")
-    }.catch {
-        AppResult.Failure(it)
-    }
-
-    fun clearTeamId(): Flow<AppResult<Boolean>> = flow {
-        emit(AppResult.Loading)
-        context.dataStore.edit { preferences -> preferences.remove(TEAM_ID) }
-        emit(AppResult.Success(true))
-    }.catch {
-        emit(AppResult.Failure(it))
-    }
+    suspend fun getTeamId(): String = preferencesData.data.first()[TEAM_ID] ?: ""
 
     /** 토큰이 있는지 확인하고 있으면 업데이트, 없으면 새로 저장 */
     suspend fun updateTokenAtDatastore(newToken: String) {
