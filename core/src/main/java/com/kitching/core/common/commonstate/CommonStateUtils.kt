@@ -32,7 +32,7 @@ fun CommonState.updateUserInfo(user: User?) {
     appInfoState.value = appInfoState.value.copy(userInfo = user)
 }
 
-fun CommonState.updateTeamInfo(team: Team) {
+fun CommonState.updateTeamInfo(team: Team?) {
     appInfoState.value = appInfoState.value.copy(teamInfo = team)
 }
 

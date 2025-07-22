@@ -233,24 +233,24 @@ class LoginViewModel(
         }
     }
 
-    private var _teamIdSaveResult = MutableStateFlow<AppResult<Team>>(AppResult.Initial)
+    private var _teamIdSaveResult = MutableStateFlow(UiState<Team>())
     val teamIdSaveResult get() = _teamIdSaveResult.asStateFlow()
 
     fun saveTeamIdToDataStore(teamId: String, context: Context) {
         viewModelScope.launch {
             PreferencesDataSource(context).saveTeamId(teamId).collectLatest { result ->
                 when (result) {
-                    is AppResult.Success<*> -> {
+                    is AppResult.Initial -> {
+                        _teamIdSaveResult.value = _teamIdSaveResult.value
+                    }
+                    is AppResult.Loading -> {
+                        _teamIdSaveResult.value = _teamIdSaveResult.value.toLoading()
+                    }
+                    is AppResult.Success -> {
                         loadTeamData(teamId)
                     }
                     is AppResult.Failure -> {
-                        _teamIdSaveResult.value = AppResult.Failure(result.exception)
-                    }
-                    AppResult.Loading -> {
-                        _teamIdSaveResult.value = AppResult.Loading
-                    }
-                    AppResult.Initial -> {
-                        _teamIdSaveResult.value = AppResult.Initial
+                        _teamIdSaveResult.value = _teamIdSaveResult.value.toError(result.exception.message.toString())
                     }
                 }
             }
@@ -259,19 +259,51 @@ class LoginViewModel(
 
     private fun loadTeamData(teamId: String) {
         viewModelScope.launch {
-            teamRepository.getTeam(teamId).collectLatest {
-                _teamIdSaveResult.value = it
+            teamRepository.getTeam(teamId).collectLatest { result ->
+                when (result) {
+                    is AppResult.Initial -> {
+                        _teamIdSaveResult.value = _teamIdSaveResult.value
+                    }
+
+                    is AppResult.Loading -> {
+                        _teamIdSaveResult.value = _teamIdSaveResult.value.toLoading()
+                    }
+
+                    is AppResult.Success -> {
+                        _teamIdSaveResult.value = _teamIdSaveResult.value.toSuccess(result.data)
+                    }
+
+                    is AppResult.Failure -> {
+                        _teamIdSaveResult.value = _teamIdSaveResult.value.toError(result.exception.message.toString())
+                    }
+                }
             }
         }
     }
 
-    private val _teamList = MutableStateFlow<AppResult<List<Team>>>(AppResult.Initial)
+    private val _teamList = MutableStateFlow(UiState<List<Team>>())
     val teamList get() = _teamList.asStateFlow()
 
     fun getTeamList(userId: String) {
         viewModelScope.launch {
-            teamRepository.getTeamsByUserId(userId).collectLatest {
-                _teamList.value = it
+            teamRepository.getTeamsByUserId(userId).collectLatest { result ->
+                when (result) {
+                    is AppResult.Initial -> {
+                        _teamList.value = _teamList.value
+                    }
+
+                    is AppResult.Loading -> {
+                        _teamList.value = _teamList.value.toLoading()
+                    }
+
+                    is AppResult.Success -> {
+                        _teamList.value = _teamList.value.toSuccess(result.data)
+                    }
+
+                    is AppResult.Failure -> {
+                        _teamList.value = _teamList.value.toError(result.exception.message.toString())
+                    }
+                }
             }
         }
     }

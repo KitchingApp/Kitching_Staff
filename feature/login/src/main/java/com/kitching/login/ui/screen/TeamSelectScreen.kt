@@ -27,15 +27,13 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
-import com.kitching.core.common.appresultscreen.AppResultHandler
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.appresultscreen.EmptyScreen
+import com.kitching.core.common.appresultscreen.UiStateHandler
 import com.kitching.core.common.widget.TeamCardItem
 import com.kitching.core.common.commonstate.updateTeamInfo
 import com.kitching.core.designsystem.KitchingStaffTheme
 import com.kitching.core.designsystem.PrimaryGreen300
-import com.kitching.domain.entities.Team
-import com.kitching.domain.util.AppResult
 import com.kitching.login.R
 import com.kitching.login.ui.model.LoginViewModel
 import com.kitching.login.ui.model.LoginViewModelFactory
@@ -58,21 +56,18 @@ fun TeamSelectScreen(
     }
 
     LaunchedEffect(teamIdSaveState) {
-        when (teamIdSaveState) {
-            is AppResult.Success<*> -> {
-                val team = (teamIdSaveState as AppResult.Success<Team>).data
+        when {
+            teamIdSaveState.isSuccess -> {
+                val team = teamIdSaveState.data
 
                 commonState.updateTeamInfo(team)
 
                 goMain()
             }
 
-            is AppResult.Failure -> {
-                val exception = (teamIdSaveState as AppResult.Failure).exception
-                commonState.snackBarState.showSnackbar(exception.message.toString())
+            teamIdSaveState.isError -> {
+                commonState.snackBarState.showSnackbar(teamIdSaveState.error.toString())
             }
-
-            else -> {}
         }
     }
 
@@ -111,8 +106,8 @@ fun TeamSelectScreen(
 
                 Spacer(modifier = Modifier.padding(dimensionResource(R.dimen.default_padding)))
 
-                AppResultHandler(
-                    state = teamList,
+                UiStateHandler (
+                    uiState = teamList,
                     onRetry = {
                         loginViewModel.getTeamList(userId.toString())
                     }
