@@ -7,4 +7,7 @@
     <string name="notification_schedule_rejected_content_big_text" formatted="false">"%s의 %s %s 스케줄 신청이 반려되었습니다.
 
 반려 사유: %s"</string>
+
+    <string name="notification_channel_notice_name">공지사항</string>
+    <string name="notification_channel_notice_description">새로운 공지사항이 있습니다.</string>
 </resources>

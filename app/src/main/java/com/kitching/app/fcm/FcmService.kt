@@ -33,7 +33,28 @@ class FcmService : FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
         val messageData = message.data
+        val notificationType = messageData["type"]
 
+        when (notificationType) {
+            "notice" -> handleNoticeNotification(messageData)
+            else -> handleScheduleRejectedNotification(messageData)
+        }
+    }
+
+    private fun handleNoticeNotification(messageData: Map<String, String>) {
+        val title = messageData["noticeTitle"] ?: "넘어온 값 없음"
+        val writerName = messageData["writerName"] ?: ""
+        val content = messageData["content"] ?: ""
+
+        NoticeNotificationChannel().showNoticeNotification(
+            context = this,
+            title = title,
+            writerName = writerName,
+            content = content
+        )
+    }
+
+    private fun handleScheduleRejectedNotification(messageData: Map<String, String>) {
         val teamName = messageData["teamName"] ?: throw Throwable("teamName is null")
         val scheduleDate = messageData["scheduleDate"] ?: throw Throwable("scheduleDate is null")
         val scheduleTimeName =
