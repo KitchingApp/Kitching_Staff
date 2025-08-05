@@ -12,8 +12,12 @@ class FcmTokenDataSourceImpl(private val db: FirebaseFirestore = FirebaseFiresto
         runCatching {
             val fcmTokenQuerySnapshot = db.collection(COLLECTION_FIREBASE_MESSAGING_TOKEN).whereEqualTo("userId", userId).whereEqualTo("deviceModel", deviceModel).get().await()
 
-            if (!fcmTokenQuerySnapshot.isEmpty) fcmTokenQuerySnapshot.first().reference.delete()
-            createToken(userId = userId, token = token, deviceModel = deviceModel)
+            if (!fcmTokenQuerySnapshot.isEmpty) {
+                val existingDoc = fcmTokenQuerySnapshot.first()
+                existingDoc.reference.update("token", token).await()
+            } else {
+                createToken(userId = userId, token = token, deviceModel = deviceModel)
+            }
         }.isSuccess
 
     private suspend fun createToken(userId: String, token: String, deviceModel: String): Boolean =

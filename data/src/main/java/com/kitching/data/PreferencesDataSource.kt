@@ -28,7 +28,7 @@ class PreferencesDataSource(private val context: Context) {
     suspend fun getTeamId(): String = preferencesData.data.first()[TEAM_ID] ?: ""
 
     /** 토큰이 있는지 확인하고 있으면 업데이트, 없으면 새로 저장 */
-    suspend fun updateTokenAtDatastore(newToken: String) {
-        context.dataStore.edit { preferences -> preferences[FCM_TOKEN] = newToken }
-    }
+    suspend fun saveFcmToken(newToken: String) = context.dataStore.edit { preferences -> preferences[FCM_TOKEN] = newToken }
+
+    suspend fun getFcmToken(): String = context.dataStore.data.first()[FCM_TOKEN] ?: ""
 }
