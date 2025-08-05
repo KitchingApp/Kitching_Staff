@@ -25,11 +25,18 @@ class NoticeNotificationChannel : NotificationChannelDef(
         val notificationId = System.currentTimeMillis().toInt()
 
         val notificationTitle = "$title | $writerName"
-        val notificationBody = content
+
+        val shortContent = if (content.length > 20) {
+            content.take(20) + "..."
+        } else {
+            content
+        }
+
+        val notificationBody = shortContent
 
         // 확장된 내용 (BigTextStyle용)
         val expandedContent = """
-            새 공지사항
+            $title
             
             작성자: $writerName
             
@@ -46,12 +53,7 @@ class NoticeNotificationChannel : NotificationChannelDef(
                     .bigText(expandedContent)
                     .setBigContentTitle(notificationTitle)
                     .setSummaryText("새 공지사항")
-            )
-            .setAutoCancel(true) // 클릭 시 자동 삭제
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-            .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
-            .build()
+            ).build()
 
         notificationManager.notify(notificationId, notification)
     }
