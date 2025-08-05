@@ -1,6 +1,7 @@
 package com.kitching.login.ui.model
 
 import android.content.Context
+import android.os.Build
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kakao.sdk.auth.model.OAuthToken
@@ -8,6 +9,7 @@ import com.kakao.sdk.user.UserApiClient
 import com.kitching.data.PreferencesDataSource
 import com.kitching.domain.entities.Team
 import com.kitching.domain.entities.User
+import com.kitching.domain.repository.FcmTokenRepository
 import com.kitching.domain.repository.LoginRepository
 import com.kitching.domain.repository.TeamRepository
 import com.kitching.domain.util.AppResult
@@ -22,7 +24,8 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val loginRepository: LoginRepository,
-    private val teamRepository: TeamRepository
+    private val teamRepository: TeamRepository,
+    private val fcmTokenRepository: FcmTokenRepository
 ) : ViewModel() {
 
     private val _splashResult = MutableStateFlow(UiState<SplashResult>())
@@ -250,6 +253,30 @@ class LoginViewModel(
 
     private val _teamList = MutableStateFlow(UiState<List<Team>>())
     val teamList get() = _teamList.asStateFlow()
+
+    fun updateToken(context: Context, userId: String) {
+        viewModelScope.launch {
+            val token = PreferencesDataSource(context).getFcmToken()
+            val deviceModel = Build.MODEL
+
+            fcmTokenRepository.updateToken(userId, token, deviceModel).collectLatest { result ->
+                when (result) {
+                    is AppResult.Loading -> {
+                        _teamList.value = _teamList.value.toLoading()
+                    }
+
+                    is AppResult.Success -> {
+                        getTeamList(userId)
+                    }
+
+                    is AppResult.Failure -> {
+                        _teamList.value = _teamList.value.toError(result.getDisplayMessage())
+                    }
+                }
+
+            }
+        }
+    }
 
     fun getTeamList(userId: String) {
         viewModelScope.launch {

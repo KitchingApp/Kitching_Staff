@@ -1,6 +1,7 @@
 package com.kitching.app.fcm
 
 import android.os.Build
+import android.util.Log
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.kitching.data.PreferencesDataSource
@@ -8,24 +9,34 @@ import com.kitching.data.repository.FcmTokenRepositoryImpl
 import com.kitching.domain.util.AppResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.takeWhile
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class FcmService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
         super.onNewToken(token)
 
+        Log.d("FcmService", "새로운 FCM 토큰 수신: $token")
+
         CoroutineScope(Dispatchers.IO).launch {
-            val userId = PreferencesDataSource(this@FcmService).getUserId()
+            val preferencesDataSource = PreferencesDataSource(this@FcmService)
+            val userId = preferencesDataSource.getUserId()
 
             if (userId.isNotEmpty()) {
                 FcmTokenRepositoryImpl().updateToken(
                     userId = userId,
                     token = token,
                     deviceModel = Build.MODEL
-                ).takeWhile { result -> !(result is AppResult.Success && result.data) }
-                    .launchIn(this@launch)
+                ).collectLatest { result ->
+                    when (result) {
+                        is AppResult.Loading -> {}
+                        else -> {
+                            preferencesDataSource.saveFcmToken(token)
+                        }
+                    }
+                }
+            } else {
+                preferencesDataSource.saveFcmToken(token)
             }
         }
     }
@@ -42,9 +53,9 @@ class FcmService : FirebaseMessagingService() {
     }
 
     private fun handleNoticeNotification(messageData: Map<String, String>) {
-        val title = messageData["noticeTitle"] ?: "넘어온 값 없음"
-        val writerName = messageData["writerName"] ?: ""
-        val content = messageData["content"] ?: ""
+        val title = messageData["noticeTitle"] ?: throw Throwable("noticeTitle is null")
+        val writerName = messageData["writerName"] ?: throw Throwable("writerName is null")
+        val content = messageData["content"] ?: throw Throwable("content is null")
 
         NoticeNotificationChannel().showNoticeNotification(
             context = this,
@@ -60,9 +71,6 @@ class FcmService : FirebaseMessagingService() {
         val scheduleTimeName =
             messageData["scheduleTimeName"] ?: throw Throwable("scheduleTimeName is null")
         val rejectReason = messageData["rejectReason"] ?: throw Throwable("rejectReason is null")
-
-        val title = "${teamName}의 $scheduleDate $scheduleTimeName 스케줄 신청이 반려되었습니다."
-        val body = "반려 사유: $rejectReason"
 
         ScheduleRejectedNotificationChannel().showScheduleRejectNotification(
             context = this,

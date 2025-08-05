@@ -52,7 +52,7 @@ fun TeamSelectScreen(
     val teamIdSaveState by loginViewModel.teamIdSaveResult.collectAsStateWithLifecycle()
 
     LaunchedEffect(userId) {
-        loginViewModel.getTeamList(userId.toString())
+        loginViewModel.updateToken(context, userId.toString())
     }
 
     LaunchedEffect(teamIdSaveState) {
