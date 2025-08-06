@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -26,12 +27,19 @@ import kotlinx.coroutines.launch
 fun EntryPointScreen(
     appNavController: NavHostController,
     commonState: CommonState,
+    targetRoute: ScreenRouteDef? = null
 ) {
 
     val tabNavController = rememberNavController()
 
     val navBackStackEntry by tabNavController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
+
+    LaunchedEffect(targetRoute) {
+        targetRoute?.let { route ->
+            tabNavController.navigate(route)
+        }
+    }
 
     CustomDrawer(
         drawerState = commonState.topAppBarState.value.drawerState,

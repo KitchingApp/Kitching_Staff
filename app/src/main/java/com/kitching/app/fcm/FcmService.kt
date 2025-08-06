@@ -16,8 +16,6 @@ class FcmService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
         super.onNewToken(token)
 
-        Log.d("FcmService", "새로운 FCM 토큰 수신: $token")
-
         CoroutineScope(Dispatchers.IO).launch {
             val preferencesDataSource = PreferencesDataSource(this@FcmService)
             val userId = preferencesDataSource.getUserId()

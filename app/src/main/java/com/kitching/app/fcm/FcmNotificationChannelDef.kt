@@ -6,6 +6,7 @@ import android.content.Context.NOTIFICATION_SERVICE
 import androidx.core.app.NotificationCompat
 import com.kitching.app.R
 import com.kitching.app.common.NotificationChannelDef
+import com.kitching.core.common.navigation.ScreenRouteDef
 
 
 /**
@@ -48,7 +49,8 @@ class ScheduleRejectedNotificationChannel() : NotificationChannelDef(
         val notification = createBasicNotificationBuilder(
             context,
             context.getString(R.string.notification_schedule_rejected_content_title),
-            notificationContentText
+            notificationContentText,
+            ScreenRouteDef.BottomTab.ScheduleGraph
         )
             .setStyle(
                 NotificationCompat.BigTextStyle()
@@ -107,7 +109,8 @@ class NoticeNotificationChannel : NotificationChannelDef(
         val notification = createBasicNotificationBuilder(
             context = context,
             title = notificationTitle,
-            text = notificationBody
+            text = notificationBody,
+            targetRoute = ScreenRouteDef.Other.Notice
         )
             .setStyle(
                 NotificationCompat.BigTextStyle()
