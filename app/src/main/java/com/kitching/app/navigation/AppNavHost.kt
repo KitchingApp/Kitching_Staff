@@ -31,18 +31,12 @@ fun AppNavHost(
         }
     }
 
-    val startDestination = if (targetRoute != null) {
-        ScreenRouteDef.MainGraph
-    } else {
-        ScreenRouteDef.Splash
-    }
-
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = commonState.snackBarState) }
     ) { paddingValues ->
         NavHost(
             navController = navController,
-            startDestination = startDestination,
+            startDestination = ScreenRouteDef.Splash,
             modifier = Modifier.padding(paddingValues)
         ) {
             composable<ScreenRouteDef.Splash> {
