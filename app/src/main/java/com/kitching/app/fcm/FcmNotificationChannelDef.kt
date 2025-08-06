@@ -18,7 +18,6 @@ class ScheduleRejectedNotificationChannel() : NotificationChannelDef(
     channelName = R.string.notification_channel_schedule_rejected_name,
     channelDescription = R.string.notification_channel_schedule_rejected_description
 ) {
-
     /**
      * Show schedule reject notification 받은편지함 스타일(여러 텍스트 줄)의 스케줄 반려 노티피케이션을 생성
      *
@@ -64,6 +63,58 @@ class ScheduleRejectedNotificationChannel() : NotificationChannelDef(
                     )
             )
             .build()
+
+        notificationManager.notify(notificationId, notification)
+    }
+}
+
+class NoticeNotificationChannel : NotificationChannelDef(
+    channelId = "NOTICE",
+    importance = NotificationManager.IMPORTANCE_DEFAULT,
+    channelName = R.string.notification_channel_notice_name,
+    channelDescription = R.string.notification_channel_notice_description
+) {
+    fun showNoticeNotification(
+        context: Context,
+        title: String,
+        writerName: String,
+        content: String
+    ) {
+        val notificationManager =
+            context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+
+        val notificationId = System.currentTimeMillis().toInt()
+
+        val notificationTitle = "$title | $writerName"
+
+        val shortContent = if (content.length > 20) {
+            content.take(20) + "..."
+        } else {
+            content
+        }
+
+        val notificationBody = shortContent
+
+        // 확장된 내용 (BigTextStyle용)
+        val expandedContent = """
+            $title
+            
+            작성자: $writerName
+            
+            $content
+        """.trimIndent()
+
+        val notification = createBasicNotificationBuilder(
+            context = context,
+            title = notificationTitle,
+            text = notificationBody
+        )
+            .setStyle(
+                NotificationCompat.BigTextStyle()
+                    .bigText(expandedContent)
+                    .setBigContentTitle(notificationTitle)
+                    .setSummaryText("새 공지사항")
+            ).build()
 
         notificationManager.notify(notificationId, notification)
     }
