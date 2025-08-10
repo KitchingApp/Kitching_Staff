@@ -11,12 +11,13 @@ import com.kitching.main.EntryPointScreen
 fun NavGraphBuilder.mainNavGraph(
     navController: NavHostController,
     commonState: CommonState,
+    targetRoute: ScreenRouteDef? = null
 ) {
     navigation<ScreenRouteDef.MainGraph>(
         startDestination = ScreenRouteDef.Entry,
     ) {
         composable<ScreenRouteDef.Entry> {
-            EntryPointScreen(navController, commonState)
+            EntryPointScreen(navController, commonState, targetRoute)
         }
     }
 }

@@ -1,7 +1,6 @@
 package com.kitching.app.fcm
 
 import android.os.Build
-import android.util.Log
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.kitching.data.PreferencesDataSource
@@ -15,8 +14,6 @@ import kotlinx.coroutines.launch
 class FcmService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-
-        Log.d("FcmService", "새로운 FCM 토큰 수신: $token")
 
         CoroutineScope(Dispatchers.IO).launch {
             val preferencesDataSource = PreferencesDataSource(this@FcmService)
