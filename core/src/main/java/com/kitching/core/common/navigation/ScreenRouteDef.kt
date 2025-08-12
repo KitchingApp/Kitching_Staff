@@ -89,5 +89,7 @@ sealed class ScreenRouteDef {
         data class NoticeDetail(val notice: com.kitching.domain.entities.Notice) : Other()
         @Serializable
         data object MemberList : Other()
+        @Serializable
+        data object Alarm : Other()
     }
 }

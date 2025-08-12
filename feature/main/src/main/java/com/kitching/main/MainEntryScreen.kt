@@ -53,6 +53,9 @@ fun EntryPointScreen(
         },
         onMemberClick = {
             tabNavController.navigate(ScreenRouteDef.Other.MemberList)
+        },
+        onAlarmClick = {
+            tabNavController.navigate(ScreenRouteDef.Other.Alarm)
         }
     ) {
         Scaffold(

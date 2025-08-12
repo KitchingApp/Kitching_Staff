@@ -3,6 +3,7 @@ package com.kitching.main.view.drawer
 import com.kitching.main.R
 import android.content.Context
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -56,6 +57,7 @@ fun CustomDrawer(
     onInviteCodeClick: () -> Unit,
     onNoticeClick: () -> Unit,
     onMemberClick: () -> Unit,
+    onAlarmClick: () -> Unit,
     drawerViewModel: DrawerViewModel = viewModel(factory = viewModelFactory),
     content: @Composable () -> Unit,
 ) {
@@ -136,7 +138,14 @@ fun CustomDrawer(
                         )
 
                         AsyncImage(
-                            modifier = Modifier.size(dimensionResource(R.dimen.drawer_alarm_icon_size)),
+                            modifier = Modifier
+                                .size(dimensionResource(R.dimen.drawer_alarm_icon_size))
+                                .clickable {
+                                    commonState.scope.launch {
+                                        drawerState.close()
+                                    }
+                                    onAlarmClick()
+                                },
                             model = R.drawable.icon_bell,
                             colorFilter = ColorFilter.tint(NeutralGray600),
                             contentDescription = "알림"
