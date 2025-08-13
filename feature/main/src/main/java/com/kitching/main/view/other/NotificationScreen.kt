@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import com.kitching.core.designsystem.KitchingStaffTheme
 
 @Composable
-fun AlarmScreen() {
+fun NotificationScreen() {
     KitchingStaffTheme {
         Column {
             Text(
