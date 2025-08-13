@@ -65,7 +65,10 @@ fun NavGraphBuilder.otherNavGraph(commonState: CommonState, navController: NavHo
         }
 
         composable<ScreenRouteDef.Other.Alarm> {
-            NotificationScreen()
+            NotificationScreen(
+                context = navController.context,
+                commonState = commonState
+            )
         }
     }
 }
