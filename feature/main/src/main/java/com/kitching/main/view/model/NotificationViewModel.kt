@@ -1,7 +1,9 @@
 package com.kitching.main.view.model
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kitching.data.repository.NotificationRepositoryImpl
 import com.kitching.domain.entities.NoticeNotification
 import com.kitching.domain.entities.ScheduleNotification
 import com.kitching.domain.repository.NotificationRepository
@@ -13,9 +15,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class AlarmViewModel(
-    private val repository: NotificationRepository
-) : ViewModel() {
+class NotificationViewModel(context: Context) : ViewModel() {
+
+    private val repository: NotificationRepository by lazy {
+        NotificationRepositoryImpl(context)
+    }
     private val _scheduleNotificationList = MutableStateFlow(UiState<List<ScheduleNotification>>())
     val scheduleNotificationList get() = _scheduleNotificationList.asStateFlow()
 
