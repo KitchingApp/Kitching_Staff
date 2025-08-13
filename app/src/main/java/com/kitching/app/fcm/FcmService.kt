@@ -5,6 +5,9 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.kitching.data.PreferencesDataSource
 import com.kitching.data.repository.FcmTokenRepositoryImpl
+import com.kitching.data.repository.NotificationRepositoryImpl
+import com.kitching.domain.entities.NoticeNotification
+import com.kitching.domain.entities.ScheduleNotification
 import com.kitching.domain.util.AppResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -12,6 +15,10 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class FcmService : FirebaseMessagingService() {
+    private val notificationRepository by lazy {
+        NotificationRepositoryImpl(this)
+    }
+
     override fun onNewToken(token: String) {
         super.onNewToken(token)
 
@@ -54,12 +61,35 @@ class FcmService : FirebaseMessagingService() {
         val writerName = messageData["writerName"] ?: throw Throwable("writerName is null")
         val content = messageData["content"] ?: throw Throwable("content is null")
 
-        NoticeNotificationChannel().showNoticeNotification(
-            context = this,
-            title = title,
-            writerName = writerName,
-            content = content
-        )
+        CoroutineScope(Dispatchers.IO).launch {
+            val noticeNotification = NoticeNotification(
+                title = title,
+                writerName = writerName,
+            )
+            notificationRepository.insertNoticeNotification(noticeNotification).collectLatest { result ->
+                when (result) {
+                    is AppResult.Failure -> {
+                        NoticeNotificationChannel().showNoticeNotification(
+                            context = this@FcmService,
+                            title = title,
+                            writerName = writerName,
+                            content = content
+                        )
+                    }
+
+                    is AppResult.Success -> {
+                        NoticeNotificationChannel().showNoticeNotification(
+                            context = this@FcmService,
+                            title = title,
+                            writerName = writerName,
+                            content = content
+                        )
+                    }
+
+                    else -> {}
+                }
+            }
+        }
     }
 
     private fun handleScheduleRejectedNotification(messageData: Map<String, String>) {
@@ -69,12 +99,38 @@ class FcmService : FirebaseMessagingService() {
             messageData["scheduleTimeName"] ?: throw Throwable("scheduleTimeName is null")
         val rejectReason = messageData["rejectReason"] ?: throw Throwable("rejectReason is null")
 
-        ScheduleRejectedNotificationChannel().showScheduleRejectNotification(
-            context = this,
-            teamName = teamName,
-            scheduleDate = scheduleDate,
-            scheduleTimeName = scheduleTimeName,
-            rejectReason = rejectReason
-        )
+        CoroutineScope(Dispatchers.IO).launch {
+            val scheduleNotification = ScheduleNotification(
+                scheduleDate = scheduleDate,
+                scheduleTimeName = scheduleTimeName,
+                rejectReason = rejectReason
+            )
+
+            notificationRepository.insertScheduleNotification(scheduleNotification).collectLatest { result ->
+                when (result) {
+                    is AppResult.Failure -> {
+                        ScheduleRejectedNotificationChannel().showScheduleRejectNotification(
+                            context = this@FcmService,
+                            teamName = teamName,
+                            scheduleDate = scheduleDate,
+                            scheduleTimeName = scheduleTimeName,
+                            rejectReason = rejectReason
+                        )
+                    }
+
+                    is AppResult.Success -> {
+                        ScheduleRejectedNotificationChannel().showScheduleRejectNotification(
+                            context = this@FcmService,
+                            teamName = teamName,
+                            scheduleDate = scheduleDate,
+                            scheduleTimeName = scheduleTimeName,
+                            rejectReason = rejectReason
+                        )
+                    }
+
+                    else -> {}
+                }
+            }
+        }
     }
 }
