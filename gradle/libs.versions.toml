@@ -24,9 +24,9 @@ runtimeAndroid = "1.7.8"
 v2UserVersion = "2.20.6"
 firebaseBom = "33.10.0"
 kotlinxSerializationJson = "1.8.1"
+jetbrainsKotlinJvm = "2.2.0"
 ksp = "2.2.0-2.0.2"
 room = "2.7.2"
-
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -73,6 +73,7 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin"}
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 [bundles]
