@@ -17,7 +17,7 @@ fun ScheduleNotificationEntity.toDomain(): ScheduleNotification = ScheduleNotifi
     rejectReason = this.rejectReason
 )
 
-fun List<ScheduleNotificationEntity>.toDomainList(): List<ScheduleNotification> = this.map { it.toDomain() }
+fun List<ScheduleNotificationEntity>.toScheduleNotificationList(): List<ScheduleNotification> = this.map { it.toDomain() }
 
 fun NoticeNotification.toEntity(): NoticeNotificationEntity = NoticeNotificationEntity(
     id = this.id,
@@ -31,4 +31,4 @@ fun NoticeNotificationEntity.toDomain(): NoticeNotification = NoticeNotification
     writerName = this.writerName
 )
 
-fun List<NoticeNotificationEntity>.toDomainList(): List<NoticeNotification> = this.map { it.toDomain() }
+fun List<NoticeNotificationEntity>.toNoticeNotificationList(): List<NoticeNotification> = this.map { it.toDomain() }

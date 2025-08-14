@@ -2,8 +2,9 @@ package com.kitching.data.repository
 
 import android.content.Context
 import com.kitching.data.dao.NotificationDAO
-import com.kitching.data.entity.toDomainList
 import com.kitching.data.entity.toEntity
+import com.kitching.data.entity.toNoticeNotificationList
+import com.kitching.data.entity.toScheduleNotificationList
 import com.kitching.data.room.NotificationRoomDatabase
 import com.kitching.domain.entities.NoticeNotification
 import com.kitching.domain.entities.ScheduleNotification
@@ -34,7 +35,7 @@ class NotificationRepositoryImpl(context: Context) : NotificationRepository {
         emit(AppResult.Loading)
 
         emit(AppResult.Success(
-            notificationDAO.getScheduleNotifications().toDomainList()
+            notificationDAO.getScheduleNotifications().toScheduleNotificationList()
         ))
     }.catch {
         emit(AppResult.Failure(it))
@@ -74,7 +75,7 @@ class NotificationRepositoryImpl(context: Context) : NotificationRepository {
         emit(AppResult.Loading)
 
         emit(AppResult.Success(
-            notificationDAO.getNoticeNotifications().toDomainList()
+            notificationDAO.getNoticeNotifications().toNoticeNotificationList()
         ))
     }.catch {
         emit(AppResult.Failure(it))
