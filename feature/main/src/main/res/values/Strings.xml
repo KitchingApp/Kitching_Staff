@@ -55,7 +55,7 @@
     <string name="notification_title">알림</string>
     <string name="notification_schedule_tab">스케쥴</string>
     <string name="notification_notice_tab">공지사항</string>
-    <string name="schedule_notification_date">%s  %s</string>
+    <string name="schedule_notification_date">%s / %s</string>
     <string name="schedule_notification_empty_text">스케쥴 알림이 없습니다.</string>
     <string name="notice_notification_empty_text">공지사항 알림이 없습니다.</string>
 </resources>

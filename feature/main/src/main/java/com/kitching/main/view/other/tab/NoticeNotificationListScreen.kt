@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.kitching.core.common.appresultscreen.EmptyScreen
@@ -28,7 +29,8 @@ fun NoticeNotificationListScreen(
                 .fillMaxSize()
                 .defaultHorizontalPadding(),
             contentPadding = PaddingValues(vertical = KitchingDimens.Margin.small),
-            verticalArrangement = Arrangement.spacedBy(KitchingDimens.Margin.small)
+            verticalArrangement = Arrangement.spacedBy(KitchingDimens.Margin.small),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             items(noticeNotifications) { noticeNotification ->
                 NoticeNotificationCardItem(
