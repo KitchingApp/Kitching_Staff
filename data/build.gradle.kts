@@ -44,9 +44,7 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.datastore.preferences.core)
     implementation(libs.bundles.room.libraries)
-    ksp(libs.androidx.room.compiler){
-        exclude(group = "com.intellij", module = "annotations")
-    }
+    ksp(libs.androidx.room.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
