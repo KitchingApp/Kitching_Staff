@@ -43,7 +43,7 @@ fun NotificationScreen(
         onClickNavIcon = {
 
         },
-        actionIconInfo = ActionIconInfo.ADD,
+        actionIconInfo = ActionIconInfo.DELETE,
         onClickActionIcon = {
 
         }
