@@ -17,7 +17,7 @@ class NotificationRepositoryImpl(context: Context) : NotificationRepository {
     private val notificationDAO: NotificationDAO
 
     init {
-        val notificationDatabase = NotificationRoomDatabase.getDatabase(context)
+        val notificationDatabase = NotificationRoomDatabase.getDatabase(context.applicationContext)
         notificationDAO = notificationDatabase.notificationDao()
     }
 

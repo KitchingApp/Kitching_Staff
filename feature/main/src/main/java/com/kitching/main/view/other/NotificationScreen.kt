@@ -4,6 +4,7 @@ import com.kitching.main.R
 import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -11,25 +12,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kitching.core.common.appresultscreen.CombinedUiStateHandler
 import com.kitching.core.common.commonstate.ActionIconInfo
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.NavigationIconInfo
 import com.kitching.core.common.widget.TabPager
+import com.kitching.core.designsystem.KitchingDimens
 import com.kitching.core.designsystem.KitchingStaffTheme
 import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.PrimaryGreen300
+import com.kitching.main.factory.NotificationViewModelFactory
 import com.kitching.main.view.model.NotificationViewModel
 import com.kitching.main.view.other.tab.notificationTabs
 
 @Composable
 fun NotificationScreen(
     context: Context,
-    commonState: CommonState
+    commonState: CommonState,
+    viewModel: NotificationViewModel = viewModel(factory = NotificationViewModelFactory(context))
 ) {
-    val viewModel: NotificationViewModel by lazy {
-        NotificationViewModel(context)
-    }
 
     val scheduleNotifications by viewModel.scheduleNotificationList.collectAsStateWithLifecycle()
     val noticeNotifications by viewModel.noticeNotificationList.collectAsStateWithLifecycle()
@@ -54,7 +56,9 @@ fun NotificationScreen(
 
     KitchingStaffTheme {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = KitchingDimens.Margin.small),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             CombinedUiStateHandler(
