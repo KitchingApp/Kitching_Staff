@@ -20,6 +20,7 @@ class NotificationViewModel(context: Context) : ViewModel() {
     private val repository: NotificationRepository by lazy {
         NotificationRepositoryImpl(context)
     }
+
     private val _scheduleNotificationList = MutableStateFlow(UiState<List<ScheduleNotification>>())
     val scheduleNotificationList get() = _scheduleNotificationList.asStateFlow()
 

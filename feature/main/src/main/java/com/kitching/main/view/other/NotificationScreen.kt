@@ -1,12 +1,15 @@
 package com.kitching.main.view.other
 
+import com.kitching.main.R
 import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kitching.core.common.appresultscreen.CombinedUiStateHandler
 import com.kitching.core.common.commonstate.ActionIconInfo
@@ -33,7 +36,7 @@ fun NotificationScreen(
 
     commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
         containerColor = NeutralGray0,
-        title = "알람",
+        title = stringResource(R.string.notification_title),
         navIconInfo = NavigationIconInfo.BACK,
         onClickNavIcon = {
 
@@ -43,6 +46,11 @@ fun NotificationScreen(
 
         }
     )
+
+    LaunchedEffect(Unit) {
+        viewModel.fetchScheduleNotificationList()
+        viewModel.fetchNoticeNotificationList()
+    }
 
     KitchingStaffTheme {
         Column(
@@ -66,7 +74,9 @@ fun NotificationScreen(
 
                 TabPager(
                     tabs = tabs,
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .weight(1f),
                     indicatorColor = PrimaryGreen300
                 )
             }
