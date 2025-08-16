@@ -8,6 +8,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -24,6 +27,7 @@ import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.PrimaryGreen300
 import com.kitching.main.factory.NotificationViewModelFactory
 import com.kitching.main.view.model.NotificationViewModel
+import com.kitching.main.view.other.dialog.DeleteNotificationDialog
 import com.kitching.main.view.other.tab.notificationTabs
 
 @Composable
@@ -35,6 +39,9 @@ fun NotificationScreen(
 
     val scheduleNotifications by viewModel.scheduleNotificationList.collectAsStateWithLifecycle()
     val noticeNotifications by viewModel.noticeNotificationList.collectAsStateWithLifecycle()
+
+    var selectedScheduleNotificationId by remember { mutableStateOf<Long?>(null) }
+    var selectedNoticeNotificationId by remember { mutableStateOf<Long?>(null) }
 
     commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
         containerColor = NeutralGray0,
@@ -69,15 +76,18 @@ fun NotificationScreen(
                     { viewModel.fetchNoticeNotificationList() }
                 )
             ) { scheduleNotifications, noticeNotifications ->
-                val tabs = notificationTabs(
-                    scheduleNotifications,
-                    noticeNotifications,
-                    {},
-                    {}
-                )
-
                 TabPager(
-                    tabs = tabs,
+                    tabs = notificationTabs(
+                        scheduleNotifications,
+                        noticeNotifications,
+                        { id ->
+                            selectedScheduleNotificationId = id
+                        },
+                        { id ->
+                            selectedNoticeNotificationId = id
+
+                        }
+                    ),
                     modifier = Modifier
                         .fillMaxSize()
                         .weight(1f),
@@ -85,5 +95,27 @@ fun NotificationScreen(
                 )
             }
         }
+    }
+
+    selectedScheduleNotificationId?.let { id ->
+        DeleteNotificationDialog(
+            onDismiss = { selectedScheduleNotificationId = null },
+            onConfirm = {
+                viewModel.deleteScheduleNotification(id)
+                selectedScheduleNotificationId = null
+                viewModel.fetchScheduleNotificationList()
+            }
+        )
+    }
+
+    selectedNoticeNotificationId?.let { id ->
+        DeleteNotificationDialog(
+            onDismiss = { selectedNoticeNotificationId = null },
+            onConfirm = {
+                viewModel.deleteNoticeNotification(id)
+                selectedNoticeNotificationId = null
+                viewModel.fetchNoticeNotificationList()
+            }
+        )
     }
 }

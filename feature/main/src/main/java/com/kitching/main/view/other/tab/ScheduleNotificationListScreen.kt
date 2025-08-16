@@ -19,7 +19,7 @@ import com.kitching.main.view.other.item.ScheduleNotificationCardItem
 @Composable
 fun ScheduleNotificationListScreen(
     scheduleNotifications: List<ScheduleNotification>,
-    onDeleteClick: () -> Unit
+    onDeleteClick: (Long) -> Unit
 ) {
     if (scheduleNotifications.isEmpty()) {
         EmptyScreen(stringResource(R.string.schedule_notification_empty_text))

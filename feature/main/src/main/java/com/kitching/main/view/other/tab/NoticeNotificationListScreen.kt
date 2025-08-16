@@ -19,7 +19,7 @@ import com.kitching.main.view.other.item.NoticeNotificationCardItem
 @Composable
 fun NoticeNotificationListScreen(
     noticeNotifications: List<NoticeNotification>,
-    onDeleteClick: () -> Unit
+    onDeleteClick: (Long) -> Unit
 ) {
     if (noticeNotifications.isEmpty()) {
         EmptyScreen(stringResource(R.string.notice_notification_empty_text))

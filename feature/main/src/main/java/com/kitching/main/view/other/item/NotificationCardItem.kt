@@ -31,7 +31,7 @@ import com.kitching.domain.entities.ScheduleNotification
 @Composable
 fun ScheduleNotificationCardItem(
     scheduleNotification: ScheduleNotification,
-    onDeleteClick: () -> Unit
+    onDeleteClick: (Long) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -71,7 +71,7 @@ fun ScheduleNotificationCardItem(
             AsyncImage(
                 modifier = Modifier
                     .size(KitchingDimens.Size.large)
-                    .clickable { onDeleteClick() },
+                    .clickable { onDeleteClick(scheduleNotification.id) },
                 colorFilter = ColorFilter.tint(NeutralGray600),
                 model = R.drawable.icon_trash,
                 contentDescription = "trash icon"
@@ -83,7 +83,7 @@ fun ScheduleNotificationCardItem(
 @Composable
 fun NoticeNotificationCardItem(
     noticeNotification: NoticeNotification,
-    onDeleteClick: () -> Unit
+    onDeleteClick: (Long) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -123,7 +123,7 @@ fun NoticeNotificationCardItem(
             AsyncImage(
                 modifier = Modifier
                     .size(KitchingDimens.Size.large)
-                    .clickable { onDeleteClick() },
+                    .clickable { onDeleteClick(noticeNotification.id) },
                 colorFilter = ColorFilter.tint(NeutralGray600),
                 model = R.drawable.icon_trash,
                 contentDescription = "trash icon"

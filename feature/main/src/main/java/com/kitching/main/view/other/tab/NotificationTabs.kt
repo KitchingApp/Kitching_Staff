@@ -11,8 +11,8 @@ import com.kitching.domain.entities.ScheduleNotification
 fun notificationTabs(
     scheduleNotifications: List<ScheduleNotification>,
     noticeNotifications: List<NoticeNotification>,
-    onDeleteScheduleClick: () -> Unit,
-    onDeleteNoticeClick: () -> Unit
+    onDeleteScheduleClick: (Long) -> Unit,
+    onDeleteNoticeClick: (Long) -> Unit
 ): List<TabItem> {
     return listOf(
         TabItem(
@@ -20,7 +20,7 @@ fun notificationTabs(
             content = {
                 ScheduleNotificationListScreen(
                     scheduleNotifications = scheduleNotifications,
-                    onDeleteClick = { onDeleteScheduleClick() }
+                    onDeleteClick = onDeleteScheduleClick
                 )
             }
         ),
@@ -29,7 +29,7 @@ fun notificationTabs(
             content = {
                 NoticeNotificationListScreen(
                     noticeNotifications = noticeNotifications,
-                    onDeleteClick = { onDeleteNoticeClick() }
+                    onDeleteClick = onDeleteNoticeClick
                 )
             }
         )
