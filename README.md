@@ -37,7 +37,7 @@
 
 #### 📌그 외
 
-<img src="https://github.com/user-attachments/assets/f1f223ee-a044-4578-80cd-d2e5b6ad22e2" width="200px" /> <img src="https://github.com/user-attachments/assets/b7422efe-7b7d-4d36-b017-57178af48689" width="200px" /> <img src="https://github.com/user-attachments/assets/c1be23aa-7028-421d-ada4-790b2c4f9009" width="200px" />
+<img src="https://github.com/user-attachments/assets/f1f223ee-a044-4578-80cd-d2e5b6ad22e2" width="200px" /> <img src="https://github.com/user-attachments/assets/5a9ecd0f-1116-443d-b7f5-a2fde3809e67" width="200px" /> <img src="https://github.com/user-attachments/assets/b7b046b0-3c20-4a80-9f69-5e5f2ff0f5c2" width="200px" />
 
 - 여러 레스토랑에 소속되어 있을시 팀변경 기능
 - 팀에 합류할 수 있는 초대코드 화면
