@@ -18,6 +18,7 @@
 /.idea/compiler.xml
 /.idea/inspectionProfiles/Project_Default.xml
 /.idea/AndroidProjectSystem.xml
+/.idea/deviceManager.xml
 /app/google-services.json
 .DS_Store
 /build

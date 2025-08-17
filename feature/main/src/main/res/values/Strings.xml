@@ -51,4 +51,15 @@
     <string name="other_comment_delete_dialog_confirm_text">삭제</string>
     <string name="other_comment_delete_dialog_cancel_text">취소</string>
     <string name="other_comment_delete_dialog_title">댓글을 삭제하시겠습니까?</string>
+
+    <string name="notification_title">알림</string>
+    <string name="notification_schedule_tab">스케쥴</string>
+    <string name="notification_notice_tab">공지사항</string>
+    <string name="schedule_notification_date">%s / %s</string>
+    <string name="schedule_notification_empty_text">스케쥴 알림이 없습니다.</string>
+    <string name="notice_notification_empty_text">공지사항 알림이 없습니다.</string>
+    <string name="notification_delete_dialog_confirm_text">삭제</string>
+    <string name="notification_delete_dialog_cancel_text">취소</string>
+    <string name="notification_delete_dialog_title">해당 알림을 삭제하시겠습니까?</string>
+    <string name="notification_all_delete_dialog_title">%s 알림을 전체 삭제겠습니까?</string>
 </resources>

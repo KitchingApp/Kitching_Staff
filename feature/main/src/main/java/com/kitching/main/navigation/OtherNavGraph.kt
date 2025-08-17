@@ -9,6 +9,7 @@ import com.kitching.core.common.navigation.ScreenRouteDef
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.navigation.parcelableType
 import com.kitching.domain.entities.Notice
+import com.kitching.main.view.other.NotificationScreen
 import com.kitching.main.view.other.InviteCodeScreen
 import com.kitching.main.view.other.MemberListScreen
 import com.kitching.main.view.other.NoticeDetailScreen
@@ -61,6 +62,16 @@ fun NavGraphBuilder.otherNavGraph(commonState: CommonState, navController: NavHo
             MemberListScreen(commonState) {
                 navController.popBackStack()
             }
+        }
+
+        composable<ScreenRouteDef.Other.Alarm> {
+            NotificationScreen(
+                context = navController.context,
+                commonState = commonState,
+                popBackStack = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }
