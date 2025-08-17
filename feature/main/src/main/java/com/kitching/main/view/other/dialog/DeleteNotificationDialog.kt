@@ -36,3 +36,32 @@ fun DeleteNotificationDialog(
         )
     }
 }
+
+@Composable
+fun DeleteAllNotificationDialog(
+    currentTab: Int,
+    onDismiss: () -> Unit,
+    onConfirm: (Int) -> Unit,
+) {
+    val tabName = when (currentTab) {
+        0 -> stringResource(R.string.notification_schedule_tab)
+        else -> stringResource(R.string.notification_notice_tab)
+    }
+    CommonDialogComponent(
+        height = dimensionResource(R.dimen.notification_delete_dialog_height),
+        paddingTop = KitchingDimens.Margin.xxLarge,
+        paddingBottom = KitchingDimens.Margin.xxLarge,
+        radius = KitchingDimens.Corner.large,
+        confirmText = stringResource(R.string.notification_delete_dialog_confirm_text),
+        onClickConfirm = { onConfirm(currentTab) },
+        cancelText = stringResource(R.string.notification_delete_dialog_cancel_text),
+        onClickCancel = { onDismiss() },
+    ) {
+        Text(
+            modifier = Modifier.padding(top = KitchingDimens.Margin.xLarge),
+            text = stringResource(R.string.notification_all_delete_dialog_title, tabName),
+            style = Body1_m.copy(color = NeutralGray800),
+            textAlign = TextAlign.Center,
+        )
+    }
+}

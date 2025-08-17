@@ -2,6 +2,7 @@ package com.kitching.core.common.widget
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -18,9 +19,9 @@ fun TabPager(
     initialPage: Int = 0,
     tabBackgroundSelected: Color = SecondaryLightGreen100,
     tabBackgroundUnselected: Color = Color.White,
-    indicatorColor: Color = PrimaryGreen300
+    indicatorColor: Color = PrimaryGreen300,
+    pagerState: PagerState = rememberPagerState(initialPage = initialPage) { tabs.size }
 ) {
-    val pagerState = rememberPagerState(initialPage = initialPage) { tabs.size }
     val coroutineScope = rememberCoroutineScope()
 
     Column(modifier = modifier) {

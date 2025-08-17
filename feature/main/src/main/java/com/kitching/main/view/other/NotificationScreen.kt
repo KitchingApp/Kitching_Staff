@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -27,6 +28,7 @@ import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.PrimaryGreen300
 import com.kitching.main.factory.NotificationViewModelFactory
 import com.kitching.main.view.model.NotificationViewModel
+import com.kitching.main.view.other.dialog.DeleteAllNotificationDialog
 import com.kitching.main.view.other.dialog.DeleteNotificationDialog
 import com.kitching.main.view.other.tab.notificationTabs
 
@@ -34,6 +36,7 @@ import com.kitching.main.view.other.tab.notificationTabs
 fun NotificationScreen(
     context: Context,
     commonState: CommonState,
+    popBackStack: () -> Unit,
     viewModel: NotificationViewModel = viewModel(factory = NotificationViewModelFactory(context))
 ) {
 
@@ -42,17 +45,20 @@ fun NotificationScreen(
 
     var selectedScheduleNotificationId by remember { mutableStateOf<Long?>(null) }
     var selectedNoticeNotificationId by remember { mutableStateOf<Long?>(null) }
+    var showAllDeleteDialog by remember { mutableStateOf(false) }
+
+    val pagerState = rememberPagerState(initialPage = 0) { 2 }
 
     commonState.topAppBarState.value = commonState.topAppBarState.value.copy(
         containerColor = NeutralGray0,
         title = stringResource(R.string.notification_title),
         navIconInfo = NavigationIconInfo.BACK,
         onClickNavIcon = {
-
+            popBackStack()
         },
         actionIconInfo = ActionIconInfo.DELETE,
         onClickActionIcon = {
-
+            showAllDeleteDialog = true
         }
     )
 
@@ -91,7 +97,8 @@ fun NotificationScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .weight(1f),
-                    indicatorColor = PrimaryGreen300
+                    indicatorColor = PrimaryGreen300,
+                    pagerState = pagerState
                 )
             }
         }
@@ -117,5 +124,25 @@ fun NotificationScreen(
                 viewModel.fetchNoticeNotificationList()
             }
         )
+    }
+
+    if (showAllDeleteDialog) {
+        DeleteAllNotificationDialog(
+            currentTab = pagerState.currentPage,
+            onDismiss = { showAllDeleteDialog = false }
+        ) { tabIndex ->
+            when (tabIndex) {
+                0 -> {
+                    viewModel.deleteAllScheduleNotification()
+                    viewModel.fetchScheduleNotificationList()
+                }
+
+                1 -> {
+                    viewModel.deleteAllNoticeNotification()
+                    viewModel.fetchNoticeNotificationList()
+                }
+            }
+            showAllDeleteDialog = false
+        }
     }
 }
