@@ -7,7 +7,7 @@
 ### 🚀개발 환경
 <img src="https://img.shields.io/badge/Android-3DDC84?style=flat-square&logo=android&logoColor=FFFFFF"/>
 
-![image](https://github.com/user-attachments/assets/8cff7bd7-f7f2-4902-9f73-6e95df309dfb)
+![image](https://github.com/user-attachments/assets/dd34bfd3-adab-4460-880c-d6b2b25b9a1d)
 
 ### ✅기능 소개
 #### 🔪프랩
