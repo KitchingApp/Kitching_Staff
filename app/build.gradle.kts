@@ -80,6 +80,9 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.datastore.preferences.core)
     implementation(libs.sdk.v2.user)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+    implementation(libs.coil.svg)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
