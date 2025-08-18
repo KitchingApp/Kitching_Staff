@@ -7,16 +7,15 @@ import com.kitching.domain.entities.TodoPrepData
 import com.kitching.domain.entities.TodoPrepWithDetails
 import com.kitching.domain.repository.PrepRepository
 import com.kitching.domain.util.AppResult
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 
 class PrepRepositoryImpl(private val dataSource: PrepDataSource = PrepDataSourceImpl()) :
     PrepRepository {
-    override fun getTodoPrep(
+    override suspend fun getTodoPrep(
         teamId: String,
         date: String,
-    ): Flow<AppResult<TodoPrepData>> = flow {
+    ) = flow {
         emit(AppResult.Loading)
 
         val todoPreps = dataSource.getTodoPrep(teamId, date)
@@ -46,12 +45,12 @@ class PrepRepositoryImpl(private val dataSource: PrepDataSource = PrepDataSource
         emit(AppResult.Failure(it))
     }
 
-    override fun createTodoPrep(
+    override suspend fun createTodoPrep(
         teamId: String,
         date: String,
         categoryId: String,
         prepId: String,
-    ): Flow<AppResult<Boolean>> = flow {
+    ) = flow {
         emit(AppResult.Loading)
 
         val todoPrep = TodoPrepDTO(
@@ -69,10 +68,10 @@ class PrepRepositoryImpl(private val dataSource: PrepDataSource = PrepDataSource
         emit(AppResult.Failure(it))
     }
 
-    override fun updateTodoPrep(
+    override suspend fun updateTodoPrep(
         todoId: String,
         isDone: Boolean,
-    ): Flow<AppResult<Boolean>> = flow {
+    ) = flow {
         emit(AppResult.Loading)
 
         val result = dataSource.updateTodoPrep(todoId, isDone)
@@ -82,7 +81,7 @@ class PrepRepositoryImpl(private val dataSource: PrepDataSource = PrepDataSource
         emit(AppResult.Failure(it))
     }
 
-    override fun deleteTodoPrep(todoId: String): Flow<AppResult<Boolean>> = flow {
+    override suspend fun deleteTodoPrep(todoId: String) = flow {
         emit(AppResult.Loading)
 
         val result = dataSource.deleteTodoPrep(todoId)

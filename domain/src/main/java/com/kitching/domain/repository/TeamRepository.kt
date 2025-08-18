@@ -8,19 +8,19 @@ import com.kitching.domain.util.AppResult
 import kotlinx.coroutines.flow.Flow
 
 interface TeamRepository {
-    fun getTeamsByUserId(userId: String): Flow<AppResult<List<Team>>>
+    suspend fun getTeamsByUserId(userId: String): Flow<AppResult<List<Team>>>
 
-    fun getTeam(teamId: String): Flow<AppResult<Team>>
+    suspend fun getTeam(teamId: String): Flow<AppResult<Team>>
 
-    fun joinTeamByInviteCode(userId: String, inviteCode: String): Flow<AppResult<Team>>
+    suspend fun joinTeamByInviteCode(userId: String, inviteCode: String): Flow<AppResult<Team>>
 
-    fun getAllMemberList(teamId: String): Flow<AppResult<List<Member>>>
+    suspend fun getAllMemberList(teamId: String): Flow<AppResult<List<Member>>>
 
-    fun getNoticeList(teamId: String): Flow<AppResult<List<Notice>>>
+    suspend fun getNoticeList(teamId: String): Flow<AppResult<List<Notice>>>
 
-    fun getNoticeById(noticeId: String): Flow<AppResult<Notice>>
+    suspend fun getNoticeById(noticeId: String): Flow<AppResult<Notice>>
 
-    fun addComment(noticeId: String, user: User, comment: String): Flow<AppResult<Boolean>>
+    suspend fun addComment(noticeId: String, user: User, comment: String): Flow<AppResult<Boolean>>
 
-    fun deleteComment(noticeId: String, commentId: String): Flow<AppResult<Boolean>>
+    suspend fun deleteComment(noticeId: String, commentId: String): Flow<AppResult<Boolean>>
 }

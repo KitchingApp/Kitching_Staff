@@ -4,19 +4,17 @@ import com.kitching.data.datasource.ScheduleDataSource
 import com.kitching.data.datasource.impl.ScheduleDataSourceImpl
 import com.kitching.data.dto.ScheduleDTO
 import com.kitching.domain.entities.Schedule
-import com.kitching.domain.entities.ScheduleTime
 import com.kitching.domain.repository.ScheduleRepository
 import com.kitching.domain.util.AppResult
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 
 class ScheduleRepositoryImpl(private val dataSource: ScheduleDataSource = ScheduleDataSourceImpl()) :
     ScheduleRepository {
-    override fun getMySchedules(
+    override suspend fun getMySchedules(
         userId: String,
         teamId: String,
-    ): Flow<AppResult<List<Schedule>>> = flow {
+    ) = flow {
         emit(AppResult.Loading)
 
         val schedules = dataSource.getMySchedules(userId, teamId)
@@ -41,10 +39,10 @@ class ScheduleRepositoryImpl(private val dataSource: ScheduleDataSource = Schedu
         emit(AppResult.Failure(it))
     }
 
-    override fun getScheduleByDate(
+    override suspend fun getScheduleByDate(
         teamId: String,
         date: String,
-    ): Flow<AppResult<List<Schedule>>> = flow {
+    ) = flow {
         emit(AppResult.Loading)
 
         val schedules = dataSource.getScheduleByDate(teamId, date)
@@ -70,7 +68,7 @@ class ScheduleRepositoryImpl(private val dataSource: ScheduleDataSource = Schedu
         emit(AppResult.Failure(it))
     }
 
-    override fun getScheduleTimes(teamId: String): Flow<AppResult<List<ScheduleTime>>> = flow {
+    override suspend fun getScheduleTimes(teamId: String) = flow {
             emit(AppResult.Loading)
 
             val scheduleTimes = dataSource.getScheduleTimes(teamId)
@@ -80,13 +78,13 @@ class ScheduleRepositoryImpl(private val dataSource: ScheduleDataSource = Schedu
             emit(AppResult.Failure(it))
         }
 
-    override fun createApplySchedule(
+    override suspend fun createApplySchedule(
         teamId: String,
         dateString: String,
         userId: String,
         scheduleTimeId: String,
         fix: Boolean
-    ): Flow<AppResult<Boolean>> = flow {
+    ) = flow {
         emit(AppResult.Loading)
 
         val schedule = ScheduleDTO(

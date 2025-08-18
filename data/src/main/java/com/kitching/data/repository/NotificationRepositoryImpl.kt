@@ -61,7 +61,7 @@ class NotificationRepositoryImpl(context: Context) : NotificationRepository {
         emit(AppResult.Failure(it))
     }
 
-    override suspend fun insertNoticeNotification(notification: NoticeNotification) =flow {
+    override suspend fun insertNoticeNotification(notification: NoticeNotification) = flow {
         emit(AppResult.Loading)
 
         emit(AppResult.Success(
