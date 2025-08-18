@@ -1,4 +1,4 @@
-package com.kitching.domain.exception
+package com.kitching.core.exception
 
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseNetworkException
@@ -24,7 +24,7 @@ sealed class KitchingRuntimeException(
     /**
      * 네트워크 관련 에러
      */
-    class NetworkException(
+    class CheckedException(
         message: String = NETWORK_EXCEPTION_MESSAGE,
         cause: Throwable? = null,
         errorCode: String? = NETWORK_ERROR_CODE
@@ -201,17 +201,17 @@ fun Throwable.toKitchingException(): KitchingRuntimeException {
         is KitchingRuntimeException -> this
         is UnknownHostException,
         is SocketTimeoutException,
-        is ConnectException -> KitchingRuntimeException.NetworkException(
+        is ConnectException -> KitchingRuntimeException.CheckedException(
             message = NETWORK_CONNECTION_MESSAGE,
             cause = this
         )
 
-        is IOException -> KitchingRuntimeException.NetworkException(
+        is IOException -> KitchingRuntimeException.CheckedException(
             message = NETWORK_EXCEPTION_MESSAGE,
             cause = this
         )
 
-        is FirebaseNetworkException -> KitchingRuntimeException.NetworkException(
+        is FirebaseNetworkException -> KitchingRuntimeException.CheckedException(
             message = NETWORK_CONNECTION_MESSAGE,
             cause = this
         )

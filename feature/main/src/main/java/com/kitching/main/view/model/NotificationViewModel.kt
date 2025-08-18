@@ -3,13 +3,13 @@ package com.kitching.main.view.model
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kitching.core.exception.getDisplayMessage
 import com.kitching.data.repository.NotificationRepositoryImpl
 import com.kitching.domain.entities.NoticeNotification
 import com.kitching.domain.entities.ScheduleNotification
 import com.kitching.domain.repository.NotificationRepository
 import com.kitching.domain.util.AppResult
 import com.kitching.domain.util.UiState
-import com.kitching.domain.util.getDisplayMessage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest

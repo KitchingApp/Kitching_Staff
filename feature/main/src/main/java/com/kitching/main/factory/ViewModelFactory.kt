@@ -8,7 +8,6 @@ import com.kitching.data.repository.RecipeRepositoryImpl
 import com.kitching.data.repository.ScheduleRepositoryImpl
 import com.kitching.data.repository.TeamRepositoryImpl
 import com.kitching.main.view.model.DrawerViewModel
-import com.kitching.main.view.model.FcmViewModel
 import com.kitching.main.view.model.OrderViewModel
 import com.kitching.main.view.model.OtherViewModel
 import com.kitching.main.view.model.PrepViewModel
@@ -22,8 +21,6 @@ val viewModelFactory = object : ViewModelProvider.Factory {
             when {
                 isAssignableFrom(ScheduleViewModel::class.java) ->
                     ScheduleViewModel(ScheduleRepositoryImpl())
-                isAssignableFrom(FcmViewModel::class.java) ->
-                    FcmViewModel()
                 isAssignableFrom(OrderViewModel::class.java) ->
                     OrderViewModel(OrderRepositoryImpl())
                 isAssignableFrom(DrawerViewModel::class.java) ->
