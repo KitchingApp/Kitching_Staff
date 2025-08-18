@@ -6,6 +6,8 @@ import coil3.PlatformContext
 import coil3.SingletonImageLoader
 import com.kakao.sdk.common.KakaoSdk
 import com.kitching.app.BuildConfig
+import com.kitching.app.fcm.NoticeNotificationChannel
+import com.kitching.app.fcm.ScheduleRejectedNotificationChannel
 import com.kitching.core.common.util.CoilManager
 
 class KitchingApplication: Application(), SingletonImageLoader.Factory {
@@ -14,6 +16,8 @@ class KitchingApplication: Application(), SingletonImageLoader.Factory {
         kitchingApplication = this
 
         KakaoSdk.init(this, BuildConfig.KAKAO_APP_KEY)
+        ScheduleRejectedNotificationChannel().createChannel(this)
+        NoticeNotificationChannel().createChannel(this)
         CoilManager.initialize(this)
     }
 
