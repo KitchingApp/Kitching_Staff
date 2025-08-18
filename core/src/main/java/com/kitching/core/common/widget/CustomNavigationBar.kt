@@ -11,8 +11,8 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavDestination
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import com.kitching.core.common.navigation.navigateToBottomTab
 import com.kitching.core.designsystem.NeutralGray200
 import com.kitching.core.designsystem.NeutralGray400
 import com.kitching.core.designsystem.PrimaryGreen300
@@ -49,13 +49,7 @@ fun CustomNavigationBar(
                         )
                     },
                     onClick = {
-                        navController.navigate(bottomNavItem.routeName) {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
+                        navController.navigateToBottomTab(bottomNavItem.routeName)
                     },
                     colors = NavigationBarItemColors(
                         selectedIconColor = PrimaryGreen300,
