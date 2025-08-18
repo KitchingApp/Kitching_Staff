@@ -55,6 +55,10 @@ object ExceptionHandler {
                 USER_TEAM_CREATE_FAILED_MESSAGE
             is KitchingRuntimeException.UserTeamAlreadyExistsException ->
                 USER_TEAM_ALREADY_EXISTS_MESSAGE
+            is KitchingRuntimeException.FcmTokenCreateFailedException ->
+                FCM_TOKEN_UPDATE_FAILED_MESSAGE
+            is KitchingRuntimeException.FcmTokenUpdateFailedException ->
+                FCM_TOKEN_CREATE_FAILED_MESSAGE
         }
     }
 

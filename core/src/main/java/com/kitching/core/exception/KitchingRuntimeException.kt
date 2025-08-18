@@ -184,6 +184,24 @@ sealed class KitchingRuntimeException(
     ) : KitchingRuntimeException(message, cause, errorCode)
 
     /**
+     * FCM 토큰 업데이트 실패 에러
+     */
+    class FcmTokenUpdateFailedException(
+        message: String = FCM_TOKEN_UPDATE_FAILED_MESSAGE,
+        cause: Throwable? = null,
+        errorCode: String? = FCM_TOKEN_UPDATE_FAILED_ERROR_CODE
+    ) : KitchingRuntimeException(message, cause, errorCode)
+
+    /**
+     * FCM 토큰 생성 실패 에러
+     */
+    class FcmTokenCreateFailedException(
+        message: String = FCM_TOKEN_CREATE_FAILED_MESSAGE,
+        cause: Throwable? = null,
+        errorCode: String? = FCM_TOKEN_CREATE_FAILED_ERROR_CODE
+    ) : KitchingRuntimeException(message, cause, errorCode)
+
+    /**
      * 알 수 없는 에러
      */
     class UnknownException(
