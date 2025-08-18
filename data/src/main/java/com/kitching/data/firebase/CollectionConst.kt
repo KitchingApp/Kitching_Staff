@@ -39,3 +39,6 @@ const val DOCUMENT_INVITE_CODE = "inviteCode"
 
 const val FIELD_USER_NAME = "userName"
 const val FIELD_USER_IMAGE = "userImage"
+
+const val FIELD_DEVICE_MODEL = "deviceModel"
+const val FILED_TOKEN = "token"

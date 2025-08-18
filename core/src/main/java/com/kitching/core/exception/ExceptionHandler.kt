@@ -1,4 +1,4 @@
-package com.kitching.domain.exception
+package com.kitching.core.exception
 
 object ExceptionHandler {
     /**
@@ -17,7 +17,7 @@ object ExceptionHandler {
      */
     fun getDisplayMessage(exception: KitchingRuntimeException): String {
         return when (exception) {
-            is KitchingRuntimeException.NetworkException ->
+            is KitchingRuntimeException.CheckedException ->
                 NETWORK_CONNECTION_MESSAGE
             is KitchingRuntimeException.ServerException ->
                 SERVER_EXCEPTION_MESSAGE
@@ -55,6 +55,10 @@ object ExceptionHandler {
                 USER_TEAM_CREATE_FAILED_MESSAGE
             is KitchingRuntimeException.UserTeamAlreadyExistsException ->
                 USER_TEAM_ALREADY_EXISTS_MESSAGE
+            is KitchingRuntimeException.FcmTokenCreateFailedException ->
+                FCM_TOKEN_UPDATE_FAILED_MESSAGE
+            is KitchingRuntimeException.FcmTokenUpdateFailedException ->
+                FCM_TOKEN_CREATE_FAILED_MESSAGE
         }
     }
 

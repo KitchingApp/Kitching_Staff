@@ -2,11 +2,11 @@ package com.kitching.main.view.model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kitching.core.exception.getDisplayMessage
 import com.kitching.domain.entities.Recipe
 import com.kitching.domain.repository.RecipeRepository
 import com.kitching.domain.util.AppResult
 import com.kitching.domain.util.UiState
-import com.kitching.domain.util.getDisplayMessage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest

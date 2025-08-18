@@ -1,4 +1,4 @@
-package com.kitching.domain.exception
+package com.kitching.core.exception
 
 const val NETWORK_EXCEPTION_MESSAGE = "네트워크 오류가 발생했습니다.  잠시 후 다시 시도해주세요."
 const val NETWORK_ERROR_CODE = "NETWORK_ERROR"
@@ -72,3 +72,10 @@ const val USER_TEAM_CREATE_FAILED_ERROR_CODE = "USER_TEAM_CREATE_FAILED"
 
 const val USER_TEAM_ALREADY_EXISTS_MESSAGE = "이미 해당 팀에 소속되어 있습니다."
 const val USER_TEAM_ALREADY_EXISTS_ERROR_CODE = "USER_TEAM_ALREADY_EXISTS"
+
+// FCM Token 관련 에러 상수들
+const val FCM_TOKEN_UPDATE_FAILED_MESSAGE = "FCM 토큰 업데이트에 실패했습니다."
+const val FCM_TOKEN_UPDATE_FAILED_ERROR_CODE = "FCM_TOKEN_UPDATE_FAILED"
+
+const val FCM_TOKEN_CREATE_FAILED_MESSAGE = "FCM 토큰 생성에 실패했습니다."
+const val FCM_TOKEN_CREATE_FAILED_ERROR_CODE = "FCM_TOKEN_CREATE_FAILED"

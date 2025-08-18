@@ -9,7 +9,6 @@ import com.kitching.domain.entities.Notice
 import com.kitching.domain.entities.User
 import com.kitching.domain.repository.TeamRepository
 import com.kitching.domain.util.AppResult
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 
@@ -17,7 +16,7 @@ class TeamRepositoryImpl(
     private val teamDataSource: TeamDataSource = TeamDataSourceImpl(),
     private val userTeamDataSource: UserTeamDataSource = UserTeamDataSourceImpl(),
 ) : TeamRepository {
-    override fun getTeamsByUserId(userId: String) = flow {
+    override suspend fun getTeamsByUserId(userId: String) = flow {
         emit(AppResult.Loading)
 
         val userTeams = userTeamDataSource.getUserTeams(userId)
@@ -31,7 +30,7 @@ class TeamRepositoryImpl(
         emit(AppResult.Failure(it))
     }
 
-    override fun getTeam(teamId: String) = flow {
+    override suspend fun getTeam(teamId: String) = flow {
         emit(AppResult.Loading)
 
         val team = teamDataSource.getTeam(teamId)
@@ -41,7 +40,7 @@ class TeamRepositoryImpl(
         emit(AppResult.Failure(it))
     }
 
-    override fun joinTeamByInviteCode(
+    override suspend fun joinTeamByInviteCode(
         userId: String,
         inviteCode: String,
     ) = flow {
@@ -56,7 +55,7 @@ class TeamRepositoryImpl(
         emit(AppResult.Failure(it))
     }
 
-    override fun getAllMemberList(teamId: String): Flow<AppResult<List<Member>>> = flow {
+    override suspend fun getAllMemberList(teamId: String) = flow {
         emit(AppResult.Loading)
 
         val memberList = userTeamDataSource.getAllMembers(teamId).map { userTeamDTO ->
@@ -79,7 +78,7 @@ class TeamRepositoryImpl(
         emit(AppResult.Failure(it))
     }
 
-    override fun getNoticeList(teamId: String): Flow<AppResult<List<Notice>>> = flow {
+    override suspend fun getNoticeList(teamId: String) = flow {
         emit(AppResult.Loading)
 
         val notices = teamDataSource.getNoticeList(teamId)
@@ -104,7 +103,7 @@ class TeamRepositoryImpl(
         emit(AppResult.Failure(it))
     }
 
-    override fun getNoticeById(noticeId: String): Flow<AppResult<Notice>> = flow {
+    override suspend fun getNoticeById(noticeId: String) = flow {
         emit(AppResult.Loading)
 
         val noticeDTO = teamDataSource.getNoticeById(noticeId)
@@ -129,11 +128,11 @@ class TeamRepositoryImpl(
         emit(AppResult.Failure(it))
     }
 
-    override fun addComment(
+    override suspend fun addComment(
         noticeId: String,
         user: User,
         comment: String,
-    ): Flow<AppResult<Boolean>> = flow {
+    ) = flow {
         emit(AppResult.Loading)
 
         val addSuccess = teamDataSource.addComment(noticeId, user, comment)
@@ -143,10 +142,10 @@ class TeamRepositoryImpl(
         emit(AppResult.Failure(it))
     }
 
-    override fun deleteComment(
+    override suspend fun deleteComment(
         noticeId: String,
         commentId: String,
-    ): Flow<AppResult<Boolean>> = flow {
+    ) = flow {
         emit(AppResult.Loading)
 
         val deleteSuccess = teamDataSource.deleteComment(noticeId, commentId)

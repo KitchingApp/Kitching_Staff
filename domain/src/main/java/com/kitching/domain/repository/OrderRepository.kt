@@ -6,7 +6,7 @@ import com.kitching.domain.util.AppResult
 import kotlinx.coroutines.flow.Flow
 
 interface OrderRepository {
-    fun getOrderCategories(teamId: String): Flow<AppResult<List<OrderCategory>>>
+    suspend fun getOrderCategories(teamId: String): Flow<AppResult<List<OrderCategory>>>
 
-    fun getOrderItems(teamId: String): Flow<AppResult<List<Order>>>
+    suspend fun getOrderItems(teamId: String): Flow<AppResult<List<Order>>>
 }

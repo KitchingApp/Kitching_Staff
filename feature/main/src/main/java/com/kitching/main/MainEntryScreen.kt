@@ -18,6 +18,7 @@ import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.widget.CustomNavigationBar
 import com.kitching.core.common.CustomTopAppBar
 import com.kitching.core.common.commonstate.NavigationIconInfo
+import com.kitching.core.common.navigation.BackPressHandler
 import com.kitching.core.common.navigation.ScreenRouteDef
 import com.kitching.main.navigation.CustomNavHost
 import com.kitching.main.view.drawer.CustomDrawer
@@ -40,6 +41,13 @@ fun EntryPointScreen(
             tabNavController.navigate(route)
         }
     }
+
+    BackPressHandler(
+        navController = tabNavController,
+        drawerState = commonState.topAppBarState.value.drawerState,
+        coroutineScope = commonState.scope,
+        snackBarHostState = commonState.snackBarState
+    )
 
     CustomDrawer(
         drawerState = commonState.topAppBarState.value.drawerState,

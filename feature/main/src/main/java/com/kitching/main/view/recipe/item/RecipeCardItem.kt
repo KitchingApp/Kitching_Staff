@@ -17,9 +17,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import coil3.compose.AsyncImage
+import com.kitching.core.common.util.CoilImageRequest
 import com.kitching.core.designsystem.Caption1_R
 import com.kitching.core.designsystem.KitchingDimens
 import com.kitching.core.designsystem.NeutralGray0
@@ -54,15 +54,12 @@ fun RecipeCardItem(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AsyncImage(
-                model = recipe.picture,
+                model = CoilImageRequest.getImageRequest(recipe.picture),
                 contentDescription = recipe.recipeName,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(dimensionResource(R.dimen.recipe_card_item_image_height)),
                 contentScale = ContentScale.Crop,
-                placeholder = painterResource(R.drawable.recipe_loding_img),
-                error = painterResource(R.drawable.recipe_error_img),
-                fallback = painterResource(R.drawable.recipe_empty_img)
             )
 
             Box(

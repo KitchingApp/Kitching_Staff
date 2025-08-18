@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
+import com.kitching.core.exception.getDisplayMessage
 import com.kitching.data.PreferencesDataSource
 import com.kitching.domain.entities.Team
 import com.kitching.domain.entities.User
@@ -14,7 +15,6 @@ import com.kitching.domain.repository.LoginRepository
 import com.kitching.domain.repository.TeamRepository
 import com.kitching.domain.util.AppResult
 import com.kitching.domain.util.UiState
-import com.kitching.domain.util.getDisplayMessage
 import com.kitching.login.SplashEntryPoint
 import com.kitching.login.SplashResult
 import kotlinx.coroutines.flow.MutableStateFlow
