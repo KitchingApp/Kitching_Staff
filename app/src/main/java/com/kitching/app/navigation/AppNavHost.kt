@@ -11,10 +11,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.kitching.app.common.NotificationChannelDef
-import com.kitching.core.common.navigation.ScreenRouteDef
 import com.kitching.core.common.commonstate.rememberCommonState
-import com.kitching.login.ui.screen.splash.SplashScreen
+import com.kitching.core.common.navigation.ScreenRouteDef
 import com.kitching.login.navigation.loginNavGraph
+import com.kitching.login.ui.screen.splash.SplashScreen
 import com.kitching.main.navigation.mainNavGraph
 import kotlinx.serialization.json.Json
 
@@ -41,7 +41,6 @@ fun AppNavHost(
         ) {
             composable<ScreenRouteDef.Splash> {
                 SplashScreen(
-                    context = navController.context,
                     commonState = commonState,
                     goLogin = {
                         navController.navigate(ScreenRouteDef.LoginGraph) {

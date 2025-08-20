@@ -35,7 +35,7 @@ class LoginViewModel @Inject constructor(
     private val _splashResult = MutableStateFlow(UiState<SplashResult>())
     val splashResult get() = _splashResult.asStateFlow()
 
-    fun initializeAppInfoState(context: Context) {
+    fun initializeAppInfoState() {
         viewModelScope.launch {
             _splashResult.value = _splashResult.value.toLoading()
 
@@ -160,17 +160,17 @@ class LoginViewModel @Inject constructor(
 
             if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
                 UserApiClient.instance.loginWithKakaoTalk(context) { token, error ->
-                    handleKakaoLoginResult(token, error, context)
+                    handleKakaoLoginResult(token, error)
                 }
             } else {
                 UserApiClient.instance.loginWithKakaoAccount(context) { token, error ->
-                    handleKakaoLoginResult(token, error, context)
+                    handleKakaoLoginResult(token, error)
                 }
             }
         }
     }
 
-    private fun handleKakaoLoginResult(token: OAuthToken?, error: Throwable?, context: Context) {
+    private fun handleKakaoLoginResult(token: OAuthToken?, error: Throwable?) {
         if (error != null) {
             _kakaoLoginState.value = _kakaoLoginState.value.toError(error.message.toString())
         } else if (token != null) {
@@ -182,13 +182,13 @@ class LoginViewModel @Inject constructor(
                     val kakaoNickname = user.kakaoAccount?.profile?.nickname ?: ""
                     val kakaoImage = user.kakaoAccount?.profile?.profileImageUrl ?: ""
 
-                    processLoginUserData(context, kakaoUid, kakaoNickname, kakaoImage)
+                    processLoginUserData(kakaoUid, kakaoNickname, kakaoImage)
                 }
             }
         }
     }
 
-    private fun processLoginUserData(context: Context, userId: String, userNickname: String, userImage: String) {
+    private fun processLoginUserData(userId: String, userNickname: String, userImage: String) {
         viewModelScope.launch {
             loginRepository.checkAndSaveUser(userId, userNickname, userImage).collectLatest { result ->
                 when (result) {
@@ -197,7 +197,7 @@ class LoginViewModel @Inject constructor(
                     }
 
                     is AppResult.Success -> {
-                        saveUserIdToDataStore(context, userId)
+                        saveUserIdToDataStore(userId)
                     }
 
                     is AppResult.Failure -> {
@@ -208,7 +208,7 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private fun saveUserIdToDataStore(context: Context, userId: String) {
+    private fun saveUserIdToDataStore(userId: String) {
         viewModelScope.launch {
             preferencesDataSource.saveUserId(userId)
 
@@ -233,7 +233,7 @@ class LoginViewModel @Inject constructor(
     private var _teamIdSaveResult = MutableStateFlow(UiState<Team>())
     val teamIdSaveResult get() = _teamIdSaveResult.asStateFlow()
 
-    fun saveTeamIdToDataStore(teamId: String, context: Context) {
+    fun saveTeamIdToDataStore(teamId: String) {
         viewModelScope.launch {
             preferencesDataSource.saveTeamId(teamId)
 
@@ -258,7 +258,7 @@ class LoginViewModel @Inject constructor(
     private val _teamList = MutableStateFlow(UiState<List<Team>>())
     val teamList get() = _teamList.asStateFlow()
 
-    fun updateToken(context: Context, userId: String) {
+    fun updateToken(userId: String) {
         viewModelScope.launch {
             val token = preferencesDataSource.getFcmToken()
             val deviceModel = Build.MODEL

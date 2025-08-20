@@ -1,6 +1,5 @@
 package com.kitching.login.ui.screen
 
-import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -39,7 +38,6 @@ import com.kitching.login.ui.model.LoginViewModel
 
 @Composable
 fun TeamSelectScreen(
-    context: Context,
     commonState: CommonState,
     goMain: () -> Unit,
     goInviteCode: () -> Unit,
@@ -51,7 +49,7 @@ fun TeamSelectScreen(
     val teamIdSaveState by loginViewModel.teamIdSaveResult.collectAsStateWithLifecycle()
 
     LaunchedEffect(userId) {
-        loginViewModel.updateToken(context, userId.toString())
+        loginViewModel.updateToken(userId.toString())
     }
 
     LaunchedEffect(teamIdSaveState) {
@@ -128,7 +126,7 @@ fun TeamSelectScreen(
                                     TeamCardItem(
                                         team = team,
                                     ) {
-                                        loginViewModel.saveTeamIdToDataStore(team.teamId, context)
+                                        loginViewModel.saveTeamIdToDataStore(team.teamId)
                                     }
                                 }
                             }

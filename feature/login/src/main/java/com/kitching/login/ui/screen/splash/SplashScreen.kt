@@ -16,7 +16,6 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(
-    context: Context,
     commonState: CommonState,
     goLogin: () -> Unit,
     goMain: () -> Unit,
@@ -28,7 +27,7 @@ fun SplashScreen(
     LaunchedEffect(Unit) {
         delay(1000)
 
-        loginViewModel.initializeAppInfoState(context)
+        loginViewModel.initializeAppInfoState()
     }
 
     LaunchedEffect(splashResult) {

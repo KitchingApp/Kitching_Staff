@@ -29,7 +29,8 @@ fun NavGraphBuilder.loginNavGraph(
             )
         }
         composable<ScreenRouteDef.Login.TeamSelect> {
-            TeamSelectScreen(navController.context, commonState,
+            TeamSelectScreen(
+                commonState,
                 goMain = {
                     navController.navigate(ScreenRouteDef.MainGraph) {
                         popUpTo(ScreenRouteDef.LoginGraph) {
