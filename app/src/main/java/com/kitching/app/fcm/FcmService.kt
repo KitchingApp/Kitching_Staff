@@ -4,30 +4,38 @@ import android.os.Build
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.kitching.data.PreferencesDataSource
-import com.kitching.data.repository.FcmTokenRepositoryImpl
-import com.kitching.data.repository.NotificationRepositoryImpl
 import com.kitching.domain.entities.NoticeNotification
 import com.kitching.domain.entities.ScheduleNotification
+import com.kitching.domain.repository.FcmTokenRepository
+import com.kitching.domain.repository.NotificationRepository
 import com.kitching.domain.util.AppResult
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class FcmService : FirebaseMessagingService() {
-    private val notificationRepository by lazy {
-        NotificationRepositoryImpl(this)
-    }
+
+    @Inject
+    lateinit var notificationRepository: NotificationRepository
+
+    @Inject
+    lateinit var preferencesDataSource: PreferencesDataSource
+
+    @Inject
+    lateinit var fcmTokenRepository: FcmTokenRepository
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
 
         CoroutineScope(Dispatchers.IO).launch {
-            val preferencesDataSource = PreferencesDataSource(this@FcmService)
             val userId = preferencesDataSource.getUserId()
 
             if (userId.isNotEmpty()) {
-                FcmTokenRepositoryImpl().updateToken(
+                fcmTokenRepository.updateToken(
                     userId = userId,
                     token = token,
                     deviceModel = Build.MODEL
