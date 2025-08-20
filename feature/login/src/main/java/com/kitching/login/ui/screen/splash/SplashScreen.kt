@@ -1,6 +1,5 @@
 package com.kitching.login.ui.screen.splash
 
-import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
