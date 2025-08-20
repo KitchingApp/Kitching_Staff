@@ -1,7 +1,6 @@
 package com.kitching.data.repository
 
 import com.kitching.data.datasource.ScheduleDataSource
-import com.kitching.data.datasource.impl.ScheduleDataSourceImpl
 import com.kitching.data.dto.ScheduleDTO
 import com.kitching.domain.entities.Schedule
 import com.kitching.domain.repository.ScheduleRepository

@@ -1,9 +1,7 @@
 package com.kitching.data.repository
 
 import com.kitching.data.datasource.TeamDataSource
-import com.kitching.data.datasource.impl.TeamDataSourceImpl
 import com.kitching.data.datasource.UserTeamDataSource
-import com.kitching.data.datasource.impl.UserTeamDataSourceImpl
 import com.kitching.domain.entities.Member
 import com.kitching.domain.entities.Notice
 import com.kitching.domain.entities.User
