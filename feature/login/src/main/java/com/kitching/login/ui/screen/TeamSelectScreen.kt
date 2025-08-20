@@ -24,19 +24,18 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
-import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.appresultscreen.EmptyScreen
 import com.kitching.core.common.appresultscreen.UiStateHandler
-import com.kitching.core.common.widget.TeamCardItem
+import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.updateTeamInfo
+import com.kitching.core.common.widget.TeamCardItem
 import com.kitching.core.designsystem.KitchingStaffTheme
 import com.kitching.core.designsystem.PrimaryGreen300
 import com.kitching.login.R
 import com.kitching.login.ui.model.LoginViewModel
-import com.kitching.login.ui.model.LoginViewModelFactory
 
 @Composable
 fun TeamSelectScreen(
@@ -44,7 +43,7 @@ fun TeamSelectScreen(
     commonState: CommonState,
     goMain: () -> Unit,
     goInviteCode: () -> Unit,
-    loginViewModel: LoginViewModel = viewModel(factory = LoginViewModelFactory())
+    loginViewModel: LoginViewModel = hiltViewModel()
 ) {
     val userId = commonState.appInfoState.value.userInfo?.userId
 

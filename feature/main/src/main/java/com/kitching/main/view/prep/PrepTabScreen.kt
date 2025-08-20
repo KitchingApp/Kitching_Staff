@@ -1,6 +1,5 @@
 package com.kitching.main.view.prep
 
-import com.kitching.main.R
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -12,8 +11,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kitching.core.common.appresultscreen.EmptyScreen
 import com.kitching.core.common.appresultscreen.ProgressIndicatorScreen
 import com.kitching.core.common.appresultscreen.UiStateHandler
@@ -25,7 +24,7 @@ import com.kitching.core.common.widget.DateSelector
 import com.kitching.core.designsystem.KitchingStaffTheme
 import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.domain.entities.TodoPrepWithDetails
-import com.kitching.main.factory.viewModelFactory
+import com.kitching.main.R
 import com.kitching.main.view.model.PrepViewModel
 import com.kitching.main.view.prep.dialog.DeleteTodoPrepDialog
 import com.kitching.main.view.prep.dialog.TodoPrepDialog
@@ -37,7 +36,7 @@ import java.time.LocalTime
 @Composable
 fun PrepTabScreen(
     commonState: CommonState,
-    viewModel: PrepViewModel = viewModel(factory = viewModelFactory)
+    viewModel: PrepViewModel = hiltViewModel()
 ) {
     val teamId = commonState.appInfoState.value.teamInfo?.teamId.toString()
 

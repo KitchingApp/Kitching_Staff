@@ -17,15 +17,19 @@ import com.kitching.domain.util.AppResult
 import com.kitching.domain.util.UiState
 import com.kitching.login.SplashEntryPoint
 import com.kitching.login.SplashResult
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel(
+@HiltViewModel
+class LoginViewModel @Inject constructor(
     private val loginRepository: LoginRepository,
     private val teamRepository: TeamRepository,
-    private val fcmTokenRepository: FcmTokenRepository
+    private val fcmTokenRepository: FcmTokenRepository,
+    private val preferencesDataSource: PreferencesDataSource
 ) : ViewModel() {
 
     private val _splashResult = MutableStateFlow(UiState<SplashResult>())
@@ -36,8 +40,8 @@ class LoginViewModel(
             _splashResult.value = _splashResult.value.toLoading()
 
             try {
-                val userId = PreferencesDataSource(context).getUserId()
-                val teamId = PreferencesDataSource(context).getTeamId()
+                val userId = preferencesDataSource.getUserId()
+                val teamId = preferencesDataSource.getTeamId()
 
                 when {
                     // 둘 다 없으면 로그인 화면
@@ -206,7 +210,7 @@ class LoginViewModel(
 
     private fun saveUserIdToDataStore(context: Context, userId: String) {
         viewModelScope.launch {
-            PreferencesDataSource(context).saveUserId(userId)
+            preferencesDataSource.saveUserId(userId)
 
             loginRepository.getUserById(userId).collectLatest { result ->
                 when (result) {
@@ -231,7 +235,7 @@ class LoginViewModel(
 
     fun saveTeamIdToDataStore(teamId: String, context: Context) {
         viewModelScope.launch {
-            PreferencesDataSource(context).saveTeamId(teamId)
+            preferencesDataSource.saveTeamId(teamId)
 
             teamRepository.getTeam(teamId).collectLatest { result ->
                 when (result) {
@@ -256,7 +260,7 @@ class LoginViewModel(
 
     fun updateToken(context: Context, userId: String) {
         viewModelScope.launch {
-            val token = PreferencesDataSource(context).getFcmToken()
+            val token = preferencesDataSource.getFcmToken()
             val deviceModel = Build.MODEL
 
             fcmTokenRepository.updateToken(userId, token, deviceModel).collectLatest { result ->

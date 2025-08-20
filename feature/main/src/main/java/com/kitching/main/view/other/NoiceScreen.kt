@@ -13,8 +13,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kitching.core.common.appresultscreen.UiStateHandler
 import com.kitching.core.common.commonstate.ActionIconInfo
 import com.kitching.core.common.commonstate.CommonState
@@ -26,14 +26,13 @@ import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.NeutralGray600
 import com.kitching.domain.entities.Notice
 import com.kitching.main.R
-import com.kitching.main.factory.viewModelFactory
 import com.kitching.main.view.model.OtherViewModel
 import com.kitching.main.view.other.item.NoticeCardItem
 
 @Composable
 fun NoticeScreen(
     commonState: CommonState,
-    viewModel: OtherViewModel = viewModel(factory = viewModelFactory),
+    viewModel: OtherViewModel = hiltViewModel(),
     onNoticeClick: (Notice) -> Unit,
     onBack: () -> Unit
 ) {

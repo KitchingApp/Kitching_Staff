@@ -7,12 +7,17 @@ import com.kitching.domain.entities.TodoPrepData
 import com.kitching.domain.repository.PrepRepository
 import com.kitching.domain.util.AppResult
 import com.kitching.domain.util.UiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PrepViewModel(private val repository: PrepRepository) : ViewModel() {
+@HiltViewModel
+class PrepViewModel @Inject constructor(
+    private val repository: PrepRepository
+) : ViewModel() {
     private val _todoPrepsByDate = MutableStateFlow(UiState<TodoPrepData>())
     val todoPrepsByDate get() = _todoPrepsByDate.asStateFlow()
 

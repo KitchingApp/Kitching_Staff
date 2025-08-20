@@ -10,14 +10,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kitching.core.common.appresultscreen.ProgressIndicatorScreen
 import com.kitching.core.common.commonstate.ActionIconInfo
 import com.kitching.core.common.commonstate.CommonState
@@ -28,7 +28,6 @@ import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.defaultHorizontalPadding
 import com.kitching.domain.entities.Notice
 import com.kitching.main.R
-import com.kitching.main.factory.viewModelFactory
 import com.kitching.main.view.model.OtherViewModel
 import com.kitching.main.view.other.detailsection.CommentLine
 import com.kitching.main.view.other.detailsection.CommentTextField
@@ -40,7 +39,7 @@ import com.kitching.main.view.other.item.CommentsItem
 fun NoticeDetailScreen(
     commonState: CommonState,
     notice: Notice,
-    viewModel: OtherViewModel = viewModel(factory = viewModelFactory),
+    viewModel: OtherViewModel = hiltViewModel(),
     onBack: () -> Unit
 ) {
     val user = commonState.appInfoState.value.userInfo!!

@@ -1,25 +1,24 @@
 package com.kitching.main.view.model
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kitching.core.exception.getDisplayMessage
-import com.kitching.data.repository.NotificationRepositoryImpl
 import com.kitching.domain.entities.NoticeNotification
 import com.kitching.domain.entities.ScheduleNotification
 import com.kitching.domain.repository.NotificationRepository
 import com.kitching.domain.util.AppResult
 import com.kitching.domain.util.UiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NotificationViewModel(context: Context) : ViewModel() {
-
-    private val repository: NotificationRepository by lazy {
-        NotificationRepositoryImpl(context)
-    }
+@HiltViewModel
+class NotificationViewModel @Inject constructor(
+    private val repository: NotificationRepository
+) : ViewModel() {
 
     private val _scheduleNotificationList = MutableStateFlow(UiState<List<ScheduleNotification>>())
     val scheduleNotificationList get() = _scheduleNotificationList.asStateFlow()

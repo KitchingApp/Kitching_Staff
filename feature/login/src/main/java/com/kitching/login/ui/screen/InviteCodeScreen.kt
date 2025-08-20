@@ -39,8 +39,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import com.kitching.core.common.appresultscreen.ProgressIndicatorScreen
 import com.kitching.core.common.commonstate.CommonState
@@ -55,14 +55,13 @@ import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.core.designsystem.PrimaryGreen300
 import com.kitching.login.R
 import com.kitching.login.ui.model.LoginViewModel
-import com.kitching.login.ui.model.LoginViewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InviteCodeScreen(
     commonState: CommonState,
     goTeamSelect: () -> Unit,
-    loginViewModel: LoginViewModel = viewModel(factory = LoginViewModelFactory())
+    loginViewModel: LoginViewModel = hiltViewModel()
 ) {
     val userId = commonState.appInfoState.value.userInfo?.userId.toString()
     val textState = remember { mutableStateOf(TextFieldValue("")) }

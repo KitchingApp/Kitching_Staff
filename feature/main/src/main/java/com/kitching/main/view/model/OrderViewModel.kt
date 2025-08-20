@@ -8,12 +8,17 @@ import com.kitching.domain.entities.OrderCategory
 import com.kitching.domain.repository.OrderRepository
 import com.kitching.domain.util.AppResult
 import com.kitching.domain.util.UiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class OrderViewModel(private val orderRepository: OrderRepository) : ViewModel() {
+@HiltViewModel
+class OrderViewModel @Inject constructor(
+    private val orderRepository: OrderRepository
+) : ViewModel() {
 
     private val _orderCategories = MutableStateFlow(UiState<List<OrderCategory>>())
     val orderCategories get() = _orderCategories.asStateFlow()

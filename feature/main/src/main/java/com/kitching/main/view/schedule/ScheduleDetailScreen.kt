@@ -5,18 +5,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.kitching.core.common.commonstate.ActionIconInfo
 import com.kitching.core.common.appresultscreen.ProgressIndicatorScreen
 import com.kitching.core.common.appresultscreen.UiStateHandler
+import com.kitching.core.common.commonstate.ActionIconInfo
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.NavigationIconInfo
 import com.kitching.core.common.widget.DatePickerModal
@@ -26,10 +26,9 @@ import com.kitching.core.designsystem.KitchingStaffTheme
 import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.PrimaryGreen300
 import com.kitching.main.R
-import com.kitching.main.factory.viewModelFactory
+import com.kitching.main.view.model.ScheduleViewModel
 import com.kitching.main.view.schedule.dialog.ScheduleApplyDialog
 import com.kitching.main.view.schedule.tab.scheduleTabs
-import com.kitching.main.view.model.ScheduleViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
@@ -38,7 +37,7 @@ import java.time.LocalTime
 fun ScheduleDetailScreen(
     commonState: CommonState,
     date: LocalDate,
-    viewModel: ScheduleViewModel = viewModel(factory = viewModelFactory)
+    viewModel: ScheduleViewModel = hiltViewModel()
 ) {
     val userId = commonState.appInfoState.value.userInfo?.userId.toString()
     val teamId = commonState.appInfoState.value.teamInfo?.teamId.toString()

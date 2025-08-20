@@ -7,12 +7,15 @@ import com.kitching.domain.entities.Recipe
 import com.kitching.domain.repository.RecipeRepository
 import com.kitching.domain.util.AppResult
 import com.kitching.domain.util.UiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RecipeViewModel(
+@HiltViewModel
+class RecipeViewModel @Inject constructor(
     private val repository: RecipeRepository
 ) : ViewModel() {
     private val _recipeList = MutableStateFlow(UiState<List<Recipe>>())

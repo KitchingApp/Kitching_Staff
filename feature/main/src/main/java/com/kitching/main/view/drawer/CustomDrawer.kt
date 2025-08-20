@@ -1,6 +1,5 @@
 package com.kitching.main.view.drawer
 
-import com.kitching.main.R
 import android.content.Context
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -26,8 +25,8 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import com.kitching.core.common.appresultscreen.ProgressIndicatorScreen
 import com.kitching.core.common.appresultscreen.UiStateHandler
@@ -43,7 +42,7 @@ import com.kitching.core.designsystem.NeutralGray300
 import com.kitching.core.designsystem.NeutralGray600
 import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.core.designsystem.PrimaryGreen300
-import com.kitching.main.factory.viewModelFactory
+import com.kitching.main.R
 import com.kitching.main.view.drawer.list.DrawerOtherList
 import com.kitching.main.view.drawer.list.DrawerTeamList
 import com.kitching.main.view.model.DrawerViewModel
@@ -58,7 +57,7 @@ fun CustomDrawer(
     onNoticeClick: () -> Unit,
     onMemberClick: () -> Unit,
     onAlarmClick: () -> Unit,
-    drawerViewModel: DrawerViewModel = viewModel(factory = viewModelFactory),
+    drawerViewModel: DrawerViewModel = hiltViewModel(),
     content: @Composable () -> Unit,
 ) {
     val userId = commonState.appInfoState.value.userInfo?.userId.toString()
@@ -177,7 +176,7 @@ fun CustomDrawer(
                         DrawerTeamList(
                             teamList = teamList.filter { it.teamId != currentTeamId },
                             onTeamClick = { team ->
-                                drawerViewModel.changeTeam(context, team.teamId)
+                                drawerViewModel.changeTeam(team.teamId)
                             }
                         )
                     }
