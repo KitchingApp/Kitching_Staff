@@ -1,6 +1,5 @@
 package com.kitching.main.view.recipe
 
-import com.kitching.main.R
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,14 +9,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kitching.core.common.appresultscreen.UiStateHandler
 import com.kitching.core.common.commonstate.ActionIconInfo
 import com.kitching.core.common.commonstate.CommonState
@@ -30,7 +29,7 @@ import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.core.designsystem.defaultHorizontalPadding
 import com.kitching.domain.entities.Recipe
-import com.kitching.main.factory.viewModelFactory
+import com.kitching.main.R
 import com.kitching.main.view.model.RecipeViewModel
 import com.kitching.main.view.recipe.list.RecipeGridList
 import kotlinx.coroutines.delay
@@ -39,7 +38,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun RecipeTabScreen(
     commonState: CommonState,
-    viewModel: RecipeViewModel = viewModel(factory = viewModelFactory),
+    viewModel: RecipeViewModel = hiltViewModel(),
     onRecipeClick: (Recipe) -> Unit,
 ) {
     commonState.topAppBarState.value = commonState.topAppBarState.value.copy(

@@ -7,7 +7,9 @@ import androidx.activity.compose.setContent
 import com.kitching.app.common.askNotificationPermission
 import com.kitching.app.navigation.AppNavHost
 import com.kitching.core.designsystem.KitchingStaffTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

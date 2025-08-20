@@ -9,9 +9,12 @@ import com.kitching.data.firebase.COLLECTION_INGREDIENT
 import com.kitching.data.firebase.COLLECTION_RECIPE
 import com.kitching.data.firebase.DOCUMENT_TEAM_ID
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class RecipeDataSourceImpl(
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+@Singleton
+class RecipeDataSourceImpl @Inject constructor(
+    private val db: FirebaseFirestore
 ) : RecipeDataSource {
     override suspend fun getRecipes(teamId: String): List<RecipeDTO> = ExceptionHandler.safeCall {
         db.collection(COLLECTION_RECIPE)

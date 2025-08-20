@@ -1,9 +1,7 @@
 package com.kitching.data.repository
 
 import com.kitching.data.datasource.TeamDataSource
-import com.kitching.data.datasource.impl.TeamDataSourceImpl
 import com.kitching.data.datasource.UserTeamDataSource
-import com.kitching.data.datasource.impl.UserTeamDataSourceImpl
 import com.kitching.domain.entities.Member
 import com.kitching.domain.entities.Notice
 import com.kitching.domain.entities.User
@@ -11,10 +9,13 @@ import com.kitching.domain.repository.TeamRepository
 import com.kitching.domain.util.AppResult
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class TeamRepositoryImpl(
-    private val teamDataSource: TeamDataSource = TeamDataSourceImpl(),
-    private val userTeamDataSource: UserTeamDataSource = UserTeamDataSourceImpl(),
+@Singleton
+class TeamRepositoryImpl @Inject constructor(
+    private val teamDataSource: TeamDataSource,
+    private val userTeamDataSource: UserTeamDataSource,
 ) : TeamRepository {
     override suspend fun getTeamsByUserId(userId: String) = flow {
         emit(AppResult.Loading)

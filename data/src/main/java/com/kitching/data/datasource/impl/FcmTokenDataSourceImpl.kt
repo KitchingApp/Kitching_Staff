@@ -11,9 +11,13 @@ import com.kitching.data.firebase.DOCUMENT_USER_ID
 import com.kitching.data.firebase.FIELD_DEVICE_MODEL
 import com.kitching.data.firebase.FILED_TOKEN
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class FcmTokenDataSourceImpl(private val db: FirebaseFirestore = FirebaseFirestore.getInstance()) :
-    FcmTokenDataSource {
+@Singleton
+class FcmTokenDataSourceImpl @Inject constructor(
+    private val db: FirebaseFirestore
+) : FcmTokenDataSource {
     override suspend fun updateToken(userId: String, token: String, deviceModel: String): Boolean = ExceptionHandler.safeCall {
         try {
             val fcmTokenQuerySnapshot = db.collection(COLLECTION_FIREBASE_MESSAGING_TOKEN).whereEqualTo(DOCUMENT_USER_ID, userId).whereEqualTo(FIELD_DEVICE_MODEL, deviceModel).get().await()

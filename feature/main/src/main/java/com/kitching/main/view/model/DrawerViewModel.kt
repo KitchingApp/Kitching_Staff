@@ -1,6 +1,5 @@
 package com.kitching.main.view.model
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kitching.core.exception.getDisplayMessage
@@ -9,12 +8,18 @@ import com.kitching.domain.entities.Team
 import com.kitching.domain.repository.TeamRepository
 import com.kitching.domain.util.AppResult
 import com.kitching.domain.util.UiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DrawerViewModel(private val teamRepository: TeamRepository) : ViewModel() {
+@HiltViewModel
+class DrawerViewModel @Inject constructor(
+    private val teamRepository: TeamRepository,
+    private val preferencesDataSource: PreferencesDataSource
+) : ViewModel() {
     private val _teamListResult = MutableStateFlow(UiState<List<Team>>())
     val teamListResult get() = _teamListResult.asStateFlow()
 
@@ -41,9 +46,9 @@ class DrawerViewModel(private val teamRepository: TeamRepository) : ViewModel() 
     private val _teamChangeResult = MutableStateFlow(UiState<Team>())
     val teamChangeResult get() = _teamChangeResult.asStateFlow()
 
-    fun changeTeam(context: Context, teamId: String) {
+    fun changeTeam(teamId: String) {
         viewModelScope.launch {
-            PreferencesDataSource(context).saveTeamId(teamId)
+            preferencesDataSource.saveTeamId(teamId)
 
             loadTeam(teamId)
         }

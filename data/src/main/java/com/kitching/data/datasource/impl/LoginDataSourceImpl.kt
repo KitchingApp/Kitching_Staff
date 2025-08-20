@@ -9,9 +9,12 @@ import com.kitching.data.firebase.COLLECTION_USER
 import com.kitching.data.firebase.FIELD_USER_IMAGE
 import com.kitching.data.firebase.FIELD_USER_NAME
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class LoginDataSourceImpl(
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance(),
+@Singleton
+class LoginDataSourceImpl @Inject constructor(
+    private val db: FirebaseFirestore
 ) : LoginDataSource {
     override suspend fun checkAndSaveUser(
         userId: String,

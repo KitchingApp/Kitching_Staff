@@ -15,8 +15,8 @@ import androidx.compose.foundation.text.BasicText
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,11 +24,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kitching.core.common.appresultscreen.UiStateHandler
 import com.kitching.core.common.commonstate.CommonState
-import com.kitching.main.factory.viewModelFactory
 import com.kitching.main.view.model.ScheduleViewModel
 import java.time.LocalDate
 import java.time.YearMonth
@@ -40,7 +39,7 @@ fun Calendar(
     commonState: CommonState,
     state: CalendarState,
     onDoubleSelect: (LocalDate) -> Unit,
-    viewModel: ScheduleViewModel = viewModel(factory = viewModelFactory),
+    viewModel: ScheduleViewModel = hiltViewModel()
 ) {
     val userId = commonState.appInfoState.value.userInfo?.userId.toString()
     val teamId = commonState.appInfoState.value.teamInfo?.teamId.toString()

@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.ksp)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -45,6 +46,8 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.datastore.preferences.core)
     implementation(libs.bundles.room.libraries)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
     ksp(libs.androidx.room.compiler)
 
     testImplementation(libs.junit)

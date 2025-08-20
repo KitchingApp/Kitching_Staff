@@ -42,7 +42,7 @@ fun BackPressHandler(
                     lastBackPressedTime.longValue = currentTime
                 }
 
-                currentTime - lastBackPressedTime.longValue < 4000L -> {
+                currentTime - lastBackPressedTime.longValue < 3000L -> {
                     (navController.context as? ComponentActivity)?.finish()
                 }
 

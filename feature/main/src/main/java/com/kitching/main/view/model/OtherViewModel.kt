@@ -9,12 +9,17 @@ import com.kitching.domain.entities.User
 import com.kitching.domain.repository.TeamRepository
 import com.kitching.domain.util.AppResult
 import com.kitching.domain.util.UiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class OtherViewModel(val repository: TeamRepository) : ViewModel() {
+@HiltViewModel
+class OtherViewModel @Inject constructor(
+    private val repository: TeamRepository
+) : ViewModel() {
     private val _memberListResult = MutableStateFlow(UiState<List<Member>>())
     val memberListResult get() = _memberListResult.asStateFlow()
 

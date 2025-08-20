@@ -8,12 +8,17 @@ import com.kitching.domain.entities.ScheduleTime
 import com.kitching.domain.repository.ScheduleRepository
 import com.kitching.domain.util.AppResult
 import com.kitching.domain.util.UiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ScheduleViewModel(private val scheduleRepository: ScheduleRepository) : ViewModel() {
+@HiltViewModel
+class ScheduleViewModel @Inject constructor(
+    private val scheduleRepository: ScheduleRepository
+) : ViewModel() {
 
     private val _mySchedules = MutableStateFlow(UiState<List<Schedule>>())
     val mySchedules get() = _mySchedules.asStateFlow()

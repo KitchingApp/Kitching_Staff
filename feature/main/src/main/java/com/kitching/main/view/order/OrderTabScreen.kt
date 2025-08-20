@@ -5,7 +5,6 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
-import com.kitching.main.R
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -26,11 +25,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
-import com.kitching.core.common.commonstate.ActionIconInfo
 import com.kitching.core.common.appresultscreen.CombinedUiStateHandler
+import com.kitching.core.common.commonstate.ActionIconInfo
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.NavigationIconInfo
 import com.kitching.core.designsystem.H2
@@ -39,17 +38,17 @@ import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.core.designsystem.defaultHorizontalPadding
 import com.kitching.domain.entities.Order
-import com.kitching.main.factory.viewModelFactory
+import com.kitching.main.R
+import com.kitching.main.view.model.OrderViewModel
 import com.kitching.main.view.order.carditem.CategoryCardItem
 import com.kitching.main.view.order.carditem.OrderItemsList
-import com.kitching.main.view.model.OrderViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun OrderTabScreen(
     context: Context,
     commonState: CommonState,
-    viewModel: OrderViewModel = viewModel(factory = viewModelFactory),
+    viewModel: OrderViewModel = hiltViewModel()
 ) {
     val teamId = commonState.appInfoState.value.teamInfo?.teamId.toString()
 
