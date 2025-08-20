@@ -9,7 +9,9 @@ import com.kitching.app.BuildConfig
 import com.kitching.app.fcm.NoticeNotificationChannel
 import com.kitching.app.fcm.ScheduleRejectedNotificationChannel
 import com.kitching.core.common.util.CoilManager
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class KitchingApplication: Application(), SingletonImageLoader.Factory {
     override fun onCreate() {
         super.onCreate()
