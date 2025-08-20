@@ -1,25 +1,22 @@
 package com.kitching.data.repository
 
-import android.content.Context
 import com.kitching.data.dao.NotificationDAO
 import com.kitching.data.entity.toEntity
 import com.kitching.data.entity.toNoticeNotificationList
 import com.kitching.data.entity.toScheduleNotificationList
-import com.kitching.data.room.NotificationRoomDatabase
 import com.kitching.domain.entities.NoticeNotification
 import com.kitching.domain.entities.ScheduleNotification
 import com.kitching.domain.repository.NotificationRepository
 import com.kitching.domain.util.AppResult
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class NotificationRepositoryImpl(context: Context) : NotificationRepository {
+@Singleton
+class NotificationRepositoryImpl @Inject constructor(
     private val notificationDAO: NotificationDAO
-
-    init {
-        val notificationDatabase = NotificationRoomDatabase.getDatabase(context.applicationContext)
-        notificationDAO = notificationDatabase.notificationDao()
-    }
+) : NotificationRepository {
 
     override suspend fun insertScheduleNotification(notification: ScheduleNotification) = flow {
         emit(AppResult.Loading)

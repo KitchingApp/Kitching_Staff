@@ -11,10 +11,13 @@ import com.kitching.domain.repository.TeamRepository
 import com.kitching.domain.util.AppResult
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class TeamRepositoryImpl(
-    private val teamDataSource: TeamDataSource = TeamDataSourceImpl(),
-    private val userTeamDataSource: UserTeamDataSource = UserTeamDataSourceImpl(),
+@Singleton
+class TeamRepositoryImpl @Inject constructor(
+    private val teamDataSource: TeamDataSource,
+    private val userTeamDataSource: UserTeamDataSource,
 ) : TeamRepository {
     override suspend fun getTeamsByUserId(userId: String) = flow {
         emit(AppResult.Loading)

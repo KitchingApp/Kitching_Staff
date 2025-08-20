@@ -6,8 +6,13 @@ import com.kitching.domain.repository.OrderRepository
 import com.kitching.domain.util.AppResult
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class OrderRepositoryImpl(private val dataSource: OrderDataSource = OrderDataSourceImpl()) : OrderRepository {
+@Singleton
+class OrderRepositoryImpl @Inject constructor(
+    private val dataSource: OrderDataSource
+) : OrderRepository {
     override suspend fun getOrderCategories(teamId: String) = flow {
         emit(AppResult.Loading)
 

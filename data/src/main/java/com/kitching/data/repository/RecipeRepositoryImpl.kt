@@ -6,9 +6,12 @@ import com.kitching.domain.repository.RecipeRepository
 import com.kitching.domain.util.AppResult
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class RecipeRepositoryImpl(
-    private val dataSource: RecipeDataSource = RecipeDataSourceImpl()
+@Singleton
+class RecipeRepositoryImpl @Inject constructor(
+    private val dataSource: RecipeDataSource
 ) : RecipeRepository {
     override suspend fun getRecipes(teamId: String) = flow {
         emit(AppResult.Loading)

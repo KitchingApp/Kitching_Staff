@@ -9,9 +9,13 @@ import com.kitching.domain.repository.PrepRepository
 import com.kitching.domain.util.AppResult
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class PrepRepositoryImpl(private val dataSource: PrepDataSource = PrepDataSourceImpl()) :
-    PrepRepository {
+@Singleton
+class PrepRepositoryImpl @Inject constructor(
+    private val dataSource: PrepDataSource
+) : PrepRepository {
     override suspend fun getTodoPrep(
         teamId: String,
         date: String,

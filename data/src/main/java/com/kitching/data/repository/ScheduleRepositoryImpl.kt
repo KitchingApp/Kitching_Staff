@@ -8,9 +8,13 @@ import com.kitching.domain.repository.ScheduleRepository
 import com.kitching.domain.util.AppResult
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ScheduleRepositoryImpl(private val dataSource: ScheduleDataSource = ScheduleDataSourceImpl()) :
-    ScheduleRepository {
+@Singleton
+class ScheduleRepositoryImpl @Inject constructor(
+    private val dataSource: ScheduleDataSource
+) : ScheduleRepository {
     override suspend fun getMySchedules(
         userId: String,
         teamId: String,
