@@ -1,6 +1,5 @@
 package com.kitching.data.di
 
-import com.kitching.data.PreferencesDataSource
 import com.kitching.data.datasource.FcmTokenDataSource
 import com.kitching.data.datasource.LoginDataSource
 import com.kitching.data.datasource.OrderDataSource
@@ -26,12 +25,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class DataSourceModule {
-
-    @Binds
-    @Singleton
-    abstract fun bindPreferencesDataSource(
-        preferencesDataSource: PreferencesDataSource
-    ): PreferencesDataSource
 
     @Binds
     @Singleton
