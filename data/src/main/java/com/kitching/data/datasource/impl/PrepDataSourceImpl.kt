@@ -15,9 +15,12 @@ import com.kitching.data.firebase.DOCUMENT_ID
 import com.kitching.data.firebase.DOCUMENT_TEAM_ID
 import com.kitching.data.firebase.DOCUMENT_TODO_PREP_DONE
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class PrepDataSourceImpl(
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+@Singleton
+class PrepDataSourceImpl @Inject constructor(
+    private val db: FirebaseFirestore
 ) : PrepDataSource {
     override suspend fun getTodoPrep(
         teamId: String,

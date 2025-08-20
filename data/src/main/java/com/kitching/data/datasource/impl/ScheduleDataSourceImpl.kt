@@ -16,9 +16,13 @@ import com.kitching.data.firebase.DOCUMENT_SCHEDULE_FIX
 import com.kitching.data.firebase.DOCUMENT_TEAM_ID
 import com.kitching.data.firebase.DOCUMENT_USER_ID
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ScheduleDataSourceImpl(private val db: FirebaseFirestore = FirebaseFirestore.getInstance()) :
-    ScheduleDataSource {
+@Singleton
+class ScheduleDataSourceImpl @Inject constructor(
+    private val db: FirebaseFirestore
+) : ScheduleDataSource {
     override suspend fun getUserById(userId: String): UserDTO = ExceptionHandler.safeCall {
         val userDto = db.collection(COLLECTION_USER)
             .whereEqualTo(DOCUMENT_ID, userId)

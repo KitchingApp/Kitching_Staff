@@ -16,9 +16,13 @@ import com.kitching.data.firebase.DOCUMENT_TEAM_ID
 import com.kitching.domain.entities.User
 import kotlinx.coroutines.tasks.await
 import java.time.LocalDateTime
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class TeamDataSourceImpl(private val db: FirebaseFirestore = FirebaseFirestore.getInstance()) :
-    TeamDataSource {
+@Singleton
+class TeamDataSourceImpl @Inject constructor(
+    private val db: FirebaseFirestore
+) : TeamDataSource {
     override suspend fun getTeam(teamId: String) = ExceptionHandler.safeCall {
         db.collection(COLLECTION_TEAM).document(teamId).get().await()
             .toObject(TeamDTO::class.java) ?: throw KitchingRuntimeException.TeamNotFoundException()

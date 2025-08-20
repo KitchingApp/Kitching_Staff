@@ -14,9 +14,13 @@ import com.kitching.data.firebase.DOCUMENT_ID
 import com.kitching.data.firebase.DOCUMENT_TEAM_ID
 import com.kitching.data.firebase.DOCUMENT_USER_ID
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class UserTeamDataSourceImpl(private val db: FirebaseFirestore = FirebaseFirestore.getInstance()) :
-    UserTeamDataSource {
+@Singleton
+class UserTeamDataSourceImpl @Inject constructor(
+    private val db: FirebaseFirestore
+) : UserTeamDataSource {
     override suspend fun getAllMembers(teamId: String): List<UserTeamDTO> = ExceptionHandler.safeCall {
         db.collection(COLLECTION_USER_TEAM).whereEqualTo(DOCUMENT_TEAM_ID, teamId).get().await()
             .toObjects(UserTeamDTO::class.java)
