@@ -12,7 +12,9 @@ import com.kitching.domain.util.AppResult
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,10 +30,12 @@ class FcmService : FirebaseMessagingService() {
     @Inject
     lateinit var fcmTokenRepository: FcmTokenRepository
 
+    private val roomIOScope = CoroutineScope(Dispatchers.IO)
+
     override fun onNewToken(token: String) {
         super.onNewToken(token)
 
-        CoroutineScope(Dispatchers.IO).launch {
+        roomIOScope.launch {
             val userId = preferencesDataSource.getUserId()
 
             if (userId.isNotEmpty()) {
@@ -64,12 +68,22 @@ class FcmService : FirebaseMessagingService() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        stopSelf()
+
+        if (roomIOScope.isActive) {
+            roomIOScope.cancel()
+        }
+    }
+
     private fun handleNoticeNotification(messageData: Map<String, String>) {
         val title = messageData["noticeTitle"] ?: throw Throwable("noticeTitle is null")
         val writerName = messageData["writerName"] ?: throw Throwable("writerName is null")
         val content = messageData["content"] ?: throw Throwable("content is null")
 
-        CoroutineScope(Dispatchers.IO).launch {
+        roomIOScope.launch {
             val noticeNotification = NoticeNotification(
                 title = title,
                 writerName = writerName,
@@ -107,7 +121,7 @@ class FcmService : FirebaseMessagingService() {
             messageData["scheduleTimeName"] ?: throw Throwable("scheduleTimeName is null")
         val rejectReason = messageData["rejectReason"] ?: throw Throwable("rejectReason is null")
 
-        CoroutineScope(Dispatchers.IO).launch {
+        roomIOScope.launch {
             val scheduleNotification = ScheduleNotification(
                 scheduleDate = scheduleDate,
                 scheduleTimeName = scheduleTimeName,
