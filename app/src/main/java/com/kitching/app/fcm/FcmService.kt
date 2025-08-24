@@ -60,11 +60,11 @@ class FcmService : FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
         val messageData = message.data
-        val notificationType = messageData["type"]
+        val notificationType = NotificationType.fromString(messageData["type"])
 
         when (notificationType) {
-            "notice" -> handleNoticeNotification(messageData)
-            else -> handleScheduleRejectedNotification(messageData)
+            NotificationType.NOTICE -> handleNoticeNotification(messageData)
+            NotificationType.SCHEDULE_REJECTED -> handleScheduleRejectedNotification(messageData)
         }
     }
 
@@ -153,6 +153,17 @@ class FcmService : FirebaseMessagingService() {
                     else -> {}
                 }
             }
+        }
+    }
+}
+
+enum class NotificationType(val type: String) {
+    NOTICE("notice"),
+    SCHEDULE_REJECTED("schedule_rejected");
+
+    companion object {
+        fun fromString(type: String?): NotificationType {
+            return entries.find { it.type == type }!!
         }
     }
 }
