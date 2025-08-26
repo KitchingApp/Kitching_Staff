@@ -1,39 +1,14 @@
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kitching.android.library)
+    alias(libs.plugins.kitching.android.compose)
+    alias(libs.plugins.kitching.android.hilt)
+    alias(libs.plugins.kitching.android.coil)
+    alias(libs.plugins.kitching.android.datastore)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.google.ksp)
-    alias(libs.plugins.hilt)
 }
 
 android {
     namespace = "com.kitching.login"
-    compileSdk = 35
-
-    defaultConfig {
-        minSdk = 26
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
 }
 
 dependencies {
@@ -41,32 +16,7 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":core"))
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    implementation(libs.material)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation(libs.androidx.lifecycle.runtime.compose)
-    implementation(libs.androidx.datastore.preferences)
-    implementation(libs.androidx.datastore.preferences.core)
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.runtime.android)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.runtime.android)
     implementation(libs.sdk.v2.user)
-    implementation(libs.coil.compose)
-    implementation(libs.coil.network.okhttp)
-    implementation(libs.coil.svg)
-    implementation(libs.hilt.android)
-    implementation(libs.hilt.navigation.compose)
-    ksp(libs.hilt.android.compiler)
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 }
