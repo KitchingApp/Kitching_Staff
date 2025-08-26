@@ -159,7 +159,7 @@ class FcmService : FirebaseMessagingService() {
 
 enum class NotificationType(val type: String) {
     NOTICE("notice"),
-    SCHEDULE_REJECTED("schedule_rejected");
+    SCHEDULE_REJECTED("schedule_reject");
 
     companion object {
         fun fromString(type: String?): NotificationType {

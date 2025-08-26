@@ -22,6 +22,8 @@
 /app/google-services.json
 .DS_Store
 /build
+/build-logic/.gradle
+/build-logic/convention/build
 /captures
 .externalNativeBuild
 .cxx
