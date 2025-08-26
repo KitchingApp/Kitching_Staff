@@ -29,8 +29,15 @@ ksp = "2.1.0-1.0.28"
 room = "2.6.1"
 hilt = "2.54"
 hiltNavigationCompose = "1.2.0"
+androidGradlePlugin = "8.11.0"
 
 [libraries]
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+compose-gradlePlugin = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "kotlin" }
+ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+hilt-gradlePlugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
+
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -82,8 +89,84 @@ jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrai
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
+kitching-android-application = { id = "kitching.android.application", version = "unspecified" }
+kitching-android-library = { id = "kitching.android.library", version = "unspecified" }
+kitching-android-compose = { id = "kitching.android.compose", version = "unspecified" }
+kitching-android-hilt = { id = "kitching.android.hilt", version = "unspecified" }
+kitching-android-firebase-app = { id = "kitching.android.firebase.app", version = "unspecified" }
+kitching-android-firebase-data = { id = "kitching.android.firebase.data", version = "unspecified" }
+kitching-android-coil = { id = "kitching.android.coil", version = "unspecified" }
+kitching-android-datastore = { id = "kitching.android.datastore", version = "unspecified" }
+kitching-android-room = { id = "kitching.android.room", version = "unspecified" }
+
 [bundles]
+android-core-libraries = [
+    "androidx-core-ktx",
+    "androidx-appcompat",
+    "material",
+    "androidx-lifecycle-runtime-ktx"
+]
+
+compose-libraries = [
+    "androidx-ui",
+    "androidx-ui-graphics",
+    "androidx-ui-tooling-preview",
+    "androidx-material3",
+    "androidx-activity-compose",
+    "androidx-lifecycle-viewmodel-compose",
+    "androidx-lifecycle-runtime-compose",
+    "androidx-navigation-compose"
+]
+
+compose-additional-libraries = [
+    "androidx-runtime-android"
+]
+
+compose-debug-libraries = [
+    "androidx-ui-tooling",
+    "androidx-ui-test-manifest"
+]
+
+compose-test-libraries = [
+    "androidx-ui-test-junit4"
+]
+
 room-libraries = [
     "androidx-room-ktx",
     "androidx-room-runtime"
+]
+
+hilt-libraries = [
+    "hilt-android",
+    "hilt-navigation-compose"
+]
+
+coil-libraries = [
+    "coil-compose",
+    "coil-network-okhttp",
+    "coil-svg"
+]
+
+datastore-libraries = [
+    "androidx-datastore-preferences",
+    "androidx-datastore-preferences-core"
+]
+
+firebase-app-libraries = [
+    "firebase-analytics",
+    "firebase-messaging"
+]
+
+firebase-data-libraries = [
+    "firebase-firestore",
+    "firebase-storage"
+]
+
+test-libraries = [
+    "junit"
+]
+
+android-test-libraries = [
+    "androidx-junit",
+    "androidx-espresso-core"
 ]
