@@ -17,6 +17,5 @@ dependencies {
     implementation(project(":core"))
 
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.androidx.runtime.android)
     implementation(libs.sdk.v2.user)
 }

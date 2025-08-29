@@ -1,5 +1,3 @@
-import java.util.Properties
-
 plugins {
     alias(libs.plugins.kitching.android.application)
     alias(libs.plugins.kitching.android.compose)
@@ -9,38 +7,27 @@ plugins {
     alias(libs.plugins.kitching.android.coil)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.google.gms.google.services)
-}
-
-val localProperties = Properties()
-val localPropertiesFile = rootProject.file("local.properties")
-if (localPropertiesFile.exists()) {
-    localProperties.load(localPropertiesFile.inputStream())
+    alias(libs.plugins.secrets.gradle.plugin)
 }
 
 android {
     namespace = "com.kitching.app"
-    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.kitching.app.staff"
-        minSdk = 26
-        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        buildConfigField(
-            "String",
-            "KAKAO_APP_KEY",
-            "\"${localProperties.getProperty("KAKAO_APP_KEY")}\""
-        )
-        manifestPlaceholders["KAKAO_APP_KEY"] = localProperties["KAKAO_APP_KEY"] as Any
     }
 
     buildFeatures {
         buildConfig = true
     }
+}
+
+secrets {
+    propertiesFileName = "local.properties"
 }
 
 dependencies {
