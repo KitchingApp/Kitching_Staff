@@ -1,7 +1,7 @@
 
 ![image](https://github.com/user-attachments/assets/3991c3a8-0d8b-49ca-8fcd-d677b35752e7)
 ### 🍴프로젝트 소개
-![Image](https://github.com/user-attachments/assets/0f984301-98cb-4285-ae76-7debc14d820f)
+![Image](https://github.com/user-attachments/assets/28f6b91a-283a-4a9d-acd7-84c5985b5323)
 - 레스토랑 관리자와 셰프(스탭)를 대상으로 한 업무 관리 솔루션의 **스탭용 앱**
 
 ### 🚀개발 환경
