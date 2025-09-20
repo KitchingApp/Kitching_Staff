@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import coil3.compose.AsyncImage
-import com.kitching.core.designsystem.H3_m
 import com.kitching.core.designsystem.NeutralGray300
 import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.domain.entities.Order
@@ -50,7 +50,7 @@ fun OrderCardItem(
         ) {
             Text(
                 text = order.orderName,
-                style = H3_m.copy(color = NeutralGray800)
+                style = MaterialTheme.typography.titleLarge.copy(color = NeutralGray800)
             )
 
             Row(
@@ -67,7 +67,7 @@ fun OrderCardItem(
 
                 Text(
                     text = count.toString(),
-                    style = H3_m.copy(color = NeutralGray800)
+                    style = MaterialTheme.typography.titleLarge.copy(color = NeutralGray800)
                 )
 
                 IconButton(

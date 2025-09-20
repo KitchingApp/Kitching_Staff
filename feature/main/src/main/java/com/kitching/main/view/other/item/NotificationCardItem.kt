@@ -1,7 +1,6 @@
 package com.kitching.main.view.other.item
 
 import androidx.compose.foundation.clickable
-import com.kitching.main.R
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,13 +20,13 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import coil3.compose.AsyncImage
-import com.kitching.core.designsystem.Body1_m
 import com.kitching.core.designsystem.KitchingDimens
 import com.kitching.core.designsystem.NeutralGray600
 import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.core.designsystem.PrimaryGreen50
 import com.kitching.domain.entities.NoticeNotification
 import com.kitching.domain.entities.ScheduleNotification
+import com.kitching.main.R
 
 @Composable
 fun ScheduleNotificationCardItem(
@@ -55,14 +55,14 @@ fun ScheduleNotificationCardItem(
             ) {
                 Text(
                     text = stringResource(R.string.schedule_notification_date, scheduleNotification.scheduleDate, scheduleNotification.scheduleTimeName),
-                    style = Body1_m.copy(NeutralGray600)
+                    style = MaterialTheme.typography.bodyMedium.copy(NeutralGray600)
                 )
 
                 Spacer(modifier = Modifier.height(KitchingDimens.Margin.xxSmall))
 
                 Text(
                     text = scheduleNotification.rejectReason,
-                    style = Body1_m.copy(NeutralGray800),
+                    style = MaterialTheme.typography.bodyMedium.copy(NeutralGray800),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -107,7 +107,7 @@ fun NoticeNotificationCardItem(
             ) {
                 Text(
                     text = noticeNotification.title,
-                    style = Body1_m.copy(NeutralGray800),
+                    style = MaterialTheme.typography.bodyMedium.copy(NeutralGray800),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -116,7 +116,7 @@ fun NoticeNotificationCardItem(
 
                 Text(
                     text = noticeNotification.writerName,
-                    style = Body1_m.copy(NeutralGray600)
+                    style = MaterialTheme.typography.bodyMedium.copy(NeutralGray600)
                 )
             }
 

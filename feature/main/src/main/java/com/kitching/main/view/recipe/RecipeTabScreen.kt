@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,7 +23,6 @@ import com.kitching.core.common.commonstate.ActionIconInfo
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.NavigationIconInfo
 import com.kitching.core.common.widget.SearchTextField
-import com.kitching.core.designsystem.H2
 import com.kitching.core.designsystem.KitchingDimens
 import com.kitching.core.designsystem.KitchingStaffTheme
 import com.kitching.core.designsystem.NeutralGray0
@@ -86,7 +86,7 @@ fun RecipeTabScreen(
                 Text(
                     modifier = Modifier.padding(end = KitchingDimens.Margin.medium),
                     text = stringResource(id = R.string.recipe_search_title),
-                    style = H2.copy(color = NeutralGray800),
+                    style = MaterialTheme.typography.displaySmall.copy(color = NeutralGray800),
                 )
 
                 SearchTextField(

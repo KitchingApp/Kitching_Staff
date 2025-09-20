@@ -6,9 +6,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import com.kitching.main.R
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,11 +21,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import coil3.compose.AsyncImage
 import com.kitching.core.common.util.CoilImageRequest
-import com.kitching.core.designsystem.Body1_m
 import com.kitching.core.designsystem.KitchingDimens
 import com.kitching.core.designsystem.NeutralGray300
 import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.domain.entities.Member
+import com.kitching.main.R
 
 @Composable
 fun MemberCardItem(
@@ -63,7 +63,7 @@ fun MemberCardItem(
             Text(
                 modifier = Modifier.weight(1f),
                 text = member.userName,
-                style = Body1_m.copy(color = NeutralGray800),
+                style = MaterialTheme.typography.bodyMedium.copy(color = NeutralGray800),
             )
 
             Text(
@@ -71,7 +71,7 @@ fun MemberCardItem(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 text = member.staffLevelName.ifEmpty { stringResource(R.string.other_staff_level_name_empty) },
-                style = Body1_m.copy(
+                style = MaterialTheme.typography.bodyMedium.copy(
                     color = if (member.staffLevelName.isEmpty()) NeutralGray300 else NeutralGray800
                 )
             )

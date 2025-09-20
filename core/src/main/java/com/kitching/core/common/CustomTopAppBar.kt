@@ -4,6 +4,7 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -15,8 +16,6 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.kitching.core.common.commonstate.ActionIconInfo
 import com.kitching.core.common.commonstate.TopAppBarState
-import com.kitching.core.designsystem.H3
-import com.kitching.core.designsystem.H3_m
 import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.NeutralGray600
 import com.kitching.core.designsystem.NeutralGray800
@@ -43,7 +42,7 @@ fun CustomTopAppBar(
         title = {
             Text(
                 text = topAppBarState.title,
-                style = if(topAppBarState.containerColor == PrimaryGreen300) H3 else H3_m
+                style = if(topAppBarState.containerColor == PrimaryGreen300) MaterialTheme.typography.headlineLarge else MaterialTheme.typography.titleLarge
             )
         },
         colors = TopAppBarDefaults.topAppBarColors(

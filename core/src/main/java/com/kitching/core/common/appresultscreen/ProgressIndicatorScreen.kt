@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,8 +18,6 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import coil3.compose.AsyncImage
 import com.kitching.core.R
-import com.kitching.core.designsystem.Caption1_m
-import com.kitching.core.designsystem.H1
 import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.NeutralGray100
 import com.kitching.core.designsystem.PrimaryGreen300
@@ -53,7 +52,7 @@ fun ProgressIndicatorScreen() {
                     )
                     Text(
                         text = stringResource(indicatorItem.title),
-                        style = H1.copy(color = PrimaryGreen300)
+                        style = MaterialTheme.typography.displayMedium.copy(color = PrimaryGreen300)
                     )
                 }
                 LinearProgressIndicator(
@@ -63,7 +62,7 @@ fun ProgressIndicatorScreen() {
                 )
                 Text(
                     text = stringResource(R.string.progress_indicator_common_message),
-                    style = Caption1_m.copy(color = NeutralGray0)
+                    style = MaterialTheme.typography.labelMedium.copy(color = NeutralGray0)
                 )
             }
         }

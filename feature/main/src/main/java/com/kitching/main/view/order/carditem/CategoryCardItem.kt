@@ -1,6 +1,5 @@
 package com.kitching.main.view.order.carditem
 
-import com.kitching.main.R
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,19 +9,20 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
+import androidx.core.graphics.toColorInt
 import coil3.compose.AsyncImage
-import com.kitching.core.designsystem.H3_m
 import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.core.designsystem.ShadowColor
 import com.kitching.core.designsystem.dropShadow
 import com.kitching.domain.entities.OrderCategory
-import androidx.core.graphics.toColorInt
+import com.kitching.main.R
 
 @Composable
 fun CategoryCardItem(
@@ -58,7 +58,7 @@ fun CategoryCardItem(
             Text(
                 modifier = Modifier.align(Alignment.Center),
                 text = category.categoryName,
-                style = H3_m.copy(color = NeutralGray800)
+                style = MaterialTheme.typography.titleLarge.copy(color = NeutralGray800)
             )
 
             AsyncImage(

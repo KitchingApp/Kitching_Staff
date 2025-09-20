@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,7 +33,6 @@ import com.kitching.core.common.appresultscreen.CombinedUiStateHandler
 import com.kitching.core.common.commonstate.ActionIconInfo
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.NavigationIconInfo
-import com.kitching.core.designsystem.H2
 import com.kitching.core.designsystem.KitchingStaffTheme
 import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.NeutralGray800
@@ -91,7 +91,7 @@ fun OrderTabScreen(
             ) {
                 Text(
                     text = stringResource(R.string.order_main_text),
-                    style = H2.copy(color = NeutralGray800)
+                    style = MaterialTheme.typography.displaySmall.copy(color = NeutralGray800)
                 )
 
                 IconButton(

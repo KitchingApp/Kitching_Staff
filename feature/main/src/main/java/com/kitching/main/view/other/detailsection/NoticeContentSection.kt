@@ -5,13 +5,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.kitching.core.common.widget.KitchingVerticalDivider
-import com.kitching.core.designsystem.Body1_m
-import com.kitching.core.designsystem.Body2_m
-import com.kitching.core.designsystem.H2
 import com.kitching.core.designsystem.KitchingDimens
 import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.core.designsystem.defaultHorizontalPadding
@@ -30,7 +28,7 @@ fun NoticeContentSection(
                 .fillMaxWidth()
                 .padding(vertical = KitchingDimens.Margin.large),
             text = notice.title,
-            style = H2.copy(color = NeutralGray800)
+            style = MaterialTheme.typography.displaySmall.copy(color = NeutralGray800)
         )
 
         Row(
@@ -39,7 +37,7 @@ fun NoticeContentSection(
         ) {
             Text(
                 text = notice.writerName,
-                style = Body1_m.copy(color = NeutralGray800)
+                style = MaterialTheme.typography.bodyMedium.copy(color = NeutralGray800)
             )
 
             KitchingVerticalDivider(
@@ -52,7 +50,7 @@ fun NoticeContentSection(
 
             Text(
                 text = notice.date,
-                style = Body1_m.copy(color = NeutralGray800)
+                style = MaterialTheme.typography.bodyMedium.copy(color = NeutralGray800)
             )
         }
 
@@ -61,7 +59,7 @@ fun NoticeContentSection(
                 .fillMaxWidth()
                 .padding(vertical = KitchingDimens.Margin.xLarge),
             text = notice.content,
-            style = Body2_m.copy(color = NeutralGray800)
+            style = MaterialTheme.typography.bodySmall.copy(color = NeutralGray800)
         )
     }
 }

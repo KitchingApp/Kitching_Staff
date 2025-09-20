@@ -53,7 +53,7 @@ fun KitchingStaffTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = customTypography,
+        typography = kitchingTypography,
         content = content
     )
 }

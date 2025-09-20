@@ -18,6 +18,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -44,9 +45,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import com.kitching.core.common.appresultscreen.ProgressIndicatorScreen
 import com.kitching.core.common.commonstate.CommonState
-import com.kitching.core.designsystem.Body1
-import com.kitching.core.designsystem.H2
-import com.kitching.core.designsystem.H3_m
 import com.kitching.core.designsystem.KitchingStaffTheme
 import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.NeutralGray300
@@ -96,7 +94,7 @@ fun InviteCodeScreen(
                 title = {
                     Text(
                         text = stringResource(R.string.invite_code),
-                        style = H3_m.copy(NeutralGray800)
+                        style = MaterialTheme.typography.titleLarge.copy(NeutralGray800)
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -134,11 +132,11 @@ fun InviteCodeScreen(
                 ) {
                     Text(
                         text = stringResource(R.string.insert_invite_code),
-                        style = H2.copy(NeutralGray800)
+                        style = MaterialTheme.typography.displaySmall.copy(NeutralGray800)
                     )
                     Text(
                         text = stringResource(R.string.insert_invite_code_message),
-                        style = Body1.copy(NeutralGray800)
+                        style = MaterialTheme.typography.bodyLarge.copy(NeutralGray800)
                     )
                     Row(
                         modifier = Modifier
@@ -166,7 +164,7 @@ fun InviteCodeScreen(
                                 onValueChange = {
                                     textState.value = it
                                 },
-                                textStyle = Body1.copy(
+                                textStyle = MaterialTheme.typography.bodyLarge.copy(
                                     color = NeutralGray800,
                                     textAlign = TextAlign.Start
                                 ),

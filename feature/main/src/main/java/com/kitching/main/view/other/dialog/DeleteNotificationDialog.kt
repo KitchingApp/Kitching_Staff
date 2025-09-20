@@ -1,6 +1,7 @@
 package com.kitching.main.view.other.dialog
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -8,7 +9,6 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.kitching.core.common.widget.CommonDialogComponent
-import com.kitching.core.designsystem.Body1_m
 import com.kitching.core.designsystem.KitchingDimens
 import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.main.R
@@ -31,7 +31,7 @@ fun DeleteNotificationDialog(
         Text(
             modifier = Modifier.padding(top = KitchingDimens.Margin.xLarge),
             text = stringResource(R.string.notification_delete_dialog_title),
-            style = Body1_m.copy(color = NeutralGray800),
+            style = MaterialTheme.typography.bodyMedium.copy(color = NeutralGray800),
             textAlign = TextAlign.Center,
         )
     }
@@ -60,7 +60,7 @@ fun DeleteAllNotificationDialog(
         Text(
             modifier = Modifier.padding(top = KitchingDimens.Margin.xLarge),
             text = stringResource(R.string.notification_all_delete_dialog_title, tabName),
-            style = Body1_m.copy(color = NeutralGray800),
+            style = MaterialTheme.typography.bodyMedium.copy(color = NeutralGray800),
             textAlign = TextAlign.Center,
         )
     }

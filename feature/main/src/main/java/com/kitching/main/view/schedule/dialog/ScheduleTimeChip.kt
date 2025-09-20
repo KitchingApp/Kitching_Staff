@@ -5,13 +5,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SelectableChipColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.kitching.core.designsystem.H5_m
 import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.core.designsystem.PrimaryGreen300
@@ -35,7 +35,7 @@ fun ScheduleTimeChip(
                 label = {
                     Text(
                         text = scheduleTime.scheduleTimeName,
-                        style = H5_m
+                        style = MaterialTheme.typography.titleSmall
                     )
                 },
                 selected = selectedScheduleTime.value == scheduleTime.scheduleTimeId,

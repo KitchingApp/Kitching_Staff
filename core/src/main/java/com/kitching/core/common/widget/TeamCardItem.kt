@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,7 +22,6 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.kitching.core.R
-import com.kitching.core.designsystem.H3_m
 import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.core.designsystem.PrimaryGreen300
@@ -58,7 +58,7 @@ fun TeamCardItem(
             )
             Text(
                 text = team.teamName,
-                style = H3_m.copy(color = NeutralGray800)
+                style = MaterialTheme.typography.titleLarge.copy(color = NeutralGray800)
             )
         }
     }
