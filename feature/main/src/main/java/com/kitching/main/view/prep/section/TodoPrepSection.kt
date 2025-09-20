@@ -1,7 +1,6 @@
 package com.kitching.main.view.prep.section
 
 import androidx.compose.foundation.background
-import com.kitching.main.R
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
@@ -22,13 +22,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextAlign
-import com.kitching.core.designsystem.KitchingDimens
 import com.kitching.core.common.util.hexToArgb
-import com.kitching.main.view.prep.item.TodoPrepItem
-import com.kitching.core.designsystem.H3_m
+import com.kitching.core.designsystem.KitchingDimens
 import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.domain.entities.PrepCategory
 import com.kitching.domain.entities.TodoPrepWithDetails
+import com.kitching.main.R
+import com.kitching.main.view.prep.item.TodoPrepItem
 
 @Composable
 fun TodoPrepSection(
@@ -62,7 +62,7 @@ fun TodoPrepSection(
         ) {
             Text(
                 text = category.categoryName,
-                style = H3_m.copy(color = NeutralGray800),
+                style = MaterialTheme.typography.titleLarge.copy(color = NeutralGray800),
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(KitchingDimens.Margin.xxSmall)
             )

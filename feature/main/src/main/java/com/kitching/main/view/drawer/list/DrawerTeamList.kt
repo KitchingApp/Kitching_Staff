@@ -6,17 +6,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import com.kitching.main.R
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextAlign
 import com.kitching.core.common.widget.TeamCardItem
-import com.kitching.core.designsystem.H3_m
 import com.kitching.core.designsystem.NeutralGray400
 import com.kitching.domain.entities.Team
+import com.kitching.main.R
 
 @Composable
 fun DrawerTeamList(
@@ -30,7 +30,7 @@ fun DrawerTeamList(
         ) {
             Text(
                 text = "다른 팀이 없습니다",
-                style = H3_m.copy(color = NeutralGray400),
+                style = MaterialTheme.typography.titleLarge.copy(color = NeutralGray400),
                 textAlign = TextAlign.Center
             )
         }

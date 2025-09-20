@@ -46,7 +46,6 @@ import coil3.compose.AsyncImage
 import com.kitching.core.common.appresultscreen.ProgressIndicatorScreen
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.designsystem.Body1
-import com.kitching.core.designsystem.H3_m
 import com.kitching.core.designsystem.KitchingStaffTheme
 import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.NeutralGray300
@@ -96,7 +95,7 @@ fun InviteCodeScreen(
                 title = {
                     Text(
                         text = stringResource(R.string.invite_code),
-                        style = H3_m.copy(NeutralGray800)
+                        style = MaterialTheme.typography.titleLarge.copy(NeutralGray800)
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(

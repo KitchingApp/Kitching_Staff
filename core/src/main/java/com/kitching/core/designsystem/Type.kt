@@ -112,18 +112,6 @@ val kitchingTypography = Typography(
     ),
 )
 
-val H3 = TextStyle(
-    fontFamily = pretendard,
-    fontWeight = FontWeight.SemiBold,
-    fontSize = 20.sp
-)
-
-val H3_m = TextStyle(
-    fontFamily = pretendard,
-    fontWeight = FontWeight.Medium,
-    fontSize = 20.sp
-)
-
 val H4 = TextStyle(
     fontFamily = pretendard,
     fontWeight = FontWeight.SemiBold,

@@ -34,8 +34,6 @@ import com.kitching.core.common.appresultscreen.UiStateHandler
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.updateTeamInfo
 import com.kitching.core.common.widget.KitchingHorizontalDivider
-import com.kitching.core.designsystem.H3
-import com.kitching.core.designsystem.H3_m
 import com.kitching.core.designsystem.KitchingDimens
 import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.NeutralGray300
@@ -133,7 +131,7 @@ fun CustomDrawer(
                         Text(
                             modifier = Modifier.weight(1f),
                             text = userInfo?.userName ?: "",
-                            style = H3.copy(color = NeutralGray800),
+                            style = MaterialTheme.typography.headlineLarge.copy(color = NeutralGray800),
                         )
 
                         AsyncImage(
@@ -164,7 +162,7 @@ fun CustomDrawer(
                             .fillMaxWidth()
                             .padding(vertical = KitchingDimens.Margin.xSmall),
                         text = stringResource(R.string.drawer_team_list),
-                        style = H3_m.copy(color = NeutralGray800)
+                        style = MaterialTheme.typography.titleLarge.copy(color = NeutralGray800)
                     )
 
                     UiStateHandler(
@@ -194,7 +192,7 @@ fun CustomDrawer(
                             .fillMaxWidth()
                             .padding(vertical = KitchingDimens.Margin.xSmall),
                         text = stringResource(R.string.drawer_other_list),
-                        style = H3_m.copy(color = NeutralGray800)
+                        style = MaterialTheme.typography.titleLarge.copy(color = NeutralGray800)
                     )
 
                     DrawerOtherList(
