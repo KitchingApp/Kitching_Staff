@@ -10,7 +10,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.kitching.core.common.widget.KitchingVerticalDivider
-import com.kitching.core.designsystem.Body2_m
 import com.kitching.core.designsystem.KitchingDimens
 import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.core.designsystem.defaultHorizontalPadding
@@ -60,7 +59,7 @@ fun NoticeContentSection(
                 .fillMaxWidth()
                 .padding(vertical = KitchingDimens.Margin.xLarge),
             text = notice.content,
-            style = Body2_m.copy(color = NeutralGray800)
+            style = MaterialTheme.typography.bodySmall.copy(color = NeutralGray800)
         )
     }
 }
