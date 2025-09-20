@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DrawerState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Text
@@ -33,7 +34,6 @@ import com.kitching.core.common.appresultscreen.UiStateHandler
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.updateTeamInfo
 import com.kitching.core.common.widget.KitchingHorizontalDivider
-import com.kitching.core.designsystem.H1
 import com.kitching.core.designsystem.H3
 import com.kitching.core.designsystem.H3_m
 import com.kitching.core.designsystem.KitchingDimens
@@ -107,7 +107,7 @@ fun CustomDrawer(
                             .fillMaxWidth()
                             .padding(vertical = KitchingDimens.Margin.xMedium),
                         text = stringResource(R.string.drawer_profile),
-                        style = H1.copy(color = NeutralGray800)
+                        style = MaterialTheme.typography.displayMedium.copy(color = NeutralGray800)
                     )
 
                     Row(
