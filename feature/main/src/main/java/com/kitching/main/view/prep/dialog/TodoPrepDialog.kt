@@ -40,7 +40,6 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import com.kitching.core.common.util.hexToArgb
 import com.kitching.core.common.widget.CommonDialogComponent
-import com.kitching.core.designsystem.Caption1_m
 import com.kitching.core.designsystem.KitchingDimens
 import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.NeutralGray500
@@ -183,7 +182,7 @@ fun TodoPrepDialog(
                                     selectedPrep != null -> selectedPrep.prepName
                                     else -> stringResource(R.string.prep_dialog_choice_prep)
                                 },
-                                style = Caption1_m.copy(
+                                style = MaterialTheme.typography.labelMedium.copy(
                                     color = when {
                                         selectedCategoryId == null || filteredPreps.isEmpty() -> NeutralGray500
                                         selectedPrep != null -> NeutralGray800
@@ -221,7 +220,7 @@ fun TodoPrepDialog(
                                 text = {
                                     Text(
                                         text = prep.prepName,
-                                        style = Caption1_m.copy(color = NeutralGray800)
+                                        style = MaterialTheme.typography.labelMedium.copy(color = NeutralGray800)
                                     )
                                 },
                                 onClick = {

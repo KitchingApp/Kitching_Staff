@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import coil3.compose.AsyncImage
 import com.kitching.core.common.widget.KitchingVerticalDivider
-import com.kitching.core.designsystem.Caption1_m
 import com.kitching.core.designsystem.KitchingDimens
 import com.kitching.core.designsystem.NeutralGray400
 import com.kitching.core.designsystem.NeutralGray800
@@ -60,14 +59,14 @@ fun CommentsItem(
 
                 Text(
                     text = comment.formattedDate,
-                    style = Caption1_m.copy(color = NeutralGray800)
+                    style = MaterialTheme.typography.labelMedium.copy(color = NeutralGray800)
                 )
             }
 
             Text(
                 modifier = Modifier.padding(top = KitchingDimens.Margin.xxSmall),
                 text = comment.content,
-                style = Caption1_m.copy(color = NeutralGray800)
+                style = MaterialTheme.typography.labelMedium.copy(color = NeutralGray800)
             )
         }
 

@@ -31,7 +31,6 @@ import coil3.compose.AsyncImage
 import com.kitching.core.common.commonstate.ActionIconInfo
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.NavigationIconInfo
-import com.kitching.core.designsystem.Caption1_m
 import com.kitching.core.designsystem.KitchingDimens
 import com.kitching.core.designsystem.KitchingStaffTheme
 import com.kitching.core.designsystem.NeutralGray0
@@ -98,7 +97,7 @@ fun InviteCodeScreen(
                         .align(Alignment.Center)
                         .padding(KitchingDimens.Margin.small),
                     text = team?.inviteCode ?: "",
-                    style = Caption1_m.copy(color = NeutralGray800)
+                    style = MaterialTheme.typography.labelMedium.copy(color = NeutralGray800)
                 )
 
                 IconButton(

@@ -18,7 +18,6 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import coil3.compose.AsyncImage
 import com.kitching.core.R
-import com.kitching.core.designsystem.Caption1_m
 import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.NeutralGray100
 import com.kitching.core.designsystem.PrimaryGreen300
@@ -63,7 +62,7 @@ fun ProgressIndicatorScreen() {
                 )
                 Text(
                     text = stringResource(R.string.progress_indicator_common_message),
-                    style = Caption1_m.copy(color = NeutralGray0)
+                    style = MaterialTheme.typography.labelMedium.copy(color = NeutralGray0)
                 )
             }
         }
