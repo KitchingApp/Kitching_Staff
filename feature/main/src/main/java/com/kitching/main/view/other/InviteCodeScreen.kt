@@ -5,7 +5,6 @@ import android.content.ClipboardManager
 import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import com.kitching.main.R
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,7 +32,6 @@ import com.kitching.core.common.commonstate.ActionIconInfo
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.common.commonstate.NavigationIconInfo
 import com.kitching.core.designsystem.Caption1_m
-import com.kitching.core.designsystem.H5_m
 import com.kitching.core.designsystem.KitchingDimens
 import com.kitching.core.designsystem.KitchingStaffTheme
 import com.kitching.core.designsystem.NeutralGray0
@@ -42,6 +41,7 @@ import com.kitching.core.designsystem.SecondaryLightGreen500
 import com.kitching.core.designsystem.ShadowColor
 import com.kitching.core.designsystem.defaultHorizontalPadding
 import com.kitching.core.designsystem.dropShadow
+import com.kitching.main.R
 
 @Composable
 fun InviteCodeScreen(
@@ -76,7 +76,7 @@ fun InviteCodeScreen(
             Text(
                 modifier = Modifier.padding(bottom = KitchingDimens.Margin.xxLarge),
                 text = stringResource(R.string.other_invite_code_message),
-                style = H5_m.copy(NeutralGray800)
+                style = MaterialTheme.typography.titleSmall.copy(NeutralGray800)
             )
             Box(
                 modifier = Modifier
@@ -145,7 +145,7 @@ fun InviteCodeScreen(
                 Text(
                     modifier = Modifier.padding(start = KitchingDimens.Margin.small),
                     text = "카카오톡으로 공유",
-                    style = H5_m.copy(NeutralGray800)
+                    style = MaterialTheme.typography.titleSmall.copy(NeutralGray800)
                 )
             }
         }

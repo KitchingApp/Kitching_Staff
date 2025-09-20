@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,7 +24,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.kitching.core.designsystem.H5
 import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.NeutralGray200
 import com.kitching.core.designsystem.NeutralGray300
@@ -95,7 +95,7 @@ fun CommonDialogComponent(
                     ) {
                         Text(
                             text = confirmText,
-                            style = H5
+                            style = MaterialTheme.typography.headlineSmall
                         )
                     }
                     Button(
@@ -114,7 +114,7 @@ fun CommonDialogComponent(
                     ) {
                         Text(
                             text = cancelText,
-                            style = H5
+                            style = MaterialTheme.typography.headlineSmall
                         )
                     }
                 }

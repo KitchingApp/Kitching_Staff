@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -12,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import coil3.compose.AsyncImage
 import com.kitching.core.common.widget.KitchingHorizontalDivider
-import com.kitching.core.designsystem.H5
 import com.kitching.core.designsystem.KitchingDimens
 import com.kitching.core.designsystem.NeutralGray200
 import com.kitching.core.designsystem.NeutralGray500
@@ -44,7 +44,7 @@ fun CommentLine() {
             Text(
                 modifier = Modifier.padding(horizontal = KitchingDimens.Margin.xMedium),
                 text = stringResource(R.string.other_comment_title),
-                style = H5.copy(NeutralGray500)
+                style = MaterialTheme.typography.headlineSmall.copy(NeutralGray500)
             )
         }
 
