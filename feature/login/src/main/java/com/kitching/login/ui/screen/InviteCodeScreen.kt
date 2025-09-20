@@ -18,6 +18,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -45,7 +46,6 @@ import coil3.compose.AsyncImage
 import com.kitching.core.common.appresultscreen.ProgressIndicatorScreen
 import com.kitching.core.common.commonstate.CommonState
 import com.kitching.core.designsystem.Body1
-import com.kitching.core.designsystem.H2
 import com.kitching.core.designsystem.H3_m
 import com.kitching.core.designsystem.KitchingStaffTheme
 import com.kitching.core.designsystem.NeutralGray0
@@ -134,7 +134,7 @@ fun InviteCodeScreen(
                 ) {
                     Text(
                         text = stringResource(R.string.insert_invite_code),
-                        style = H2.copy(NeutralGray800)
+                        style = MaterialTheme.typography.displaySmall.copy(NeutralGray800)
                     )
                     Text(
                         text = stringResource(R.string.insert_invite_code_message),
