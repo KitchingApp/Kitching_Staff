@@ -20,6 +20,98 @@ val pretendard = FontFamily(
     Font(R.font.pretendard_thin, FontWeight.Thin),
 )
 
+val kitchingTypography = Typography(
+    displayLarge = TextStyle(
+        fontFamily = pretendard,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 32.sp,
+    ),
+    // H1
+    displayMedium = TextStyle(
+        fontFamily = pretendard,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 28.sp,
+    ),
+    // H2
+    displaySmall = TextStyle(
+        fontFamily = pretendard,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 24.sp,
+    ),
+    // H3
+    headlineLarge = TextStyle(
+        fontFamily = pretendard,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 20.sp,
+    ),
+    // H4
+    headlineMedium = TextStyle(
+        fontFamily = pretendard,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 18.sp,
+    ),
+    // H5
+    headlineSmall = TextStyle(
+        fontFamily = pretendard,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 16.sp,
+    ),
+    // H3_m
+    titleLarge = TextStyle(
+        fontFamily = pretendard,
+        fontWeight = FontWeight.Medium,
+        fontSize = 20.sp,
+    ),
+    // H4_m
+    titleMedium = TextStyle(
+        fontFamily = pretendard,
+        fontWeight = FontWeight.Medium,
+        fontSize = 18.sp,
+    ),
+    // H5_m
+    titleSmall = TextStyle(
+        fontFamily = pretendard,
+        fontWeight = FontWeight.Medium,
+        fontSize = 16.sp,
+    ),
+    // Body1
+    bodyLarge = TextStyle(
+        fontFamily = pretendard,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+    ),
+    // Body1_m
+    bodyMedium = TextStyle(
+        fontFamily = pretendard,
+        fontWeight = FontWeight.Medium,
+        fontSize = 16.sp,
+    ),
+    // Body2_m
+    bodySmall = TextStyle(
+        fontFamily = pretendard,
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp,
+    ),
+    // Caption1_R
+    labelLarge = TextStyle(
+        fontFamily = pretendard,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp,
+    ),
+    // Caption1_m
+    labelMedium = TextStyle(
+        fontFamily = pretendard,
+        fontWeight = FontWeight.Medium,
+        fontSize = 12.sp,
+    ),
+    // Caption2_m
+    labelSmall = TextStyle(
+        fontFamily = pretendard,
+        fontWeight = FontWeight.Medium,
+        fontSize = 10.sp,
+    ),
+)
+
 val H1 = TextStyle(
     fontFamily = pretendard,
     fontWeight = FontWeight.SemiBold,
@@ -127,112 +219,4 @@ val Caption2_m = TextStyle(
     fontFamily = pretendard,
     fontWeight = FontWeight.Medium,
     fontSize = 10.sp
-)
-
-val customTypography = Typography(
-    displayLarge = TextStyle(
-        fontFamily = pretendard,
-        fontWeight = FontWeight.Normal,
-        fontSize = 57.sp,
-        lineHeight = 64.sp,
-        letterSpacing = (-0.25).sp
-    ),
-    displayMedium = TextStyle(
-        fontFamily = pretendard,
-        fontWeight = FontWeight.Normal,
-        fontSize = 45.sp,
-        lineHeight = 52.sp,
-        letterSpacing = 0.sp
-    ),
-    displaySmall = TextStyle(
-        fontFamily = pretendard,
-        fontWeight = FontWeight.Normal,
-        fontSize = 36.sp,
-        lineHeight = 44.sp,
-        letterSpacing = 0.sp
-    ),
-    headlineLarge = TextStyle(
-        fontFamily = pretendard,
-        fontWeight = FontWeight.Normal,
-        fontSize = 32.sp,
-        lineHeight = 40.sp,
-        letterSpacing = 0.sp
-    ),
-    headlineMedium = TextStyle(
-        fontFamily = pretendard,
-        fontWeight = FontWeight.Normal,
-        fontSize = 28.sp,
-        lineHeight = 36.sp,
-        letterSpacing = 0.sp
-    ),
-    headlineSmall = TextStyle(
-        fontFamily = pretendard,
-        fontWeight = FontWeight.Normal,
-        fontSize = 24.sp,
-        lineHeight = 32.sp,
-        letterSpacing = 0.sp
-    ),
-    titleLarge = TextStyle(
-        fontFamily = pretendard,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.sp
-    ),
-    titleMedium = TextStyle(
-        fontFamily = pretendard,
-        fontWeight = FontWeight.Medium,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.15.sp
-    ),
-    titleSmall = TextStyle(
-        fontFamily = pretendard,
-        fontWeight = FontWeight.Medium,
-        fontSize = 14.sp,
-        lineHeight = 20.sp,
-        letterSpacing = 0.1.sp
-    ),
-    bodyLarge = TextStyle(
-        fontFamily = pretendard,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
-    ),
-    bodyMedium = TextStyle(
-        fontFamily = pretendard,
-        fontWeight = FontWeight.Normal,
-        fontSize = 14.sp,
-        lineHeight = 20.sp,
-        letterSpacing = 0.25.sp
-    ),
-    bodySmall = TextStyle(
-        fontFamily = pretendard,
-        fontWeight = FontWeight.Normal,
-        fontSize = 12.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.4.sp
-    ),
-    labelLarge = TextStyle(
-        fontFamily = pretendard,
-        fontWeight = FontWeight.Medium,
-        fontSize = 14.sp,
-        lineHeight = 20.sp,
-        letterSpacing = 0.1.sp
-    ),
-    labelMedium = TextStyle(
-        fontFamily = pretendard,
-        fontWeight = FontWeight.Medium,
-        fontSize = 12.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
-    ),
-    labelSmall = TextStyle(
-        fontFamily = pretendard,
-        fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
-    )
 )
