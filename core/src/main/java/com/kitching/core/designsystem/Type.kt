@@ -112,12 +112,6 @@ val kitchingTypography = Typography(
     ),
 )
 
-val Caption1_R = TextStyle(
-    fontFamily = pretendard,
-    fontWeight = FontWeight.Normal,
-    fontSize = 12.sp
-)
-
 val Caption1_m = TextStyle(
     fontFamily = pretendard,
     fontWeight = FontWeight.Medium,

@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextOverflow
-import com.kitching.core.designsystem.Caption1_R
 import com.kitching.core.designsystem.KitchingDimens
 import com.kitching.core.designsystem.NeutralGray600
 import com.kitching.core.designsystem.NeutralGray800
@@ -45,13 +44,13 @@ fun NoticeCardItem(
             Text(
                 modifier = Modifier.padding(end = KitchingDimens.Margin.xSmall),
                 text = notice.writerName,
-                style = Caption1_R.copy(NeutralGray600),
+                style = MaterialTheme.typography.labelLarge.copy(NeutralGray600),
                 overflow = TextOverflow.Ellipsis,
             )
             Text(
                 modifier = Modifier.weight(1f),
                 text = notice.date,
-                style = Caption1_R.copy(NeutralGray600),
+                style = MaterialTheme.typography.labelLarge.copy(NeutralGray600),
                 overflow = TextOverflow.Ellipsis,
             )
         }
@@ -60,7 +59,7 @@ fun NoticeCardItem(
                 .fillMaxWidth()
                 .padding(vertical = KitchingDimens.Margin.xSmall),
             text = notice.content,
-            style = Caption1_R.copy(NeutralGray800),
+            style = MaterialTheme.typography.labelLarge.copy(NeutralGray800),
             overflow = TextOverflow.Ellipsis,
             maxLines = 2
         )

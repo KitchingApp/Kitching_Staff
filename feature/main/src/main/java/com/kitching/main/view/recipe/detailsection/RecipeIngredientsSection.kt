@@ -15,7 +15,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.kitching.core.common.widget.KitchingHorizontalDivider
-import com.kitching.core.designsystem.Caption1_R
 import com.kitching.core.designsystem.KitchingDimens
 import com.kitching.core.designsystem.NeutralGray500
 import com.kitching.core.designsystem.PrimaryGreen50
@@ -51,25 +50,25 @@ fun RecipeIngredientsSection(ingredients: List<Ingredient>) {
             ) {
                 Text(
                     text = stringResource(R.string.recipe_detail_once),
-                    style = Caption1_R,
+                    style = MaterialTheme.typography.labelLarge,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f)
                 )
                 Text(
                     text = stringResource(R.string.recipe_detail_twice),
-                    style = Caption1_R,
+                    style = MaterialTheme.typography.labelLarge,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f)
                 )
                 Text(
                     text = stringResource(R.string.recipe_detail_unit),
-                    style = Caption1_R,
+                    style = MaterialTheme.typography.labelLarge,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f)
                 )
                 Text(
                     text = stringResource(R.string.recipe_detail_ingredient),
-                    style = Caption1_R,
+                    style = MaterialTheme.typography.labelLarge,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(2f)
                 )
@@ -89,25 +88,25 @@ fun RecipeIngredientsSection(ingredients: List<Ingredient>) {
                 ) {
                     Text(
                         text = "${ingredient.once}",
-                        style = Caption1_R,
+                        style = MaterialTheme.typography.labelLarge,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.weight(1f)
                     )
                     Text(
                         text = "${ingredient.twice}",
-                        style = Caption1_R,
+                        style = MaterialTheme.typography.labelLarge,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.weight(1f)
                     )
                     Text(
                         text = ingredient.unit,
-                        style = Caption1_R,
+                        style = MaterialTheme.typography.labelLarge,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.weight(1f)
                     )
                     Text(
                         text = ingredient.ingredientName,
-                        style = Caption1_R,
+                        style = MaterialTheme.typography.labelLarge,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.weight(2f)
                     )

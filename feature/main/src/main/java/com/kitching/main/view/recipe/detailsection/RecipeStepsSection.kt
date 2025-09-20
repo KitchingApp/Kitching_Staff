@@ -14,7 +14,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import com.kitching.core.designsystem.Caption1_R
 import com.kitching.core.designsystem.KitchingDimens
 import com.kitching.core.designsystem.NeutralGray500
 import com.kitching.core.designsystem.defaultHorizontalPadding
@@ -50,12 +49,12 @@ fun RecipeStepsSection(steps: List<String>) {
                     ) {
                         Text(
                             text = "${index + 1}.",
-                            style = Caption1_R,
+                            style = MaterialTheme.typography.labelLarge,
                             modifier = Modifier.padding(end = KitchingDimens.Margin.xSmall)
                         )
                         Text(
                             text = step,
-                            style = Caption1_R
+                            style = MaterialTheme.typography.labelLarge
                         )
                     }
                 }

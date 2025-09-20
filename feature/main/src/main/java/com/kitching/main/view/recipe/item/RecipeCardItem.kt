@@ -7,10 +7,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import com.kitching.main.R
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,13 +20,13 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextAlign
 import coil3.compose.AsyncImage
 import com.kitching.core.common.util.CoilImageRequest
-import com.kitching.core.designsystem.Caption1_R
 import com.kitching.core.designsystem.KitchingDimens
 import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.core.designsystem.ShadowColor
 import com.kitching.core.designsystem.dropShadow
 import com.kitching.domain.entities.Recipe
+import com.kitching.main.R
 
 @Composable
 fun RecipeCardItem(
@@ -70,7 +70,7 @@ fun RecipeCardItem(
             ) {
                 Text(
                     text = recipe.recipeName,
-                    style = Caption1_R.copy(color = NeutralGray800),
+                    style = MaterialTheme.typography.labelLarge.copy(color = NeutralGray800),
                     textAlign = TextAlign.Center
                 )
             }
