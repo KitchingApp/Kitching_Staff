@@ -22,13 +22,13 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
-import com.kitching.main.R
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,10 +38,8 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.core.graphics.toColorInt
 import com.kitching.core.common.util.hexToArgb
 import com.kitching.core.common.widget.CommonDialogComponent
-import com.kitching.core.designsystem.Body1_m
 import com.kitching.core.designsystem.Caption1_m
 import com.kitching.core.designsystem.KitchingDimens
 import com.kitching.core.designsystem.NeutralGray0
@@ -51,6 +49,7 @@ import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.core.designsystem.PrimaryGreen300
 import com.kitching.domain.entities.Prep
 import com.kitching.domain.entities.PrepCategory
+import com.kitching.main.R
 
 @SuppressLint("UnusedBoxWithConstraintsScope")
 @Composable
@@ -99,7 +98,7 @@ fun TodoPrepDialog(
         ) {
             Text(
                 text = selectedDate,
-                style = Body1_m.copy(NeutralGray800),
+                style = MaterialTheme.typography.bodyMedium.copy(NeutralGray800),
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -128,7 +127,7 @@ fun TodoPrepDialog(
                         label = {
                             Text(
                                 text = category.categoryName,
-                                style = Body1_m
+                                style = MaterialTheme.typography.bodyMedium
                             )
                         },
                         selected = selectedCategoryId == category.categoryId,

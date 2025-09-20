@@ -10,7 +10,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.kitching.core.common.widget.KitchingVerticalDivider
-import com.kitching.core.designsystem.Body1_m
 import com.kitching.core.designsystem.Body2_m
 import com.kitching.core.designsystem.KitchingDimens
 import com.kitching.core.designsystem.NeutralGray800
@@ -39,7 +38,7 @@ fun NoticeContentSection(
         ) {
             Text(
                 text = notice.writerName,
-                style = Body1_m.copy(color = NeutralGray800)
+                style = MaterialTheme.typography.bodyMedium.copy(color = NeutralGray800)
             )
 
             KitchingVerticalDivider(
@@ -52,7 +51,7 @@ fun NoticeContentSection(
 
             Text(
                 text = notice.date,
-                style = Body1_m.copy(color = NeutralGray800)
+                style = MaterialTheme.typography.bodyMedium.copy(color = NeutralGray800)
             )
         }
 

@@ -45,7 +45,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import com.kitching.core.common.appresultscreen.ProgressIndicatorScreen
 import com.kitching.core.common.commonstate.CommonState
-import com.kitching.core.designsystem.Body1
 import com.kitching.core.designsystem.KitchingStaffTheme
 import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.NeutralGray300
@@ -137,7 +136,7 @@ fun InviteCodeScreen(
                     )
                     Text(
                         text = stringResource(R.string.insert_invite_code_message),
-                        style = Body1.copy(NeutralGray800)
+                        style = MaterialTheme.typography.bodyLarge.copy(NeutralGray800)
                     )
                     Row(
                         modifier = Modifier
@@ -165,7 +164,7 @@ fun InviteCodeScreen(
                                 onValueChange = {
                                     textState.value = it
                                 },
-                                textStyle = Body1.copy(
+                                textStyle = MaterialTheme.typography.bodyLarge.copy(
                                     color = NeutralGray800,
                                     textAlign = TextAlign.Start
                                 ),

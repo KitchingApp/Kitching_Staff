@@ -1,6 +1,5 @@
 package com.kitching.main.view.schedule.tab
 
-import com.kitching.main.R
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,17 +12,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardColors
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
-import com.kitching.core.designsystem.Body1_m
 import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.NeutralGray800
 import com.kitching.core.designsystem.PrimaryGreen50
 import com.kitching.core.designsystem.PrimaryGreen700
+import com.kitching.main.R
 
 @Composable
 fun ScheduleCardItem(
@@ -56,14 +56,14 @@ fun ScheduleCardItem(
             ) {
                 Text(
                     text = userName,
-                    style = Body1_m.copy(color = NeutralGray800)
+                    style = MaterialTheme.typography.bodyMedium.copy(color = NeutralGray800)
                 )
 
                 Spacer(modifier = Modifier.width(dimensionResource(R.dimen.schedule_card_item_between_padding)))
 
                 Text(
                     text = scheduleTimeName,
-                    style = Body1_m.copy(color = PrimaryGreen700)
+                    style = MaterialTheme.typography.bodyMedium.copy(color = PrimaryGreen700)
                 )
             }
         }

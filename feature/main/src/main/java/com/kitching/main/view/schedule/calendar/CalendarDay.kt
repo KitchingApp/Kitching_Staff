@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,13 +25,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.kitching.core.designsystem.Body1
+import androidx.core.graphics.toColorInt
 import com.kitching.domain.entities.Schedule
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import java.time.DayOfWeek
 import java.time.LocalDate
-import androidx.core.graphics.toColorInt
 
 @Composable
 fun CalendarDay(
@@ -101,7 +101,7 @@ fun CalendarDay(
                         .clip(RoundedCornerShape(6.dp))
                         .background(Color(schedule.color.toColorInt())),
                     text = schedule.scheduleTimeName,
-                    style = Body1,
+                    style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Center
                 )
             }

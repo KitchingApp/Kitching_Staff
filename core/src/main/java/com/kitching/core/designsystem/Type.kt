@@ -112,25 +112,6 @@ val kitchingTypography = Typography(
     ),
 )
 
-/** Regular = Normal */
-val Body1 = TextStyle(
-    fontFamily = pretendard,
-    fontWeight = FontWeight.Normal,
-    fontSize = 16.sp
-)
-
-val Body1_m = TextStyle(
-    fontFamily = pretendard,
-    fontWeight = FontWeight.Medium,
-    fontSize = 16.sp
-)
-
-val Body2 = TextStyle(
-    fontFamily = pretendard,
-    fontWeight = FontWeight.Normal,
-    fontSize = 14.sp
-)
-
 val Body2_m = TextStyle(
     fontFamily = pretendard,
     fontWeight = FontWeight.Medium,

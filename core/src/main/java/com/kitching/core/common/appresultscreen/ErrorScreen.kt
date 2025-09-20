@@ -20,7 +20,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.kitching.core.R
-import com.kitching.core.designsystem.Body1
 import com.kitching.core.designsystem.Caption1_m
 import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.NeutralGray500
@@ -71,7 +70,7 @@ fun ErrorScreen(
             ) {
                 Text(
                     text = stringResource(R.string.retry),
-                    style = Body1
+                    style = MaterialTheme.typography.bodyLarge
                 )
             }
         }
