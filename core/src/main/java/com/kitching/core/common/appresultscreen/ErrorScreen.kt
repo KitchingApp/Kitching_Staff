@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -21,7 +22,6 @@ import coil3.compose.AsyncImage
 import com.kitching.core.R
 import com.kitching.core.designsystem.Body1
 import com.kitching.core.designsystem.Caption1_m
-import com.kitching.core.designsystem.H4
 import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.NeutralGray500
 import com.kitching.core.designsystem.NeutralGray800
@@ -48,7 +48,7 @@ fun ErrorScreen(
             )
             Text(
                 text = message,
-                style = H4,
+                style = MaterialTheme.typography.headlineMedium,
                 textAlign = TextAlign.Center,
                 color = NeutralGray800
             )

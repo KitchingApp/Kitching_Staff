@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardColors
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
 import com.kitching.core.R
-import com.kitching.core.designsystem.H4_m
 import com.kitching.core.designsystem.NeutralGray0
 import com.kitching.core.designsystem.NeutralGray300
 import com.kitching.core.designsystem.NeutralGray800
@@ -48,7 +48,7 @@ fun DrawerOtherItem(
         ) {
             Text(
                 text = text,
-                style = H4_m.copy(color = NeutralGray800)
+                style = MaterialTheme.typography.titleMedium.copy(color = NeutralGray800)
             )
         }
     }
